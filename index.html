@@ -155,6 +155,11 @@ h2{margin:0; font-size:20px; font-weight:800}
 .incl{display:flex; flex-wrap:wrap; gap:8px 20px; font-size:14px}
 .incl label{display:inline-flex; gap:8px; align-items:center; min-height:32px; cursor:pointer}
 .incl input{width:18px; height:18px; accent-color:var(--ink)}
+.incl .lbl{font-weight:700}
+.incl.fields{gap:12px 20px}
+.fld{display:inline-flex; flex-direction:column; gap:4px; font-size:13px; font-weight:700}
+.fld input{font:inherit; font-weight:400; font-size:15px; border:1.5px solid var(--line); background:var(--bg); color:var(--ink); padding:6px 8px; min-height:38px; width:220px; max-width:100%}
+.fld input:focus{border-color:var(--ink)}
 .btn.solid{background:var(--ink); color:var(--bg)}
 .btn.solid:hover{opacity:.85}
 #printsheet{display:none}
@@ -222,13 +227,26 @@ h2{margin:0; font-size:20px; font-weight:800}
   <section class="market" id="market"></section>
 
   <section class="saveplan" aria-labelledby="save-h">
-    <div class="sec-head"><h2 id="save-h">Save my plan</h2><span>Pick what to include, then save a PDF to bring to advising. Your checked classes also stay saved in this browser.</span></div>
-    <div class="incl" role="group" aria-label="Sections to include">
-      <label><input type="checkbox" id="inc-classes" checked> My classes and requirements</label>
-      <label><input type="checkbox" id="inc-career" checked> My career goal and next classes</label>
+    <div class="sec-head"><h2 id="save-h">Save my plan</h2><span>Your plan as a two-page PDF: your semester sequence filled in with your classes, and your career direction with space for advisor notes. Your checked classes also stay saved in this browser.</span></div>
+    <div class="incl" role="group" aria-label="Which sequence">
+      <span class="lbl">Sequence</span>
+      <label><input type="radio" name="seq" id="seq-4" checked> 4 semesters</label>
+      <label><input type="radio" name="seq" id="seq-5"> 5 semesters</label>
+    </div>
+    <div class="incl fields">
+      <label class="fld" for="pl-name">Name (optional)<input id="pl-name" type="text" autocomplete="name"></label>
+      <label class="fld" for="pl-cat">Catalog year (optional)<input id="pl-cat" type="text" placeholder="e.g. 2025-2026"></label>
+    </div>
+    <div class="incl">
+      <label><input type="checkbox" id="pl-share"> I'm sharing this plan with my advisor or the department</label>
+      <label class="fld" for="pl-emplid" id="emplid-wrap" hidden>EmplID<input id="pl-emplid" type="text" inputmode="numeric" maxlength="8"></label>
+    </div>
+    <div class="incl" role="group" aria-label="Optional third page">
+      <span class="lbl">Add a third page</span>
       <label><input type="checkbox" id="inc-market" checked> Job market table</label>
       <label><input type="checkbox" id="inc-pivot"> Other directions I could take</label>
     </div>
+    <p class="note" style="margin:0">Your name and EmplID are never saved or sent anywhere. They only go into the PDF you download.</p>
     <div class="bar">
       <button class="btn solid" type="button" id="btn-pdf">Download PDF</button>
       <button class="btn" type="button" id="btn-print" hidden>Print</button>
@@ -812,7 +830,7 @@ h2{margin:0; font-size:20px; font-weight:800}
   }
 
   function planData(){
-    var inc = {classes:document.getElementById('inc-classes').checked, career:document.getElementById('inc-career').checked, market:document.getElementById('inc-market').checked, pivot:document.getElementById('inc-pivot').checked};
+    var inc = {classes:true, career:true, market:document.getElementById('inc-market').checked, pivot:document.getElementById('inc-pivot').checked};
     var secs = [], unlocked = count('strat')>=2 && (count('skill')+count('boost'))>=2;
     var r = ROLES.filter(function(x){ return x.id===role; })[0];
     if(inc.classes){
@@ -860,23 +878,240 @@ h2{margin:0; font-size:20px; font-weight:800}
     planData().forEach(function(sec){ t += '\n'+sec.h.toUpperCase()+'\n'+sec.lines.join('\n')+'\n'; });
     return t+'\n'+foot()+'\n';
   }
-  function planPdf(){
-    var J = window.jspdf && window.jspdf.jsPDF; if(!J) return null;
-    var doc = new J({unit:'pt', format:'letter'}), W = 612, M = 54, y = M, maxW = W-2*M;
-    function need(h){ if(y+h > 792-M){ doc.addPage(); y = M; } }
-    function text(str, size, bold, color){
-      doc.setFont('helvetica', bold?'bold':'normal'); doc.setFontSize(size); doc.setTextColor(color||'#16161A');
-      doc.splitTextToSize(str||' ', maxW).forEach(function(l){ need(size*1.35); doc.text(l, M, y+size); y += size*1.35; });
+  function buildPlanPdf(J, m){
+    var doc = new J({unit:'pt', format:'letter'}), W = 612, H = 792, M = 40, CW = W - 2*M;
+    var INK = '#16161A', MUTED = '#5C5A55', RULE = '#2A2A2A';
+    var FILL = {elect:'#E9D7E0', req:'#D6E2F0', gen:'#FBF1CF', head:'#3A3A3A'};
+    function font(size, bold, color){ doc.setFont('helvetica', bold ? 'bold' : 'normal'); doc.setFontSize(size); doc.setTextColor(color || INK); }
+    function wrap(t, w){ return doc.splitTextToSize(String(t == null ? '' : t), w); }
+    function lines(arr, x, y, size, lh, align){ arr.forEach(function(l, i){ doc.text(l, x, y + i*lh, align ? {align:align} : undefined); }); return y + arr.length*lh; }
+    function field(label, value, x, y, w){
+      font(7.5, true, MUTED); doc.text(label.toUpperCase(), x, y);
+      doc.setDrawColor(INK); doc.setLineWidth(0.6); doc.line(x, y + 15, x + w, y + 15);
+      if(value){ font(9.5, false); doc.text(wrap(value, w)[0], x + 2, y + 12); }
     }
-    text('City Tech - Communication Design', 9, false, '#5C5A55');
-    text(HEAD, 22, true); text(today(), 10, false, '#5C5A55'); y += 6;
-    planData().forEach(function(sec){
-      y += 10; need(30); text(sec.h, 13, true); doc.setDrawColor('#16161A'); doc.setLineWidth(1.2); doc.line(M, y+2, W-M, y+2); y += 8;
-      sec.lines.forEach(function(l){ if(l===''){ y += 6; return; } text(l, 10); y += 2; });
+    function header(title, sub){
+      doc.setFillColor(INK); doc.rect(M, M, 62, 30, 'F');
+      font(15, true, '#FFFFFF'); doc.text('COMD', M + 31, M + 20, {align:'center'});
+      font(17, true); doc.text(title, M + 76, M + 14);
+      font(8.5, false, MUTED); doc.text(sub, M + 76, M + 28);
+      var fx = 372, fw = W - M - fx;
+      field('Name', m.name, fx, M + 2, fw);
+      var y2 = M + 30, parts = [['Catalog year', m.catalogYear], ['Date', m.dateShort || m.today]];
+      if(m.emplid !== null) parts.push(['EmplID', m.emplid]);
+      var pw = (fw - (parts.length - 1)*10) / parts.length;
+      parts.forEach(function(p, i){ field(p[0], p[1], fx + i*(pw + 10), y2, pw); });
+      doc.setDrawColor(INK); doc.setLineWidth(1.6); doc.line(M, M + 58, W - M, M + 58);
+    }
+    function footer(page, total){
+      font(7, false, MUTED);
+      lines(wrap(m.foot, CW - 60), M, H - 30, 7, 9);
+      doc.text('Page ' + page + ' of ' + total, W - M, H - 30, {align:'right'});
+    }
+    function tag(label, x, y, solid){
+      font(6.5, true, solid ? '#FFFFFF' : INK);
+      var tw = doc.getTextWidth(label) + 8;
+      doc.setDrawColor(INK); doc.setLineWidth(0.7);
+      if(solid){ doc.setFillColor(INK); doc.rect(x - tw/2, y - 7, tw, 10, 'F'); } else { doc.rect(x - tw/2, y - 7, tw, 10, 'S'); }
+      doc.text(label, x, y + 0.6, {align:'center'});
+    }
+    function box(x, y, s, filled){
+      doc.setDrawColor(INK); doc.setLineWidth(0.8); doc.rect(x, y, s, s, 'S');
+      if(filled){ doc.setLineWidth(1.4); doc.line(x + 2.2, y + s*0.55, x + s*0.42, y + s - 2.2); doc.line(x + s*0.42, y + s - 2.2, x + s - 2, y + 2.2); }
+    }
+    var total = m.extras ? 3 : 2;
+
+    /* Page 1: sequence grid */
+    header("My COMD Bachelor's Plan", 'City Tech  ·  Communication Design  ·  BFA');
+    var y = M + 84;
+    font(13, true); doc.text("Bachelor's degree, " + m.seqKind + '-semester suggested sequence', M, y);
+    y += 14;
+    font(8, false, MUTED);
+    var legend = [['elect','COMD elective'],['req','COMD required'],['gen','General education']], lx = M;
+    legend.forEach(function(l){ doc.setFillColor(FILL[l[0]]); doc.setDrawColor(RULE); doc.setLineWidth(0.5); doc.rect(lx, y, 10, 10, 'FD'); font(8, false, MUTED); doc.text(l[1], lx + 14, y + 8); lx += 18 + doc.getTextWidth(l[1]) + 14; });
+    tag('TAKEN', lx + 18, y + 8, true); font(8, false, MUTED); doc.text('finished', lx + 36, y + 8);
+    tag('PLANNED', lx + 98, y + 8, false); font(8, false, MUTED); doc.text('suggested for your goal', lx + 124, y + 8);
+    y += 22;
+    var cols = m.grid.length, colW = CW / cols, headH = 24, rowH = 62;
+    var rows = Math.max.apply(null, m.grid.map(function(c){ return c.cells.length; }));
+    m.grid.forEach(function(col, ci){
+      var x = M + ci*colW;
+      doc.setFillColor(FILL.head); doc.setDrawColor(RULE); doc.setLineWidth(0.6); doc.rect(x, y, colW, headH, 'FD');
+      font(10, true, '#FFFFFF'); doc.text(col.title, x + colW/2, y + 15.5, {align:'center'});
+      for(var ri = 0; ri < rows; ri++){
+        var c = col.cells[ri], cy = y + headH + ri*rowH;
+        var kind = !c ? 'gen' : (c.type === 'skill' || c.type === 'strat') ? 'elect' : c.type;
+        doc.setFillColor(FILL[kind]); doc.setDrawColor(RULE); doc.setLineWidth(0.6); doc.rect(x, cy, colW, rowH, 'FD');
+        if(!c) continue;
+        var tw = colW - (c.type === 'gen' ? 30 : 14), t = wrap(c.title, tw), s = c.sub ? wrap(c.sub, tw) : [];
+        if(t.length + s.length > 5){ s = s.slice(0, Math.max(0, 5 - t.length)); }
+        var blockH = t.length*10 + s.length*9.5 + (c.status ? 13 : 0), ty = cy + (rowH - blockH)/2 + 8;
+        font(8.5, true); ty = lines(t, x + colW/2, ty, 8.5, 10, 'center');
+        font(8, false, c.type === 'gen' ? INK : '#333333'); ty = lines(s, x + colW/2, ty, 8, 9.5, 'center');
+        if(c.status === 'taken') tag('TAKEN', x + colW/2, ty + 6, true);
+        if(c.status === 'planned') tag('PLANNED', x + colW/2, ty + 6, false);
+        if(c.type === 'gen') box(x + 5, cy + 5, 7, false);
+      }
     });
-    y += 14; text(foot(), 8, false, '#5C5A55');
+    y += headH + rows*rowH + 20;
+    font(10, true); doc.text('Where you stand', M, y); y += 6;
+    doc.setDrawColor(INK); doc.setLineWidth(0.8); doc.line(M, y, W - M, y); y += 14;
+    var stand = [['Strategy', m.tally.strat + ' of 3'], ['Skills', m.tally.skill + ' of 4'], ['Senior studio', m.tally.studio + ' of 6'], ['Strongest line', m.tally.line || 'Not chosen yet']];
+    stand.forEach(function(s, i){ var sx = M + i*(CW/4); font(7.5, true, MUTED); doc.text(s[0].toUpperCase(), sx, y); font(12, true); doc.text(s[1], sx, y + 15); });
+    y += 34;
+    font(8.5, false);
+    var notes = [];
+    if(m.career) notes.push('Planned courses fill your open slots with the classes that best build toward ' + m.career.job + '. You can take other courses in those slots.');
+    notes.push('Writing Intensive: COMD 3504 Communication Design Theory and COMD 4900 Internship are WI. Check DegreeWorks for your WI requirements.');
+    notes.push('COMD 4900 Internship needs COMD 4730, COMD 4701, or approval first. If you change the order of your semesters, keep 4701 before your internship.');
+    notes.push('Mark the small boxes on general education courses yourself. This planner only tracks COMD courses.');
+    notes.forEach(function(n){ var l = wrap(n, CW - 12); doc.setFillColor(INK); doc.circle(M + 3, y - 3, 1.4, 'F'); y = lines(l, M + 12, y, 8.5, 11) + 4; });
+    footer(1, total);
+
+    /* Page 2: career direction */
+    doc.addPage();
+    header('My Career Direction', 'City Tech  ·  Communication Design  ·  BFA');
+    y = M + 84;
+    if(m.career){
+      var cr = m.career;
+      font(7.5, true, MUTED); doc.text('MY CAREER GOAL', M, y);
+      font(18, true); doc.text(cr.job, M, y + 20);
+      font(9.5, false); y = lines(wrap(cr.what, CW), M, y + 36, 9.5, 12) + 4;
+      var stats = [[cr.pay, 'Median pay, U.S.'], [cr.out, cr.outWord + ', ' + cr.outPeriod], [cr.jobs, 'Jobs in the U.S.']], bw = (CW - 3*8) / 4;
+      stats.forEach(function(s, i){
+        var bx = M + i*(bw + 8); doc.setDrawColor(INK); doc.setLineWidth(0.7); doc.rect(bx, y, bw, 42, 'S');
+        font(14, true); doc.text(s[0], bx + 8, y + 19); font(7.5, false, MUTED); doc.text(s[1], bx + 8, y + 33);
+      });
+      var wx = M + 3*(bw + 8); doc.rect(wx, y, bw, 42, 'S');
+      font(7.5, false); lines(wrap(cr.where, bw - 14).slice(0, 3), wx + 7, y + 12, 7.5, 9);
+      font(6.5, false, MUTED); doc.text('Where they work', wx + 7, y + 38);
+      y += 54;
+      font(8, false, MUTED); y = lines(wrap(cr.entry + ' Pay is the median across all experience levels; first jobs usually start lower.', CW), M, y, 8, 10) + 8;
+
+      var c1 = 22, c2 = CW*0.56, rh = 20;
+      doc.setFillColor(INK); doc.rect(M, y, CW, 18, 'F');
+      font(7.5, true, '#FFFFFF'); doc.text('HAVE IT', M + 4, y + 12); doc.text('WHAT EMPLOYERS ASK FOR', M + c1 + 22, y + 12); doc.text('CLASSES THAT TEACH IT', M + c1 + 22 + c2, y + 12);
+      y += 18;
+      cr.comps.forEach(function(cp, i){
+        var sl = wrap(cp.skill, c2 - 10), cl = wrap(cp.classes, CW - c1 - 22 - c2 - 6), h = Math.max(rh, Math.max(sl.length, cl.length)*10 + 8);
+        if(i % 2){ doc.setFillColor('#F2F1EC'); doc.rect(M, y, CW, h, 'F'); }
+        box(M + 9, y + (h - 9)/2, 9, cp.has);
+        font(8.5, cp.has); lines(sl, M + c1 + 22, y + 12.5, 8.5, 10);
+        font(8, false, '#333333'); lines(cl, M + c1 + 22 + c2, y + 12.5, 8, 10);
+        y += h;
+      });
+      doc.setDrawColor(INK); doc.setLineWidth(0.8); doc.line(M, y, W - M, y); y += 14;
+      font(9.5, true); doc.text('Readiness: ' + cr.now + ' of ' + cr.total + ' now, ' + cr.after + ' of ' + cr.total + ' with this plan', M, y); y += 13;
+      if(cr.plan){ font(8.5, false); y = lines(wrap(cr.plan, CW), M, y, 8.5, 11); }
+      y += 10;
+    } else {
+      font(12, true); doc.text('Career goal: not chosen yet', M, y + 6);
+      font(9.5, false, MUTED); y = lines(wrap('The career planner opens after you finish 2 strategy and 2 skills courses. Until then, use the questions below to think about where you want to go, and talk them through with your advisor.', CW), M, y + 24, 9.5, 12) + 14;
+    }
+
+    function prompt(q, py, ph){
+      font(9.5, true); doc.text(q, M, py);
+      doc.setDrawColor('#9A978F'); doc.setLineWidth(0.5);
+      for(var ly = py + 20; ly < py + ph; ly += 18) doc.line(M, ly, W - M, ly);
+      return py + ph + 8;
+    }
+    var bottomH = 138, room = (H - 52 - bottomH) - y - 10, ph = Math.max(46, Math.min(80, room/2 - 8));
+    y = prompt('What are my plans after graduation?', y, ph);
+    y = prompt('What interests me most right now?', y, ph);
+    var by = Math.max(y + 4, H - 52 - bottomH), rw = CW*0.36;
+    doc.setDrawColor(INK); doc.setLineWidth(0.8); doc.rect(M, by, rw, bottomH - 6, 'S');
+    font(8, true); doc.text('RESOURCES', M + 10, by + 16);
+    font(8.5, false);
+    lines(['DegreeWorks degree audit', 'CUNYfirst registration', 'City Tech College Catalog', 'Writing Intensive course list', 'Academic Calendar', 'COMD advisement and Sophomore Review', 'COMD Career Path Finder'], M + 10, by + 32, 8.5, 13);
+    var ax = M + rw + 10, aw = CW - rw - 10;
+    doc.rect(ax, by, aw, bottomH - 6, 'S');
+    font(8, true); doc.text('ADVISOR NOTES', ax + 10, by + 16);
+    doc.setDrawColor('#9A978F'); doc.setLineWidth(0.5);
+    for(var ny = by + 36; ny < by + bottomH - 40; ny += 17) doc.line(ax + 10, ny, ax + aw - 10, ny);
+    doc.setDrawColor(INK); doc.setLineWidth(0.6);
+    var sy = by + bottomH - 20; doc.line(ax + 10, sy, ax + aw*0.62, sy); doc.line(ax + aw*0.68, sy, ax + aw - 10, sy);
+    font(7, false, MUTED); doc.text('Advisor signature', ax + 10, sy + 9); doc.text('Date', ax + aw*0.68, sy + 9);
+    footer(2, total);
+
+    /* Page 3: optional extras */
+    if(m.extras){
+      doc.addPage();
+      header('Exploring My Options', 'City Tech  ·  Communication Design  ·  BFA');
+      y = M + 84;
+      m.extras.forEach(function(sec){
+        font(12, true); doc.text(sec.h, M, y); y += 6; doc.setDrawColor(INK); doc.setLineWidth(0.8); doc.line(M, y, W - M, y); y += 14;
+        sec.lines.forEach(function(l){ font(9, false); var w = wrap(l, CW - 12); if(y + w.length*11 > H - 60){ doc.addPage(); y = M; } doc.setFillColor(INK); doc.circle(M + 3, y - 3, 1.4, 'F'); y = lines(w, M + 12, y, 9, 11) + 5; });
+        y += 14;
+      });
+      footer(3, total);
+    }
     return doc;
   }
+
+  var SEQ = {
+    '4': [
+      ['SEMESTER 05', ['skill1','skill2','strat1','gen:COM 1330|Public Speaking','gen:Flex Common Core|']],
+      ['SEMESTER 06', ['req:4701','skill3','strat2','strat3','gen:ARTH 11XX / AFR 1301, 1304|Any ARTH 1100 Series or Intro to African Art']],
+      ['SEMESTER 07', ['req:4730','req:3504','req:4900','skill4','gen:Interdisciplinary Course|']],
+      ['SEMESTER 08', ['req:4830','req:4801','gen:Liberal Arts|','gen:Adv. Lib Arts|','gen:Flex Common Core|WCGI/USED/IS/CE/SW Pathway']]
+    ],
+    '5': [
+      ['SEMESTER 06', ['skill1','skill2','strat1','gen:COM 1330|Public Speaking']],
+      ['SEMESTER 07', ['skill3','strat2','strat3','gen:ARTH 11XX / AFR 1301, 1304|Any ARTH 1100 Series or Intro to African Art']],
+      ['SEMESTER 08', ['req:3504','req:4701','skill4','gen:Flex Common Core|']],
+      ['SEMESTER 09', ['req:4730','req:4900','gen:Interdisciplinary Course|','gen:Liberal Arts|']],
+      ['SEMESTER 10', ['req:4830','req:4801','gen:Adv. Lib Arts|','gen:Flex Common Core|WCGI/USED/IS/CE/SW Pathway']]
+    ]
+  };
+  function val(id){ var el = document.getElementById(id); return el ? el.value.trim() : ''; }
+  function planModel(){
+    var seqKind = document.getElementById('seq-5').checked ? '5' : '4';
+    var unlocked = count('strat')>=2 && (count('skill')+count('boost'))>=2;
+    var r = unlocked ? ROLES.filter(function(x){ return x.id===role; })[0] : null;
+    var rc = r ? reach(r) : {picks:[], studio:[], now:0, after:0};
+    function fill(isType, pickType){
+      var out = C.filter(function(c){ return isType(c) && has(c.code); }).map(function(c){ return {c:c, st:'taken'}; });
+      rc.picks.filter(function(code){ return pickType(BY[code]); }).forEach(function(code){ out.push({c:BY[code], st:'planned'}); });
+      return out;
+    }
+    var strat = fill(function(c){ return c.type==='strat'; }, function(c){ return c.type==='strat'; });
+    var skill = fill(isSkill, isSkill);
+    var grid = SEQ[seqKind].map(function(col){
+      return {title:col[0], cells:col[1].map(function(k){
+        var mm = /^(strat|skill)(\d)$/.exec(k);
+        if(mm){
+          var f = (mm[1]==='strat' ? strat : skill)[+mm[2]-1];
+          return f ? {type:mm[1], title:'COMD '+f.c.code, sub:f.c.name, status:f.st}
+                   : {type:mm[1], title:'Upper-Level', sub:(mm[1]==='strat'?'Strategy':'Skills')+' Course ('+mm[2]+')', status:null};
+        }
+        if(k.indexOf('req:')===0){ var code = k.slice(4); return {type:'req', title:'COMD '+code, sub:BY[code].name.replace(' (WI)',''), status:has(code)?'taken':null}; }
+        var g = k.slice(4).split('|'); return {type:'gen', title:g[0], sub:g[1]||'', status:null};
+      })};
+    });
+    var top = scores().sort(function(a,b){ return b.pct-a.pct || b.done-a.done; })[0];
+    var career = null;
+    if(r){
+      var plan = [];
+      if(rc.picks.length) plan.push('Use my open slots on ' + rc.picks.map(function(c){ return 'COMD '+c+' '+BY[c].name; }).join(', ') + '.');
+      if(rc.studio.length) plan.push('Senior studio adds ' + rc.studio.map(function(c){ return 'COMD '+c+' '+BY[c].name; }).join(', ') + '.');
+      career = {job:r.name, what:r.what, entry:r.entry, pay:money(r.pay), out:outTxt(r.out), outWord:outWord(r.out), outPeriod:JOB.outlookPeriod,
+        jobs:r.jobs.toLocaleString('en-US'), where:r.where, now:rc.now, after:rc.after, total:r.comps.length, plan:plan.join(' '),
+        comps:r.comps.map(function(cp){ return {skill:cp[0], has:cp[1].some(has), classes:cp[1].map(function(c){ return c+' '+BY[c].name+(has(c)?' (taken)':''); }).join(', ')}; })};
+    }
+    var extras = planData().filter(function(sec){ return sec.h.indexOf('Job market')===0 || sec.h.indexOf('Other directions')===0; });
+    return {
+      seqKind:seqKind, grid:grid, career:career, extras: extras.length ? extras : null,
+      name:val('pl-name'), catalogYear:val('pl-cat'), emplid: document.getElementById('pl-share').checked ? val('pl-emplid') : null,
+      today:today(), dateShort:new Date().toLocaleDateString('en-US'), foot:foot(),
+      tally:{strat:Math.min(count('strat'),3), skill:Math.min(count('skill')+count('boost'),4), studio:count('studio'), line: top.done ? top.path.name : ''}
+    };
+  }
+  function planPdf(){
+    var J = window.jspdf && window.jspdf.jsPDF; if(!J) return null;
+    return buildPlanPdf(J, planModel());
+  }
+  document.getElementById('pl-share').addEventListener('change', function(){ document.getElementById('emplid-wrap').hidden = !this.checked; if(!this.checked) document.getElementById('pl-emplid').value = ''; });
+  window.COMDPathFinder = {pdf: function(){ return planPdf(); }};
   function note(m){ document.getElementById('save-note').textContent = m; }
   var dl = null, hosted = !window.claude;
   if(hosted){ document.getElementById('btn-print').hidden = false; }
@@ -909,7 +1144,7 @@ h2{margin:0; font-size:20px; font-weight:800}
     function fallback(){ var ta = document.createElement('textarea'); ta.value = t; ta.style.position='absolute'; ta.style.left='-9999px'; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); note('Copied.'); }catch(e2){ note('Copy was blocked. Use the PDF instead.'); } ta.remove(); }
     try{ navigator.clipboard.writeText(t).then(function(){ note('Copied. Paste it into an email or your notes.'); }, fallback); }catch(e){ fallback(); }
   });
-  ['inc-classes','inc-career','inc-market','inc-pivot'].forEach(function(id){
+  ['inc-market','inc-pivot','seq-4','seq-5'].forEach(function(id){
     var el = document.getElementById(id);
     try{ var v = localStorage.getItem('comd-pf-'+id); if(v!==null) el.checked = v==='1'; }catch(e){}
     el.addEventListener('change', function(){ try{ localStorage.setItem('comd-pf-'+id, el.checked?'1':'0'); }catch(e){} });
