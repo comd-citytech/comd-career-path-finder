@@ -146,6 +146,78 @@
         "Find and fix problems uncovered by testing or customer feedback",
         "Keep up with current web technologies and practices"
       ]
+    },
+    "fe": {
+      "soc": "15-1254.00",
+      "pay": 92650,
+      "jobs": 87400,
+      "out": 4,
+      "where": "Computer systems design 21%, self-employed 18%, information 11%",
+      "entry": "Bachelor's degree is typical, though some employers hire from a strong portfolio of shipped work.",
+      "what": "Builds and maintains websites and web apps, turning designs into working code.",
+      "ooh": "https://www.bls.gov/ooh/computer-and-information-technology/web-developers.htm",
+      "onet": "https://www.onetonline.org/link/summary/15-1254.00",
+      "pay10": 48100,
+      "pay90": 162290,
+      "payNote": "",
+      "duties": [
+        "Write the code behind websites and web apps",
+        "Build, run and maintain sites with scripting languages and content tools",
+        "Check code for standards and for how it works across browsers and devices",
+        "Choose the languages, design tools and applications for a project",
+        "Test sites on a schedule and after every change",
+        "Manage and update live websites",
+        "Turn user needs into technical requirements",
+        "Keep up with new tools through courses, reading and conferences"
+      ]
+    },
+    "ve": {
+      "soc": "27-4032.00",
+      "pay": 75420,
+      "jobs": 39400,
+      "out": 4,
+      "where": "Self-employed 35%, film and video 31%, publishing and media 11%",
+      "entry": "Bachelor's degree is typical. A reel of edited work matters most.",
+      "what": "Cuts raw footage into finished video for ads, social media, film and TV.",
+      "ooh": "https://www.bls.gov/ooh/media-and-communication/film-and-video-editors-and-camera-operators.htm",
+      "onet": "https://www.onetonline.org/link/summary/27-4032.00",
+      "pay10": 40280,
+      "pay90": 148550,
+      "payNote": "Figures are for film and video editors.",
+      "duties": [
+        "Arrange raw footage into a continuous story from a script or the director's notes",
+        "Choose the strongest shots from each scene",
+        "Add music, dialogue and sound effects, and fix errors",
+        "Trim segments to set lengths and reorder them for impact",
+        "Cut between camera angles so transitions flow",
+        "Run editing, titling and digital effects software",
+        "Review the assembled edit and decide what needs fixing",
+        "Work with sound, music, graphics and effects teams"
+      ]
+    },
+    "cp": {
+      "soc": "27-2012.00",
+      "pay": 90360,
+      "jobs": 181000,
+      "out": 4,
+      "where": "Self-employed 20%, film and video 19%, streaming and content 13%",
+      "entry": "Bachelor's degree, usually with a few years of production or coordinator experience.",
+      "what": "Plans and runs creative projects, from budget and schedule to crew, client and final delivery.",
+      "ooh": "https://www.bls.gov/ooh/entertainment-and-sports/producers-and-directors.htm",
+      "onet": "https://www.onetonline.org/link/summary/27-2012.00",
+      "pay10": 45780,
+      "pay90": 198540,
+      "payNote": "Figures cover all producers and directors.",
+      "duties": [
+        "Handle budgets, schedules, planning and marketing for productions",
+        "Meet with directors, managers, crew and writers on production details",
+        "Plan shot and scene details such as framing, camera movement and sound",
+        "Oversee camera, lighting, design and sound crews",
+        "Research topics using the internet, video archives and other sources",
+        "Review footage and recordings against production standards",
+        "Work with writers on script changes and final drafts",
+        "Direct shoots, recordings and live productions"
+      ]
     }
   },
   "dutiesCredit": "Duties adapted from the O*NET 31.0 Database by the U.S. Department of Labor, Employment and Training Administration (USDOL/ETA), used under CC BY 4.0. COMD has shortened and reworded some of this information. USDOL/ETA has not approved, endorsed, or tested these changes. O*NET is a trademark of USDOL/ETA."

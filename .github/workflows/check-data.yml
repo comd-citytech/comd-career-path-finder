@@ -28,7 +28,7 @@ jobs:
                   continue
               if path.endswith("role-content.json"):
                   fields = {"dayToDay": str, "whyThisJob": str, "searchTerms": list, "nycEmployers": list, "portfolioPieces": list}
-                  for job in ["gd", "ad", "cw", "mo", "il", "ux"]:
+                  for job in ["gd", "ad", "cw", "mo", "il", "ux", "fe", "ve", "cp"]:
                       if job not in data:
                           print(f"::error file={path}::The job '{job}' is missing.")
                           ok = False

@@ -3,42 +3,114 @@
   "gd": {
     "dayToDay": "Graphic designers are creative professionals who transform ideas into visually engaging content across digital and print platforms. They play a key role in shaping brand identity and enhancing the user experience through compelling design. From concept development to final execution, graphic designers collaborate with marketing, product and content teams to deliver high-quality visuals that align with business goals",
     "whyThisJob": "",
-    "searchTerms": [],
+    "searchTerms": [
+      "graphic designer",
+      "brand designer",
+      "logo designer",
+      "packaging designer",
+      "publication designer",
+      "production designer"
+    ],
     "nycEmployers": [],
     "portfolioPieces": []
   },
   "ad": {
     "dayToDay": "",
     "whyThisJob": "",
-    "searchTerms": [],
+    "searchTerms": [
+      "junior art director",
+      "advertising designer",
+      "art director",
+      "photo editor",
+      "creative assistant"
+    ],
     "nycEmployers": [],
     "portfolioPieces": []
   },
   "cw": {
     "dayToDay": "",
     "whyThisJob": "",
-    "searchTerms": [],
+    "searchTerms": [
+      "copywriter",
+      "content writer",
+      "social media coordinator",
+      "content creator"
+    ],
     "nycEmployers": [],
     "portfolioPieces": []
   },
   "mo": {
     "dayToDay": "",
     "whyThisJob": "",
-    "searchTerms": [],
+    "searchTerms": [
+      "motion designer",
+      "motion graphics designer",
+      "multimedia designer",
+      "animator",
+      "animation designer"
+    ],
     "nycEmployers": [],
     "portfolioPieces": []
   },
   "il": {
     "dayToDay": "",
     "whyThisJob": "",
-    "searchTerms": [],
+    "searchTerms": [
+      "illustrator",
+      "storyboard artist",
+      "character designer",
+      "visual development artist"
+    ],
     "nycEmployers": [],
     "portfolioPieces": []
   },
   "ux": {
     "dayToDay": "",
     "whyThisJob": "",
-    "searchTerms": [],
+    "searchTerms": [
+      "product designer",
+      "UX designer",
+      "UI designer",
+      "digital designer",
+      "web designer"
+    ],
+    "nycEmployers": [],
+    "portfolioPieces": []
+  },
+  "fe": {
+    "dayToDay": "",
+    "whyThisJob": "",
+    "searchTerms": [
+      "front-end developer",
+      "web developer",
+      "WordPress developer",
+      "creative technologist"
+    ],
+    "nycEmployers": [],
+    "portfolioPieces": []
+  },
+  "ve": {
+    "dayToDay": "",
+    "whyThisJob": "",
+    "searchTerms": [
+      "video editor",
+      "social video editor",
+      "assistant editor",
+      "post-production assistant"
+    ],
+    "nycEmployers": [],
+    "portfolioPieces": []
+  },
+  "cp": {
+    "dayToDay": "",
+    "whyThisJob": "",
+    "searchTerms": [
+      "creative producer",
+      "project manager",
+      "production coordinator",
+      "content producer",
+      "traffic coordinator"
+    ],
     "nycEmployers": [],
     "portfolioPieces": []
   }
