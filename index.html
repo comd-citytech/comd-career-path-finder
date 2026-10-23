@@ -183,16 +183,6 @@ h2{margin:0; font-size:20px; font-weight:800}
 .fld input:focus{border-color:var(--ink)}
 .btn.solid{background:var(--ink); color:var(--bg)}
 .btn.solid:hover{opacity:.85}
-#printsheet{display:none}
-@media print{
-  body{background:#fff; color:#000}
-  .wrap{display:none}
-  #printsheet{display:block; font-family:var(--display); font-size:11pt; color:#000}
-  #printsheet h1{font-size:20pt; margin:0 0 4pt}
-  #printsheet h2{font-size:13pt; margin:14pt 0 4pt; border-bottom:1.5pt solid #000; padding-bottom:2pt}
-  #printsheet p{margin:2pt 0}
-  #printsheet .small{font-size:9pt; color:#444}
-}
 .howto{background:var(--surface); border:1.5px solid var(--line); padding:18px 20px; display:flex; flex-direction:column; gap:10px}
 .howto ol{margin:0; padding:0; list-style:none; counter-reset:step; display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:16px}
 .howto li{counter-increment:step; font-size:14px; line-height:1.45; display:flex; flex-direction:column; gap:4px; min-width:0}
@@ -321,7 +311,6 @@ h2{margin:0; font-size:20px; font-weight:800}
   </div>
 </div>
 
-<div id="printsheet"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script type="application/json" id="role-content">
 {
@@ -976,7 +965,7 @@ h2{margin:0; font-size:20px; font-weight:800}
     return secs;
   }
   var HEAD = 'My COMD plan';
-  function foot(){ return 'Made with COMD Path Finder, City Tech Communication Design. Not an official degree audit. Confirm with a COMD advisor and DegreeWorks. Job data updated '+fmtDate(JOB.updated)+' from BLS and O*NET.'; }
+  function foot(){ return 'Made with COMD Career Path Finder, City Tech Communication Design. Not an official degree audit. Confirm with a COMD advisor and DegreeWorks. Job data updated '+fmtDate(JOB.updated)+' from BLS and O*NET.'; }
   function today(){ return new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}); }
   function planText(){
     var t = HEAD+'\n'+today()+'\n';
@@ -1004,18 +993,24 @@ h2{margin:0; font-size:20px; font-weight:800}
       if(value){ font(9.5, false); doc.text(wrap(value, w)[0], x + 2, y + 12); }
     }
     function header(title){
-      doc.setFillColor(INK); doc.rect(M, M, 62, 30, 'F');
-      font(15, true, '#FFFFFF'); doc.text('COMD', M + 31, M + 20, {align:'center'});
-      font(17, true); doc.text(title, M + 76, M + 14);
-      font(8.5, false, MUTED); doc.text('City Tech  ·  Communication Design  ·  BFA', M + 76, M + 28);
+      var logoOk = false;
+      if(m.logo){ try{ doc.addImage(m.logo, 'PNG', M, M - 2, 160, 28.8, 'comdlogo', 'FAST'); logoOk = true; }catch(e){} }
+      if(logoOk){
+        font(16, true); doc.text(title, M, M + 50);
+      } else {
+        doc.setFillColor(INK); doc.rect(M, M, 62, 30, 'F');
+        font(15, true, '#FFFFFF'); doc.text('COMD', M + 31, M + 20, {align:'center'});
+        font(17, true); doc.text(title, M + 76, M + 14);
+        font(8.5, false, MUTED); doc.text('City Tech  ·  Communication Design  ·  BFA', M + 76, M + 28);
+      }
       var fx = 372, fw = W - M - fx;
       field('Name', m.name, fx, M + 2, fw);
       var parts = [['Catalog year', m.catalogYear], ['Date', m.dateShort || m.today]];
       if(m.emplid !== null) parts.push(['EmplID', m.emplid]);
       var pw = (fw - (parts.length - 1)*10) / parts.length;
       parts.forEach(function(p, i){ field(p[0], p[1], fx + i*(pw + 10), M + 30, pw); });
-      doc.setDrawColor(INK); doc.setLineWidth(1.6); doc.line(M, M + 58, W - M, M + 58);
-      return M + 84;
+      doc.setDrawColor(INK); doc.setLineWidth(1.6); doc.line(M, M + 62, W - M, M + 62);
+      return M + 88;
     }
     function tag(label, x, y, solid){
       font(6.5, true, solid ? '#FFFFFF' : INK);
@@ -1229,14 +1224,15 @@ h2{margin:0; font-size:20px; font-weight:800}
     return {
       seqKind:seqKind, grid:grid, career:career, extras: extras.length ? extras : null,
       name:val('pl-name'), catalogYear:val('pl-cat'), emplid: document.getElementById('pl-share').checked ? val('pl-emplid') : null,
-      fonts:FONTS, dutiesCredit:JOB.dutiesCredit||'', today:today(), dateShort:new Date().toLocaleDateString('en-US'), foot:foot(),
+      fonts:FONTS, logo:LOGO, dutiesCredit:JOB.dutiesCredit||'', today:today(), dateShort:new Date().toLocaleDateString('en-US'), foot:foot(),
       tally:{strat:Math.min(count('strat'),3), skill:Math.min(count('skill')+count('boost'),4), studio:count('studio'), line: top.done ? top.path.name : ''}
     };
   }
-  var FONTS = null, fontsLoading = null;
+  var FONTS = null, LOGO = null, fontsLoading = null;
   function b64(buf){ var b = new Uint8Array(buf), s = '', i; for(i = 0; i < b.length; i += 0x8000) s += String.fromCharCode.apply(null, b.subarray(i, i + 0x8000)); return btoa(s); }
   function loadFonts(){
     if(FONTS || fontsLoading || location.protocol === 'file:') return fontsLoading || Promise.resolve();
+    fetch('images/comd-logo.png').then(function(r){ if(!r.ok) throw 0; return r.arrayBuffer(); }).then(function(b){ LOGO = 'data:image/png;base64,' + b64(b); }).catch(function(){});
     fontsLoading = Promise.all(['fonts/Archivo-Regular.ttf','fonts/Archivo-Bold.ttf'].map(function(u){ return fetch(u).then(function(r){ if(!r.ok) throw 0; return r.arrayBuffer(); }); }))
       .then(function(a){ FONTS = {regular:b64(a[0]), bold:b64(a[1])}; }).catch(function(){ fontsLoading = null; });
     return fontsLoading;
@@ -1252,10 +1248,11 @@ h2{margin:0; font-size:20px; font-weight:800}
   var dl = null, hosted = !window.claude;
   if(hosted){ document.getElementById('btn-print').hidden = false; }
   else if(window.claude.use){ window.claude.use('downloads').then(function(d){ dl = d; }).catch(function(){}); }
-  document.getElementById('btn-pdf').addEventListener('click', function(){
-    if(!FONTS){ var t = new Promise(function(res){ setTimeout(res, 2500); }); note('Preparing your PDF...'); Promise.race([loadFonts(), t]).then(makePdf); return; }
-    makePdf();
-  });
+  function whenReady(fn){
+    if(FONTS){ fn(); return; }
+    var t = new Promise(function(res){ setTimeout(res, 2500); }); note('Preparing your PDF...'); Promise.race([loadFonts(), t]).then(fn);
+  }
+  document.getElementById('btn-pdf').addEventListener('click', function(){ whenReady(makePdf); });
   function makePdf(){
     var doc = planPdf();
     if(!doc){ note('The PDF tool did not load. Try Copy as text instead.'); return; }
@@ -1274,10 +1271,18 @@ h2{margin:0; font-size:20px; font-weight:800}
     note('Saving is still loading. Try again in a moment, or use Copy as text.');
   }
   document.getElementById('btn-print').addEventListener('click', function(){
-    var html = '<h1>'+HEAD+'</h1><p class="small">'+today()+'</p>';
-    planData().forEach(function(sec){ html += '<h2>'+esc(sec.h)+'</h2>'+sec.lines.map(function(l){ return l===''?'<br>':'<p>'+esc(l)+'</p>'; }).join(''); });
-    html += '<p class="small" style="margin-top:14pt">'+esc(foot())+'</p>';
-    document.getElementById('printsheet').innerHTML = html; window.print();
+    whenReady(function(){
+      var doc = planPdf();
+      if(!doc){ note('The PDF tool did not load. Try Copy as text instead.'); return; }
+      var url = URL.createObjectURL(doc.output('blob'));
+      var old = document.getElementById('print-frame'); if(old) old.remove();
+      var f = document.createElement('iframe'); f.id = 'print-frame'; f.title = 'Print preview'; f.style.cssText = 'position:absolute;width:1px;height:1px;left:-9999px;border:0';
+      f.onload = function(){
+        try{ f.contentWindow.focus(); f.contentWindow.print(); note('Opening the print dialog...'); }
+        catch(e){ var w = window.open(url, '_blank'); note(w ? 'Your plan opened in a new tab. Print it from there.' : 'Printing is blocked here. Download the PDF and print that.'); }
+      };
+      f.src = url; document.body.appendChild(f);
+    });
   });
   document.getElementById('btn-copy').addEventListener('click', function(){
     var t = planText();
