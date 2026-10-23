@@ -12,7 +12,20 @@
       "entry": "Bachelor's degree. Common first job out of a BFA.",
       "what": "Creates logos, layouts, packaging and web graphics that communicate an idea.",
       "ooh": "https://www.bls.gov/ooh/arts-and-design/graphic-designers.htm",
-      "onet": "https://www.onetonline.org/link/summary/27-1024.00"
+      "onet": "https://www.onetonline.org/link/summary/27-1024.00",
+      "pay10": 39520,
+      "pay90": 104910,
+      "payNote": "",
+      "duties": [
+        "Create designs, concepts and sample layouts based on layout principles and design concepts",
+        "Decide the size and arrangement of images and copy, and choose typefaces and type sizes",
+        "Develop graphics and layouts for product illustrations, company logos and websites",
+        "Meet with clients to discuss and decide on layout design",
+        "Research the target audience for each project",
+        "Use software to create new images, charts, graphs and illustrations",
+        "Prepare digital files for printing",
+        "Review final layouts and suggest improvements"
+      ]
     },
     "ad": {
       "soc": "27-1011.00",
@@ -23,7 +36,20 @@
       "entry": "Bachelor's plus 5 or more years, usually starting as a graphic designer.",
       "what": "Leads the visual style of campaigns and directs designers, photographers and video teams.",
       "ooh": "https://www.bls.gov/ooh/arts-and-design/art-directors.htm",
-      "onet": "https://www.onetonline.org/link/summary/27-1011.00"
+      "onet": "https://www.onetonline.org/link/summary/27-1011.00",
+      "pay10": 64900,
+      "pay90": 213050,
+      "payNote": "",
+      "duties": [
+        "Work with creative directors to develop design solutions",
+        "Meet with clients to set objectives, budget, background and presentation approach",
+        "Present final layouts to clients for approval",
+        "Manage your own accounts and projects within budget and schedule",
+        "Plan the layout or presentation approach and specify details such as type style and size",
+        "Review and approve art, copy and printed proofs made by the creative team",
+        "Attend photo shoots and print sessions to make sure the work comes out right",
+        "Create custom illustrations or other graphic elements"
+      ]
     },
     "cw": {
       "soc": "27-3043.00",
@@ -34,7 +60,20 @@
       "entry": "Bachelor's degree. Figures cover all writers and authors.",
       "what": "Writes ads, slogans and campaign copy, usually paired with an art director.",
       "ooh": "https://www.bls.gov/ooh/media-and-communication/writers-and-authors.htm",
-      "onet": "https://www.onetonline.org/link/summary/27-3043.00"
+      "onet": "https://www.onetonline.org/link/summary/27-3043.00",
+      "pay10": 44310,
+      "pay90": 139870,
+      "payNote": "Range covers all writers and authors.",
+      "duties": [
+        "Write advertising for print, broadcast and online media that promotes sales",
+        "Develop advertising campaigns with an agency's creative and art directors",
+        "Invent product names and write slogans for packaging and promotion",
+        "Research a product's selling points to decide which to promote",
+        "Adjust tone and language to fit the product and the medium",
+        "Present drafts and ideas to clients, and discuss themes and copy changes",
+        "Consult sales and marketing staff on product details and the style and length of copy",
+        "Write sales letters, articles and other marketing and promotional material"
+      ]
     },
     "mo": {
       "soc": "27-1014.00",
@@ -45,7 +84,20 @@
       "entry": "Bachelor's degree. Figures cover animators and effects artists.",
       "what": "Animates graphics, type and 3D for video, ads, games and apps.",
       "ooh": "https://www.bls.gov/ooh/arts-and-design/multimedia-artists-and-animators.htm",
-      "onet": "https://www.onetonline.org/link/summary/27-1014.00"
+      "onet": "https://www.onetonline.org/link/summary/27-1014.00",
+      "pay10": 58600,
+      "pay90": 177110,
+      "payNote": "Range covers special effects artists and animators.",
+      "duties": [
+        "Design complex graphics and animation using your own judgment and creativity",
+        "Create 2D and 3D images that show objects in motion or explain a process",
+        "Script, plan and create animated sequences under tight deadlines",
+        "Use story development, directing, cinematography and editing to build storyboards",
+        "Make objects and characters look lifelike with light, color, texture and shadow",
+        "Help design and produce multimedia campaigns, including budgets and schedules",
+        "Create designs and illustrations for product labels, packaging, mail and television",
+        "Develop presentations, web pages, promotional products and technical illustrations"
+      ]
     },
     "il": {
       "soc": "27-1013.00",
@@ -56,7 +108,20 @@
       "entry": "A strong portfolio matters more than the degree. Figures include fine artists.",
       "what": "Creates images for books, editorial, brands, games and products.",
       "ooh": "https://www.bls.gov/ooh/arts-and-design/craft-and-fine-artists.htm",
-      "onet": "https://www.onetonline.org/link/summary/27-1013.00"
+      "onet": "https://www.onetonline.org/link/summary/27-1013.00",
+      "pay10": 31490,
+      "pay90": 131810,
+      "payNote": "Range covers all craft and fine artists. Median is for fine artists, including illustrators.",
+      "duties": [
+        "Create artwork with pens and ink, watercolor, charcoal, paint or software",
+        "Use line, space, color and perspective to create the effect you want",
+        "Meet with clients, editors, writers and art directors about the artwork",
+        "Keep a portfolio that shows your style, interests and abilities",
+        "Market your work through mailings, social media and your own website",
+        "Study new techniques and apply them to your work",
+        "Follow trends, research subjects and attend exhibitions",
+        "Photograph objects, places or scenes for reference"
+      ]
     },
     "ux": {
       "soc": "15-1255.00",
@@ -67,7 +132,21 @@
       "entry": "Bachelor's degree, or a strong portfolio of shipped work.",
       "what": "Designs websites and app screens people can use, and tests them with real users.",
       "ooh": "https://www.bls.gov/ooh/computer-and-information-technology/web-developers.htm",
-      "onet": "https://www.onetonline.org/link/summary/15-1255.00"
+      "onet": "https://www.onetonline.org/link/summary/15-1255.00",
+      "pay10": 53750,
+      "pay90": 201550,
+      "payNote": "",
+      "duties": [
+        "Conduct user research to set design requirements and use feedback to improve designs",
+        "Develop new visual design concepts and revise them based on stakeholder feedback",
+        "Design, build and maintain websites using authoring, scripting and content tools",
+        "Write supporting code for websites and web applications",
+        "Work with front-end and back-end developers on web projects",
+        "Test websites on a schedule and after every revision",
+        "Find and fix problems uncovered by testing or customer feedback",
+        "Keep up with current web technologies and practices"
+      ]
     }
-  }
+  },
+  "dutiesCredit": "Duties adapted from the O*NET 31.0 Database by the U.S. Department of Labor, Employment and Training Administration (USDOL/ETA), used under CC BY 4.0. COMD has shortened and reworded some of this information. USDOL/ETA has not approved, endorsed, or tested these changes. O*NET is a trademark of USDOL/ETA."
 }
