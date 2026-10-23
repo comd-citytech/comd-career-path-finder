@@ -12,18 +12,18 @@
 :root{
   --bg:#F4F3EF; --surface:#FFFFFF; --ink:#16161A; --muted:#5C5A55; --line:#D8D5CC;
   --gd:#1D4ED8; --adv:#C2410C; --mot:#7C3AED; --ill:#B98900; --web:#047857;
-  --on-path:#FFFFFF; --on-ill:#16161A; --good:#0F7A4A; --warn:#8A5A00; --bad:#B42318;
+  --on-path:#FFFFFF; --on-ill:#16161A; --good:#0F7A4A; --warn:#8A5A00; --bad:#B42318; --hl:#FFE45C; --on-hl:#16161A;
   --display:'Archivo', 'Helvetica Neue', Arial, sans-serif;
   --mono:'IBM Plex Mono', ui-monospace, Menlo, monospace;
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
   --bg:#131315; --surface:#1D1D21; --ink:#EDEBE6; --muted:#A3A09A; --line:#34343A;
   --gd:#7B9BF7; --adv:#F0804F; --mot:#AE87F7; --ill:#E9B730; --web:#34B892;
-  --on-path:#131315; --on-ill:#131315; --good:#4CC38A; --warn:#E9B730; --bad:#F97066; color-scheme:dark } }
+  --on-path:#131315; --on-ill:#131315; --good:#4CC38A; --warn:#E9B730; --bad:#F97066; --hl:#E9C93A; --on-hl:#131315; color-scheme:dark } }
 :root[data-theme="dark"]{
   --bg:#131315; --surface:#1D1D21; --ink:#EDEBE6; --muted:#A3A09A; --line:#34343A;
   --gd:#7B9BF7; --adv:#F0804F; --mot:#AE87F7; --ill:#E9B730; --web:#34B892;
-  --on-path:#131315; --on-ill:#131315; --good:#4CC38A; --warn:#E9B730; --bad:#F97066; color-scheme:dark }
+  --on-path:#131315; --on-ill:#131315; --good:#4CC38A; --warn:#E9B730; --bad:#F97066; --hl:#E9C93A; --on-hl:#131315; color-scheme:dark }
 body{background:var(--bg); color:var(--ink); font-family:var(--display); font-size:15px; line-height:1.5}
 .wrap{max-width:1180px; margin:0 auto; padding-block:32px 48px; padding-left:max(16px, env(safe-area-inset-left,0px)); padding-right:max(16px, env(safe-area-inset-right,0px)); display:flex; flex-direction:column; gap:24px}
 header{display:flex; flex-direction:column; gap:6px; border-bottom:3px solid var(--ink); padding-bottom:16px}
@@ -116,8 +116,8 @@ h2{margin:0; font-size:20px; font-weight:800}
 .bridge-head,.comp{display:grid; grid-template-columns:minmax(0,1fr) 22px minmax(0,1.15fr) 80px; gap:10px; align-items:center}
 .bridge-head{font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); font-weight:700; padding-bottom:6px; border-bottom:2px solid var(--ink)}
 .cls{display:flex; flex-wrap:wrap; gap:4px}
-.cls span{font-size:12px; padding:3px 6px; border:1.5px dashed var(--line); color:var(--muted)}
-.cls span.got{border:1.5px solid var(--ink); background:var(--ink); color:var(--bg); font-weight:600}
+.cls > span{font-size:12px; padding:3px 6px; border:1.5px dashed var(--line); color:var(--muted)}
+.cls > span.got{border:1.5px solid var(--hl); background:var(--hl); color:var(--on-hl); font-weight:600}
 .cls .code{font-family:var(--mono)}
 .arrow{color:var(--muted); text-align:center; font-size:18px}
 .snap{display:grid; grid-template-columns:1fr 1fr 2fr; gap:10px}
@@ -310,10 +310,6 @@ h2{margin:0; font-size:20px; font-weight:800}
         <div id="paths"></div>
       </section>
 
-      <section class="sec">
-        <div class="sec-head"><h2>Boosters</h2><span>Skills courses that strengthen any path.</span></div>
-        <div class="chips" id="boost"></div>
-      </section>
 
       <section class="sec">
         <div class="sec-head"><h2>Senior studio</h2><span>Required for every BFA student.</span></div>
@@ -542,15 +538,11 @@ h2{margin:0; font-size:20px; font-weight:800}
     ['3413','Character Design','skill',['ill']],
     ['3533','Special Topics in Illustration','skill',['ill']],
     ['3523','Storyboard Concepts','skill',['ill']],
+    ['3711','Vector Art Editing','skill',['ill']],
     ['3551','Web Design II','skill',['web']],
     ['3663','Dynamic Web I','skill',['web']],
     ['3662','Strategic Content Creation','skill',['adv','gd','mot']],
     ['3652','Web Design III','skill',['web']],
-    ['3316','Adv. Image Editing','boost',[]],
-    ['3532','Production for Designers','boost',[]],
-    ['3540','2D Animation I','boost',[]],
-    ['3292','3-Dimensional Design','boost',[]],
-    ['3711','Vector Art Editing','boost',[]],
     ['3504','Com. Design Theory (WI)','studio',[]],
     ['4701','Design Team','studio',[]],
     ['4730','Senior Project Research','studio',[]],
@@ -567,7 +559,7 @@ h2{margin:0; font-size:20px; font-weight:800}
       ['Set type, size and arrangement of layouts', ['3527','3505','4611','3601']],
       ['Logos and brand identity systems', ['3501','3402']],
       ['Product and packaging graphics', ['3412']],
-      ['Print-ready production files (InDesign, Acrobat)', ['4611','3532']],
+      ['Print-ready production files (InDesign, Acrobat)', ['4611']],
       ['Graphics and layouts for websites (Figma)', ['3562','3551']],
       ['Vector illustration (Illustrator)', ['3711','3313']],
       ['Present work and act on client feedback', ['4701','3504']]
@@ -577,7 +569,7 @@ h2{margin:0; font-size:20px; font-weight:800}
       ['Campaigns that run across media', ['3500','3600','3662']],
       ['Present layouts to clients for approval', ['3600','4701']],
       ['Run projects on budget and schedule', ['3507','4701']],
-      ['Direct photography and image editing (Photoshop)', ['3330','3530','3316']],
+      ['Direct photography and image editing (Photoshop)', ['3330','3530']],
       ['Video and motion basics (After Effects)', ['3620','3520']],
       ['Typography and layout', ['3527']]
     ]},
@@ -590,15 +582,15 @@ h2{margin:0; font-size:20px; font-weight:800}
       ['Present and defend ideas', ['4701','3600']]
     ]},
     {id:'mo', path:'mot', name:'Motion designer',  src:{label:'O*NET 27-1014.00 Special Effects Artists and Animators', url:ONET+'27-1014.00'}, comps:[
-      ['2D and 3D animation', ['3540','3640']],
+      ['2D and 3D animation', ['3640','3621']],
       ['Timing and motion principles (After Effects)', ['3520','3621']],
       ['Storytelling and storyboards', ['3420','3523']],
       ['Light, color, texture and realism in 3D', ['3640']],
       ['Plan multimedia campaigns on budget and schedule', ['3521','3507','3662']],
       ['Shoot and edit video', ['3620']]
     ]},
-    {id:'il', path:'ill', name:'Illustrator',  src:{label:'O*NET 27-1013.01 Fine Artists, incl. Illustrators', url:ONET+'27-1013.01'}, comps:[
-      ['Create artwork in traditional and digital media (Photoshop)', ['3313','3316']],
+    {id:'il', path:'ill', name:'Illustrator',  src:{label:'O*NET 27-1013.00 Fine Artists, incl. Illustrators', url:ONET+'27-1013.00'}, comps:[
+      ['Create artwork in traditional and digital media (Photoshop, Illustrator)', ['3313','3711']],
       ['Use line, color and perspective to convey ideas and mood', ['3513','3633']],
       ['Characters and visual development', ['3413']],
       ['Sequential images and storyboards', ['3523']],
@@ -691,8 +683,6 @@ h2{margin:0; font-size:20px; font-weight:800}
       });
       row.appendChild(head); row.appendChild(body); p.appendChild(row);
     });
-    var bo = document.getElementById('boost');
-    C.filter(function(c){return c.type==='boost';}).forEach(function(c){ bo.appendChild(chip(c)); });
     var st = document.getElementById('studio');
     C.filter(function(c){return c.type==='studio';}).forEach(function(c){ st.appendChild(chip(c)); });
   }
@@ -950,7 +940,7 @@ h2{margin:0; font-size:20px; font-weight:800}
     var r = ROLES.filter(function(x){ return x.id===role; })[0];
     if(inc.classes){
       var lines = ['Foundation: '+FOUND.filter(has).length+' of '+FOUND.length+' AAS courses'];
-      ['strat','skill','boost','studio'].forEach(function(t){
+      ['strat','skill','studio'].forEach(function(t){
         var lab = {strat:'Strategy',skill:'Skills',boost:'Boosters',studio:'Senior studio'}[t];
         var got = C.filter(function(c){ return c.type===t && has(c.code); });
         if(got.length) lines.push(lab+': '+got.map(function(c){ return 'COMD '+c.code+' '+c.name; }).join('; '));
