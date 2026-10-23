@@ -1,0 +1,941 @@
+<title>COMD Career Path Finder</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: transit-map language. Course checklist on the left, a live "where your line goes" panel on the right; stacks on phones with the panel first. */
+:root{
+  --bg:#F4F3EF; --surface:#FFFFFF; --ink:#16161A; --muted:#5C5A55; --line:#D8D5CC;
+  --gd:#1D4ED8; --adv:#C2410C; --mot:#7C3AED; --ill:#B98900; --web:#047857;
+  --on-path:#FFFFFF; --on-ill:#16161A; --good:#0F7A4A; --warn:#8A5A00; --bad:#B42318;
+  --display:'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  --mono:'IBM Plex Mono', ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#131315; --surface:#1D1D21; --ink:#EDEBE6; --muted:#A3A09A; --line:#34343A;
+  --gd:#7B9BF7; --adv:#F0804F; --mot:#AE87F7; --ill:#E9B730; --web:#34B892;
+  --on-path:#131315; --on-ill:#131315; --good:#4CC38A; --warn:#E9B730; --bad:#F97066; color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#131315; --surface:#1D1D21; --ink:#EDEBE6; --muted:#A3A09A; --line:#34343A;
+  --gd:#7B9BF7; --adv:#F0804F; --mot:#AE87F7; --ill:#E9B730; --web:#34B892;
+  --on-path:#131315; --on-ill:#131315; --good:#4CC38A; --warn:#E9B730; --bad:#F97066; color-scheme:dark }
+body{background:var(--bg); color:var(--ink); font-family:var(--display); font-size:15px; line-height:1.5}
+.wrap{max-width:1180px; margin:0 auto; padding-block:32px 48px; padding-left:max(16px, env(safe-area-inset-left,0px)); padding-right:max(16px, env(safe-area-inset-right,0px)); display:flex; flex-direction:column; gap:24px}
+header{display:flex; flex-direction:column; gap:6px; border-bottom:3px solid var(--ink); padding-bottom:16px}
+.eyebrow{font-family:var(--mono); font-size:13px; color:var(--muted)}
+h1{margin:0; font-size:clamp(30px,5vw,48px); font-weight:800; letter-spacing:-0.02em; line-height:1.05; text-wrap:balance}
+.lede{margin:0; color:var(--muted); max-width:62ch}
+.bar{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
+.note{font-size:13px; color:var(--muted)}
+.note b{color:var(--ink)}
+button{font:inherit; color:inherit; cursor:pointer}
+.btn{background:transparent; border:1.5px solid var(--ink); padding:6px 12px; font-size:13px; font-weight:700}
+.btn:hover{background:var(--ink); color:var(--bg)}
+:focus-visible{outline:3px solid var(--gd); outline-offset:2px}
+.layout{display:grid; grid-template-columns:minmax(0,1.6fr) minmax(0,1fr); gap:28px; align-items:start}
+.panel{position:sticky; top:calc(env(safe-area-inset-top,0px) + 16px); background:var(--surface); border:1.5px solid var(--ink); padding:20px; display:flex; flex-direction:column; gap:20px}
+.list{display:flex; flex-direction:column; gap:28px; min-width:0}
+h2{margin:0; font-size:20px; font-weight:800}
+.sec{display:flex; flex-direction:column; gap:12px}
+.sec-head{display:flex; gap:10px; align-items:baseline; flex-wrap:wrap}
+.sec-head span{font-size:13px; color:var(--muted)}
+.chips{display:flex; flex-wrap:wrap; gap:8px}
+.chip{display:inline-flex; align-items:center; gap:8px; background:var(--surface); border:1.5px solid var(--line); padding:7px 10px; font-size:13px; text-align:left; min-height:40px}
+.chip:hover{border-color:var(--ink)}
+.chip .code{font-family:var(--mono); font-weight:600}
+.chip .dots{display:inline-flex; gap:3px}
+.chip .dot{width:9px; height:9px; border-radius:50%}
+.chip .box{width:16px; height:16px; border:1.5px solid var(--muted); display:inline-grid; place-items:center; font-size:12px; line-height:1; flex:none}
+.chip[aria-pressed="true"]{background:var(--ink); color:var(--bg); border-color:var(--ink)}
+.chip[aria-pressed="true"] .box{border-color:var(--bg); background:var(--bg); color:var(--ink)}
+.chip.locked{opacity:.55}
+.path{display:grid; grid-template-columns:150px minmax(0,1fr); gap:14px; padding:14px 0; border-top:1px solid var(--line)}
+.path:first-of-type{border-top:0}
+.path-name{display:flex; flex-direction:column; gap:6px}
+.path-name .tag{font-weight:800; font-size:14px; padding:4px 10px; align-self:flex-start; color:var(--on-path)}
+.path-name .tag.ill{color:var(--on-ill)}
+.path-name small{color:var(--muted); font-size:12px}
+.sub{font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); font-weight:700; margin-bottom:6px}
+.path-body{display:flex; flex-direction:column; gap:10px; min-width:0}
+.any{font-size:12px; color:var(--muted); border:1.5px dashed var(--line); padding:7px 10px; align-self:flex-start}
+.lead{display:flex; flex-direction:column; gap:8px}
+.lead .label{font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); font-weight:700}
+.lead .name{font-size:28px; font-weight:800; line-height:1.1}
+.careers{display:flex; flex-wrap:wrap; gap:6px}
+.careers span{font-size:13px; font-weight:700; padding:4px 10px; color:var(--on-path)}
+.meters{display:flex; flex-direction:column; gap:10px}
+.meter{display:grid; grid-template-columns:96px minmax(0,1fr) 40px; gap:10px; align-items:center; font-size:13px}
+.track{height:10px; background:var(--line); position:relative}
+.fill{position:absolute; inset:0 auto 0 0; transition:width .35s ease}
+.meter .num{font-family:var(--mono); font-size:12px; text-align:right; font-variant-numeric:tabular-nums; color:var(--muted)}
+.req{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px}
+.req div{border:1.5px solid var(--line); padding:8px; display:flex; flex-direction:column}
+.req b{font-family:var(--mono); font-size:20px; font-variant-numeric:tabular-nums}
+.req span{font-size:12px; color:var(--muted)}
+.req .done{border-color:var(--ink)}
+.next ol{margin:0; padding-left:20px; display:flex; flex-direction:column; gap:6px; font-size:14px}
+.next .code{font-family:var(--mono); font-weight:600}
+.msg{font-size:14px; background:var(--bg); padding:10px 12px}
+.foot{font-size:12px; color:var(--muted); max-width:70ch}
+.planner{background:var(--surface); border:1.5px solid var(--ink); padding:20px; display:flex; flex-direction:column; gap:18px}
+.planner.locked{border-style:dashed; border-color:var(--muted)}
+.p-head{display:flex; flex-wrap:wrap; gap:8px 16px; align-items:baseline; justify-content:space-between}
+.p-head p{margin:0; color:var(--muted); font-size:14px; max-width:62ch}
+.roles{display:flex; flex-wrap:wrap; gap:8px}
+.role{border:1.5px solid var(--line); background:var(--bg); padding:8px 12px; font-weight:700; font-size:14px; display:inline-flex; align-items:center; gap:8px; min-height:44px}
+.role:hover{border-color:var(--ink)}
+.role .dot{width:10px; height:10px; border-radius:50%}
+.role[aria-pressed="true"]{border-color:var(--ink); background:var(--ink); color:var(--bg)}
+.pgrid{display:grid; grid-template-columns:minmax(0,1.5fr) minmax(0,1fr); gap:28px; align-items:start}
+.comps{display:flex; flex-direction:column; min-width:0}
+.comp{display:grid; grid-template-columns:92px minmax(0,1fr); gap:12px; padding:11px 0; border-top:1px solid var(--line)}
+.comp:first-child{border-top:0}
+.status{font-size:12px; font-weight:700; padding:3px 6px; align-self:start; text-align:center; border:1.5px solid var(--ink)}
+.status.yes{background:var(--ink); color:var(--bg)}
+.status.part{background:var(--bg)}
+.status.no{border-style:dashed; color:var(--muted); border-color:var(--muted)}
+.comp .t{font-weight:700; line-height:1.35}
+.comp .where{font-size:13px; color:var(--muted); margin-top:2px}
+.comp .where .code{font-family:var(--mono)}
+.comp .where .got{color:var(--ink); font-weight:600}
+.plan{display:flex; flex-direction:column; gap:16px; background:var(--bg); padding:16px}
+.big{font-family:var(--mono); font-size:44px; font-weight:600; line-height:1; font-variant-numeric:tabular-nums}
+.plan ul{margin:0; padding-left:18px; display:flex; flex-direction:column; gap:6px; font-size:14px}
+.plan .code{font-family:var(--mono); font-weight:600}
+.plan .why{display:block; font-size:12px; color:var(--muted)}
+.src{font-size:12px; color:var(--muted)}
+.src a{color:var(--ink)}
+.locks{display:flex; gap:10px; flex-wrap:wrap}
+.locks span{font-family:var(--mono); font-size:14px; border:1.5px solid var(--line); padding:6px 10px}
+.locks span.ok{border-color:var(--ink); font-weight:600}
+.bridge-head,.comp{display:grid; grid-template-columns:minmax(0,1fr) 22px minmax(0,1.15fr) 80px; gap:10px; align-items:center}
+.bridge-head{font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); font-weight:700; padding-bottom:6px; border-bottom:2px solid var(--ink)}
+.cls{display:flex; flex-wrap:wrap; gap:4px}
+.cls span{font-size:12px; padding:3px 6px; border:1.5px dashed var(--line); color:var(--muted)}
+.cls span.got{border:1.5px solid var(--ink); background:var(--ink); color:var(--bg); font-weight:600}
+.cls .code{font-family:var(--mono)}
+.arrow{color:var(--muted); text-align:center; font-size:18px}
+.snap{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px}
+.stat{border:1.5px solid var(--line); padding:10px 12px; display:flex; flex-direction:column; gap:2px; min-width:0}
+.stat b{font-family:var(--mono); font-size:22px; font-variant-numeric:tabular-nums; line-height:1.2}
+.stat span{font-size:12px; color:var(--muted)}
+.stat.wide b{font-family:var(--display); font-size:14px}
+.out{font-family:var(--mono); font-weight:600}
+.out.up{color:var(--good)} .out.flat{color:var(--warn)} .out.down{color:var(--bad)}
+.what{margin:0; font-size:15px; max-width:72ch}
+.what small{display:block; color:var(--muted); font-size:13px; margin-top:4px}
+.market{display:flex; flex-direction:column; gap:12px}
+.tablewrap{overflow-x:auto; background:var(--surface); border:1.5px solid var(--line)}
+.market table{width:100%; border-collapse:collapse; font-size:14px; min-width:640px}
+.market th,.market td{text-align:left; padding:9px 12px; border-bottom:1px solid var(--line); vertical-align:top}
+.market th{font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+.market td.num{font-family:var(--mono); font-variant-numeric:tabular-nums; text-align:right; white-space:nowrap}
+.market th.num{text-align:right}
+.market tr.fit td{background:var(--bg)}
+.market .jn{font-weight:700; display:flex; align-items:center; gap:8px}
+.market .jn .dot{width:10px; height:10px; border-radius:50%; flex:none}
+.chip .mk{font-weight:700; font-size:13px}
+.chip[aria-pressed="true"] .mk{color:inherit}
+.chip.full{opacity:.45}
+.legend{display:flex; flex-wrap:wrap; gap:6px 16px; font-size:12px; color:var(--muted)}
+.stack{display:flex; height:12px; background:var(--line); overflow:hidden}
+.stack span{display:block; height:100%}
+.align-list{display:flex; flex-direction:column; gap:4px; font-size:13px; margin-top:8px}
+.align-list .code{font-family:var(--mono); font-weight:600}
+.pivot{display:flex; flex-direction:column; gap:4px; border-top:2px solid var(--ink); padding-top:14px}
+.pivot p{margin:0 0 6px; color:var(--muted); font-size:14px; max-width:70ch}
+.pv{display:grid; grid-template-columns:minmax(0,1.1fr) 120px minmax(0,1.7fr) auto; gap:14px; align-items:center; padding:10px 0; border-top:1px solid var(--line); font-size:14px}
+.pv .jn{font-weight:700; display:flex; align-items:center; gap:8px}
+.pv .jn .dot{width:10px; height:10px; border-radius:50%; flex:none}
+.pv .rch{font-family:var(--mono); font-variant-numeric:tabular-nums}
+.pv .how{font-size:13px; color:var(--muted)}
+.pv .how .code{font-family:var(--mono); color:var(--ink); font-weight:600}
+@media (max-width:700px){ .pv{grid-template-columns:minmax(0,1fr) auto} .pv .how{grid-column:1 / -1} }
+.saveplan{display:flex; flex-direction:column; gap:12px; background:var(--surface); border:1.5px solid var(--ink); padding:20px}
+.incl{display:flex; flex-wrap:wrap; gap:8px 20px; font-size:14px}
+.incl label{display:inline-flex; gap:8px; align-items:center; min-height:32px; cursor:pointer}
+.incl input{width:18px; height:18px; accent-color:var(--ink)}
+.btn.solid{background:var(--ink); color:var(--bg)}
+.btn.solid:hover{opacity:.85}
+#printsheet{display:none}
+@media print{
+  body{background:#fff; color:#000}
+  .wrap{display:none}
+  #printsheet{display:block; font-family:var(--display); font-size:11pt; color:#000}
+  #printsheet h1{font-size:20pt; margin:0 0 4pt}
+  #printsheet h2{font-size:13pt; margin:14pt 0 4pt; border-bottom:1.5pt solid #000; padding-bottom:2pt}
+  #printsheet p{margin:2pt 0}
+  #printsheet .small{font-size:9pt; color:#444}
+}
+.howto{background:var(--surface); border:1.5px solid var(--line); padding:18px 20px; display:flex; flex-direction:column; gap:10px}
+.howto ol{margin:0; padding:0; list-style:none; counter-reset:step; display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:16px}
+.howto li{counter-increment:step; font-size:14px; line-height:1.45; display:flex; flex-direction:column; gap:4px; min-width:0}
+.howto li::before{content:counter(step); font-family:var(--mono); font-weight:600; font-size:13px; width:26px; height:26px; display:grid; place-items:center; border:1.5px solid var(--ink); border-radius:50%}
+.howto li b{font-size:15px}
+@media (max-width:1000px){ .howto ol{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:560px){ .howto ol{grid-template-columns:minmax(0,1fr)} }
+.deep{display:flex; flex-direction:column; gap:12px}
+.deep h3{margin:0; font-size:14px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)}
+.deep p{margin:0; max-width:72ch}
+.deep .terms{display:flex; flex-wrap:wrap; gap:6px}
+.deep .terms span{font-family:var(--mono); font-size:13px; border:1.5px solid var(--line); padding:3px 8px}
+@media (max-width:860px){ .snap{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:560px){ .bridge-head{display:none} .comp{grid-template-columns:minmax(0,1fr)} .comp .arrow{display:none} }
+@media (max-width:860px){
+  .pgrid{grid-template-columns:minmax(0,1fr)}
+  .layout{grid-template-columns:minmax(0,1fr)}
+  .panel{position:static}
+}
+@media (max-width:520px){
+  .path{grid-template-columns:minmax(0,1fr)}
+  .req{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (prefers-reduced-motion:reduce){ .fill{transition:none} }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">City Tech · Communication Design</div>
+    <h1>Where does your line go?</h1>
+    <p class="lede">Tap the courses you've finished. The map shows which path you're closest to, the careers it leads to, and what to take next.</p>
+    <div class="bar">
+      <button class="btn" id="btn-example" type="button">Load example student</button>
+      <button class="btn" id="btn-clear" type="button">Clear all</button>
+      <span class="note" id="mode-note"></span>
+      <span class="note" id="cap-note" role="status" style="color:var(--bad); font-weight:700"></span>
+    </div>
+  </header>
+
+  <section class="howto" aria-labelledby="how-h">
+    <h2 id="how-h">How to use it</h2>
+    <ol>
+      <li><b>Check off your classes.</b> Tap every COMD course you've finished. Start with the AAS foundation, then your 3000-level classes. You can pick up to 3 strategy and 4 skills courses, the same as your degree.</li>
+      <li><b>See where your line goes.</b> The panel shows the path you're closest to and the jobs it leads to. The arrows on each class tell you whether it leads to a growing, flat or shrinking job.</li>
+      <li><b>Explore jobs.</b> After 2 strategy and 2 skills courses, the career planner opens. It ranks jobs by how well your classes fit, shows what employers ask for, and which classes teach it.</li>
+      <li><b>Plan your next classes.</b> Pick a job to see which classes to take with your remaining slots. Thinking of switching? "Changing direction" shows what you can still reach without extra courses.</li>
+      <li><b>Save your plan.</b> Download a PDF at the bottom and bring it to advising. This is a planning tool, not a degree audit, so always confirm with a COMD advisor and DegreeWorks.</li>
+    </ol>
+  </section>
+
+  <section class="planner" id="planner" aria-live="polite"></section>
+
+  <section class="market" id="market"></section>
+
+  <section class="saveplan" aria-labelledby="save-h">
+    <div class="sec-head"><h2 id="save-h">Save my plan</h2><span>Pick what to include, then save a PDF to bring to advising. Your checked classes also stay saved in this browser.</span></div>
+    <div class="incl" role="group" aria-label="Sections to include">
+      <label><input type="checkbox" id="inc-classes" checked> My classes and requirements</label>
+      <label><input type="checkbox" id="inc-career" checked> My career goal and next classes</label>
+      <label><input type="checkbox" id="inc-market" checked> Job market table</label>
+      <label><input type="checkbox" id="inc-pivot"> Other directions I could take</label>
+    </div>
+    <div class="bar">
+      <button class="btn solid" type="button" id="btn-pdf">Download PDF</button>
+      <button class="btn" type="button" id="btn-print" hidden>Print</button>
+      <button class="btn" type="button" id="btn-copy">Copy as text</button>
+      <span class="note" id="save-note" role="status"></span>
+    </div>
+  </section>
+
+  <div class="layout">
+    <aside class="panel" aria-live="polite">
+      <div class="lead" id="lead"></div>
+      <div class="msg" id="msg"></div>
+      <div>
+        <div class="sub">Every path, side by side</div>
+        <div class="meters" id="meters"></div>
+      </div>
+      <div>
+        <div class="sub">Your classes vs. the job market</div>
+        <div id="align"></div>
+      </div>
+      <div>
+        <div class="sub">BFA requirements</div>
+        <div class="req" id="req"></div>
+      </div>
+      <div class="next">
+        <div class="sub">Next up</div>
+        <ol id="next"></ol>
+      </div>
+    </aside>
+
+    <div class="list">
+      <section class="sec">
+        <div class="sec-head"><h2>AAS foundation</h2><span>The trunk everyone rides. COMD 2400 and the Sophomore Review unlock everything below.</span></div>
+        <div class="chips" id="found"></div>
+      </section>
+
+      <section class="sec">
+        <div class="sec-head"><h2>Paths</h2><span>Pick 3 strategy and 4 skills from any path. Courses on two lines count on both.</span></div>
+        <div class="legend" aria-hidden="false"><span><span class="out up">↑</span> leads to a growing job</span><span><span class="out flat">→</span> flat</span><span><span class="out down">↓</span> shrinking</span><span>Based on the best-outlook job each class builds toward</span></div>
+        <div id="paths"></div>
+      </section>
+
+      <section class="sec">
+        <div class="sec-head"><h2>Boosters</h2><span>Skills courses that strengthen any path.</span></div>
+        <div class="chips" id="boost"></div>
+      </section>
+
+      <section class="sec">
+        <div class="sec-head"><h2>Senior studio</h2><span>Required for every BFA student.</span></div>
+        <div class="chips" id="studio"></div>
+      </section>
+
+      <p class="foot">This is an exploration tool, not an official degree audit. It covers COMD major courses only. Confirm your plan with a COMD advisor and DegreeWorks before registering.</p>
+    </div>
+  </div>
+</div>
+
+<div id="printsheet"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script type="application/json" id="role-content">
+{
+ "_note": "Faculty-written job descriptions. Fill any field; empty fields are hidden. The scheduled data refresh never edits this block.",
+ "gd": {"dayToDay": "", "whyThisJob": "", "searchTerms": [], "nycEmployers": [], "portfolioPieces": []},
+ "ad": {"dayToDay": "", "whyThisJob": "", "searchTerms": [], "nycEmployers": [], "portfolioPieces": []},
+ "cw": {"dayToDay": "", "whyThisJob": "", "searchTerms": [], "nycEmployers": [], "portfolioPieces": []},
+ "mo": {"dayToDay": "", "whyThisJob": "", "searchTerms": [], "nycEmployers": [], "portfolioPieces": []},
+ "il": {"dayToDay": "", "whyThisJob": "", "searchTerms": [], "nycEmployers": [], "portfolioPieces": []},
+ "ux": {"dayToDay": "", "whyThisJob": "", "searchTerms": [], "nycEmployers": [], "portfolioPieces": []}
+}
+</script>
+<script type="application/json" id="job-data">
+{
+ "updated": "2026-10-22",
+ "outlookPeriod": "2025 to 2035",
+ "payPeriod": "May 2025",
+ "roles": {
+  "gd": {
+   "soc": "27-1024.00",
+   "pay": 62960,
+   "jobs": 253100,
+   "out": -2,
+   "where": "Self-employed 20%, design studios 9%, advertising and PR 8%",
+   "entry": "Bachelor's degree. Common first job out of a BFA.",
+   "what": "Creates logos, layouts, packaging and web graphics that communicate an idea.",
+   "ooh": "https://www.bls.gov/ooh/arts-and-design/graphic-designers.htm",
+   "onet": "https://www.onetonline.org/link/summary/27-1024.00"
+  },
+  "ad": {
+   "soc": "27-1011.00",
+   "pay": 114850,
+   "jobs": 140200,
+   "out": 4,
+   "where": "Self-employed 62%, advertising and PR 11%, publishing and media 4%",
+   "entry": "Bachelor's plus 5 or more years, usually starting as a graphic designer.",
+   "what": "Leads the visual style of campaigns and directs designers, photographers and video teams.",
+   "ooh": "https://www.bls.gov/ooh/arts-and-design/art-directors.htm",
+   "onet": "https://www.onetonline.org/link/summary/27-1011.00"
+  },
+  "cw": {
+   "soc": "27-3043.00",
+   "pay": 76910,
+   "jobs": 140300,
+   "out": 0,
+   "where": "Self-employed 65%, the rest mostly in advertising and media",
+   "entry": "Bachelor's degree. Figures cover all writers and authors.",
+   "what": "Writes ads, slogans and campaign copy, usually paired with an art director.",
+   "ooh": "https://www.bls.gov/ooh/media-and-communication/writers-and-authors.htm",
+   "onet": "https://www.onetonline.org/link/summary/27-3043.00"
+  },
+  "mo": {
+   "soc": "27-1014.00",
+   "pay": 102030,
+   "jobs": 51900,
+   "out": 0,
+   "where": "Self-employed 63%, film and video 10%, software 7%",
+   "entry": "Bachelor's degree. Figures cover animators and effects artists.",
+   "what": "Animates graphics, type and 3D for video, ads, games and apps.",
+   "ooh": "https://www.bls.gov/ooh/arts-and-design/multimedia-artists-and-animators.htm",
+   "onet": "https://www.onetonline.org/link/summary/27-1014.00"
+  },
+  "il": {
+   "soc": "27-1013.00",
+   "pay": 55490,
+   "jobs": 28900,
+   "out": -3,
+   "where": "Mostly freelance (58% of craft and fine artists)",
+   "entry": "A strong portfolio matters more than the degree. Figures include fine artists.",
+   "what": "Creates images for books, editorial, brands, games and products.",
+   "ooh": "https://www.bls.gov/ooh/arts-and-design/craft-and-fine-artists.htm",
+   "onet": "https://www.onetonline.org/link/summary/27-1013.00"
+  },
+  "ux": {
+   "soc": "15-1255.00",
+   "pay": 104000,
+   "jobs": 132700,
+   "out": 6,
+   "where": "Tech and media 27%, self-employed 13%, computer systems design 13%",
+   "entry": "Bachelor's degree, or a strong portfolio of shipped work.",
+   "what": "Designs websites and app screens people can use, and tests them with real users.",
+   "ooh": "https://www.bls.gov/ooh/computer-and-information-technology/web-developers.htm",
+   "onet": "https://www.onetonline.org/link/summary/15-1255.00"
+  }
+ }
+}
+</script>
+<script>
+(function(){
+  var PATHS = [
+    {id:'gd',  name:'Graphic design', blurb:'Brands, systems, print', careers:['Graphic designer','Brand designer','Production artist'], any:null},
+    {id:'adv', name:'Advertising',    blurb:'Ideas that sell and stick', careers:['Junior art director','Junior copywriter','Content creator'], any:null},
+    {id:'mot', name:'Motion',         blurb:'Design that moves', careers:['Motion designer','Video editor','3D generalist'], any:null},
+    {id:'ill', name:'Illustration',   blurb:'Images that tell stories', careers:['Illustrator','Storyboard artist','Character designer'], any:'strat'},
+    {id:'web', name:'Web / UX',       blurb:'Screens people use', careers:['UX/UI designer','Web designer','Digital producer'], any:'skill'}
+  ];
+  var C = [
+    ['1100','GD Principles I','found',[],[]],
+    ['1127','Type & Media','found',[],[]],
+    ['1123','Foundation Drawing','found',[],[]],
+    ['1162','Raster & Vector','found',[],[]],
+    ['1200','GD Principles II','found',[],['1100']],
+    ['1257','Typographic Design','found',[],['1127']],
+    ['1112','Digital Media Foundations','found',[],[]],
+    ['1340','Photography I','found',[],[]],
+    ['2300','Com. Design I','found',[],['1200']],
+    ['2320','Intro to Video','found',[],[]],
+    ['1233','Figure Drawing','found',[],[]],
+    ['2400','Com. Design II','found',[],['2300']],
+    ['2451','Web Design I','found',[],['2300']],
+    ['3501','Identity Design','strat',['gd']],
+    ['3601','Information Design','strat',['gd']],
+    ['3402','Brand Strategy for Creatives','strat',['gd']],
+    ['3602','Copywriting for Creatives','strat',['adv']],
+    ['3500','Campaign Development','strat',['adv']],
+    ['3600','Advertising Portfolio Dev.','strat',['adv']],
+    ['3420','Storytelling for Creatives','strat',['mot']],
+    ['3520','Principles in Motion Design','strat',['mot']],
+    ['3521','Strategies in Motion Design','strat',['mot']],
+    ['3513','Narrative Illustration','strat',['ill']],
+    ['3633','Adv. Strategies in Illustration','strat',['ill']],
+    ['3562','UX/UI','strat',['web']],
+    ['3563','Web Analytics & Traffic','strat',['web']],
+    ['3507','Creative Project Management','strat',['web']],
+    ['3527','Advanced Typography','skill',['gd','adv']],
+    ['4611','Publication Design','skill',['gd']],
+    ['3505','Special Topics: Expressive Type / Wayfinding','skill',['gd']],
+    ['3412','Packaging Design','skill',['gd']],
+    ['3620','Video Production for Commercials','skill',['adv','mot']],
+    ['3330','Photography II','skill',['adv']],
+    ['3530','Adv. Photo Studio','skill',['adv']],
+    ['3621','Motion Design Techniques','skill',['mot']],
+    ['3640','3D Animation I','skill',['mot']],
+    ['3313','Illustration 1','skill',['ill']],
+    ['3413','Character Design','skill',['ill']],
+    ['3533','Special Topics in Illustration','skill',['ill']],
+    ['3523','Storyboard Concepts','skill',['ill']],
+    ['3551','Web Design II','skill',['web']],
+    ['3663','Dynamic Web I','skill',['web']],
+    ['3662','Strategic Content Creation','skill',['adv','gd','mot']],
+    ['3652','Web Design III','skill',['web']],
+    ['3316','Adv. Image Editing','boost',[]],
+    ['3532','Production for Designers','boost',[]],
+    ['3540','2D Animation I','boost',[]],
+    ['3292','3-Dimensional Design','boost',[]],
+    ['3711','Vector Art Editing','boost',[]],
+    ['3504','Com. Design Theory (WI)','studio',[]],
+    ['4701','Design Team','studio',[]],
+    ['4730','Senior Project Research','studio',[]],
+    ['4900','Internship (WI)','studio',[]],
+    ['4830','Senior Project','studio',[]],
+    ['4801','The Portfolio','studio',[]]
+  ].map(function(r){ return {code:r[0], name:r[1], type:r[2], paths:r[3], pre:r[4]||[]}; });
+  var BY = {}; C.forEach(function(c){ BY[c.code]=c; });
+  var FOUND = C.filter(function(c){return c.type==='found';}).map(function(c){return c.code;});
+  var EXAMPLE = FOUND.concat(['3501','3402','3527','3551']);
+  var ONET = 'https://www.onetonline.org/link/summary/';
+  var ROLES = [
+    {id:'gd', path:'gd', name:'Graphic designer',  src:{label:'O*NET 27-1024.00 Graphic Designers', url:ONET+'27-1024.00'}, comps:[
+      ['Set type, size and arrangement of layouts', ['3527','3505','4611','3601']],
+      ['Logos and brand identity systems', ['3501','3402']],
+      ['Product and packaging graphics', ['3412']],
+      ['Print-ready production files (InDesign, Acrobat)', ['4611','3532']],
+      ['Graphics and layouts for websites (Figma)', ['3562','3551']],
+      ['Vector illustration (Illustrator)', ['3711','3313']],
+      ['Present work and act on client feedback', ['4701','3504']]
+    ]},
+    {id:'ad', path:'adv', name:'Junior art director',  src:{label:'O*NET 27-1011.00 Art Directors', url:ONET+'27-1011.00'}, comps:[
+      ['Develop concepts with a creative team', ['3602','3500']],
+      ['Campaigns that run across media', ['3500','3600','3662']],
+      ['Present layouts to clients for approval', ['3600','4701']],
+      ['Run projects on budget and schedule', ['3507','4701']],
+      ['Direct photography and image editing (Photoshop)', ['3330','3530','3316']],
+      ['Video and motion basics (After Effects)', ['3620','3520']],
+      ['Typography and layout', ['3527']]
+    ]},
+    {id:'cw', path:'adv', name:'Junior copywriter',  src:null, comps:[
+      ['Headlines, taglines and ad copy', ['3602']],
+      ['Campaign concepts with an art director', ['3500','3600']],
+      ['Writing in a brand voice', ['3402']],
+      ['Storytelling for video and social', ['3420','3662']],
+      ['Plan and produce content for social and digital channels', ['3662']],
+      ['Present and defend ideas', ['4701','3600']]
+    ]},
+    {id:'mo', path:'mot', name:'Motion designer',  src:{label:'O*NET 27-1014.00 Special Effects Artists and Animators', url:ONET+'27-1014.00'}, comps:[
+      ['2D and 3D animation', ['3540','3640']],
+      ['Timing and motion principles (After Effects)', ['3520','3621']],
+      ['Storytelling and storyboards', ['3420','3523']],
+      ['Light, color, texture and realism in 3D', ['3640']],
+      ['Plan multimedia campaigns on budget and schedule', ['3521','3507','3662']],
+      ['Shoot and edit video', ['3620']]
+    ]},
+    {id:'il', path:'ill', name:'Illustrator',  src:{label:'O*NET 27-1013.01 Fine Artists, incl. Illustrators', url:ONET+'27-1013.01'}, comps:[
+      ['Create artwork in traditional and digital media (Photoshop)', ['3313','3316']],
+      ['Use line, color and perspective to convey ideas and mood', ['3513','3633']],
+      ['Characters and visual development', ['3413']],
+      ['Sequential images and storyboards', ['3523']],
+      ['Work with art directors and editors on content', ['4701','3633']],
+      ['Keep a portfolio and market your work', ['4801','3533']]
+    ]},
+    {id:'ux', path:'web', name:'UX/UI and web designer',  src:{label:'O*NET 15-1255.00 Web and Digital Interface Designers', url:ONET+'15-1255.00'}, comps:[
+      ['Design, build and maintain websites', ['3551','3652']],
+      ['Front-end code and scripting', ['3663','3652']],
+      ['Interface and user experience design (Figma)', ['3562']],
+      ['Test, find and fix problems from user feedback', ['3562','3563']],
+      ['Read analytics and site traffic', ['3563']],
+      ['Work with developers on project timelines', ['3507','4701']]
+    ]}
+  ];
+  var JOB = JSON.parse(document.getElementById('job-data').textContent);
+  ROLES.forEach(function(x){ var d = JOB.roles[x.id] || {}; Object.keys(d).forEach(function(k){ x[k] = d[k]; }); });
+  var RC = {}; try{ RC = JSON.parse(document.getElementById('role-content').textContent); }catch(e){}
+  function deepHtml(id){
+    var d = RC[id]; if(!d) return '';
+    var out = '';
+    function list(a){ return (a||[]).filter(Boolean); }
+    if(d.dayToDay) out += '<div><h3>A day on the job</h3><p>'+esc(d.dayToDay)+'</p></div>';
+    if(d.whyThisJob) out += '<div><h3>Why look into this job</h3><p>'+esc(d.whyThisJob)+'</p></div>';
+    if(list(d.searchTerms).length) out += '<div><h3>Search job boards for</h3><div class="terms">'+list(d.searchTerms).map(function(t){ return '<span>'+esc(t)+'</span>'; }).join('')+'</div></div>';
+    if(list(d.nycEmployers).length) out += '<div><h3>Who hires in NYC</h3><p>'+list(d.nycEmployers).map(esc).join(', ')+'</p></div>';
+    if(list(d.portfolioPieces).length) out += '<div><h3>Show this in your portfolio</h3><p>'+list(d.portfolioPieces).map(esc).join(' · ')+'</p></div>';
+    return out ? '<div class="deep">'+out+'</div>' : '';
+  }
+  var role = null, picked = false;
+  var FEEDS = null;
+  function feeds(code){
+    if(!FEEDS){ FEEDS = {}; ROLES.forEach(function(x){ x.comps.forEach(function(cp){ cp[1].forEach(function(c){ (FEEDS[c]=FEEDS[c]||[]); if(FEEDS[c].indexOf(x)<0) FEEDS[c].push(x); }); }); }); }
+    return FEEDS[code] || [];
+  }
+  function bestOut(code){ var f = feeds(code); if(!f.length) return null; return Math.max.apply(null, f.map(function(x){ return x.out; })); }
+  function isSkill(c){ return c.type==='skill' || c.type==='boost'; }
+  var KEY = 'comd-path-finder-v1';
+  var taken = new Set();
+  var isExample = false;
+
+  function save(){ try{ localStorage.setItem(KEY, JSON.stringify({t:Array.from(taken), ex:isExample})); }catch(e){} }
+  function load(){
+    try{ var s = JSON.parse(localStorage.getItem(KEY)||'null'); if(s && Array.isArray(s.t)){ taken = new Set(s.t); isExample = !!s.ex; return true; } }catch(e){}
+    return false;
+  }
+  function color(id){ return 'var(--'+id+')'; }
+  function has(code){ return taken.has(code); }
+  function upperOpen(){ return has('2400'); }
+  function count(type){ return C.filter(function(c){ return c.type===type && has(c.code); }).length; }
+
+  function chip(c){
+    var b = document.createElement('button');
+    b.type='button'; b.className='chip'; b.dataset.code=c.code;
+    b.id = 'c-'+c.code+'-'+Math.random().toString(36).slice(2,6);
+    var dots = c.paths.map(function(p){ return '<span class="dot" style="background:'+color(p)+'"></span>'; }).join('');
+    var bo = (c.type==='found') ? null : bestOut(c.code), mk = '';
+    if(bo!==null){ var oc = bo>=3?'up':(bo<=-2?'down':'flat'); mk = ' <span class="mk out '+oc+'" title="Leads to a job with '+(bo>0?'+':'')+bo+'% outlook">'+(oc==='up'?'↑':(oc==='down'?'↓':'→'))+'</span>'; }
+    b.innerHTML = '<span class="box" aria-hidden="true"></span>'+(dots?'<span class="dots" aria-hidden="true">'+dots+'</span>':'')+'<span><span class="code">'+c.code+'</span> '+c.name.replace(/&/g,'&amp;')+mk+'</span>';
+    b.setAttribute('aria-label', 'COMD '+c.code+' '+c.name);
+    b.addEventListener('click', function(){
+      var cap = document.getElementById('cap-note');
+      if(!has(c.code)){
+        if(c.type==='strat' && count('strat')>=3){ cap.textContent = 'All 3 strategy slots are used. Uncheck one to swap.'; return; }
+        if(isSkill(c) && (count('skill')+count('boost'))>=4){ cap.textContent = 'All 4 skills slots are used. Uncheck one to swap.'; return; }
+        taken.add(c.code);
+      } else { taken.delete(c.code); }
+      cap.textContent = '';
+      isExample = false; render(); save();
+    });
+    return b;
+  }
+
+  function build(){
+    var f = document.getElementById('found');
+    C.filter(function(c){return c.type==='found';}).forEach(function(c){ f.appendChild(chip(c)); });
+    var p = document.getElementById('paths');
+    PATHS.forEach(function(path){
+      var row = document.createElement('div'); row.className='path';
+      var head = document.createElement('div'); head.className='path-name';
+      head.innerHTML = '<span class="tag'+(path.id==='ill'?' ill':'')+'" style="background:'+color(path.id)+'">'+path.name+'</span><small>'+path.blurb+'</small>';
+      var body = document.createElement('div'); body.className='path-body';
+      ['strat','skill'].forEach(function(t){
+        var wrap = document.createElement('div');
+        wrap.innerHTML = '<div class="sub">'+(t==='strat'?'Strategy':'Skills')+'</div>';
+        var chips = document.createElement('div'); chips.className='chips';
+        C.filter(function(c){ return c.type===t && c.paths.indexOf(path.id)>-1; }).forEach(function(c){ chips.appendChild(chip(c)); });
+        if(path.any===t){ var a=document.createElement('span'); a.className='any'; a.textContent='+ 1 from any path'; chips.appendChild(a); }
+        wrap.appendChild(chips); body.appendChild(wrap);
+      });
+      row.appendChild(head); row.appendChild(body); p.appendChild(row);
+    });
+    var bo = document.getElementById('boost');
+    C.filter(function(c){return c.type==='boost';}).forEach(function(c){ bo.appendChild(chip(c)); });
+    var st = document.getElementById('studio');
+    C.filter(function(c){return c.type==='studio';}).forEach(function(c){ st.appendChild(chip(c)); });
+  }
+
+  function scores(){
+    return PATHS.map(function(p){
+      var list = C.filter(function(c){ return (c.type==='strat'||c.type==='skill') && c.paths.indexOf(p.id)>-1; });
+      var done = list.filter(function(c){ return has(c.code); }).length;
+      return {path:p, done:done, total:list.length, pct: list.length? done/list.length : 0};
+    });
+  }
+
+  function eligible(c){
+    if(has(c.code)) return false;
+    if(c.type==='found') return c.pre.every(has);
+    if(!upperOpen()) return false;
+    if(c.type==='studio'){
+      var upper = C.some(function(x){ return (x.type==='strat'||x.type==='skill'||x.type==='boost') && has(x.code); });
+      if(c.code==='3504') return true;
+      if(c.code==='4701') return upper;
+      if(c.code==='4730') return count('strat')>=2 && count('skill')>=2;
+      if(c.code==='4900') return has('4730') || has('4701');
+      if(c.code==='4830') return has('4730');
+      if(c.code==='4801') return has('4730') && has('4701');
+    }
+    return true;
+  }
+
+  function render(){
+    document.querySelectorAll('.chip').forEach(function(b){
+      var code=b.dataset.code, on=has(code), c=BY[code];
+      b.setAttribute('aria-pressed', on?'true':'false');
+      b.querySelector('.box').textContent = on ? '✓' : '';
+      b.classList.toggle('locked', !on && c.type!=='found' && !upperOpen());
+      var full = !on && ((c.type==='strat' && count('strat')>=3) || (isSkill(c) && (count('skill')+count('boost'))>=4));
+      b.classList.toggle('full', full);
+      if(full) b.setAttribute('aria-disabled','true'); else b.removeAttribute('aria-disabled');
+    });
+    document.getElementById('mode-note').innerHTML = isExample ? '<b>Showing an example student.</b> Clear it and tap your own courses.' : (taken.size? 'Your picks are saved in this browser.' : '');
+
+    var sc = scores().sort(function(a,b){ return b.pct-a.pct || b.done-a.done; });
+    var top = sc[0], tied = sc.filter(function(s){ return s.done>0 && s.pct===top.pct; });
+    var lead = document.getElementById('lead');
+    if(top.done===0){
+      lead.innerHTML = '<div class="label">Your strongest line</div><div class="name">Not chosen yet</div><div class="note">Take a 3000-level course and your line lights up here.</div>';
+    } else if(tied.length>1){
+      lead.innerHTML = '<div class="label">You are riding two lines</div><div class="name">'+tied.map(function(t){return '<span style="color:'+color(t.path.id)+'">'+t.path.name+'</span>';}).join(' + ')+'</div><div class="careers">'+tied.map(function(t){ return '<span style="background:'+color(t.path.id)+(t.path.id==='ill'?';color:var(--on-ill)':'')+'">'+t.path.careers[0]+'</span>'; }).join('')+'</div>';
+    } else {
+      lead.innerHTML = '<div class="label">Your strongest line</div><div class="name" style="color:'+color(top.path.id)+'">'+top.path.name+'</div><div class="label">Leads to</div><div class="careers">'+top.path.careers.map(function(r){ return '<span style="background:'+color(top.path.id)+(top.path.id==='ill'?';color:var(--on-ill)':'')+'">'+r+'</span>'; }).join('')+'</div>'+leadStat(top.path.id);
+    }
+
+    var m = document.getElementById('meters'); m.innerHTML='';
+    scores().forEach(function(s){
+      var row=document.createElement('div'); row.className='meter';
+      row.innerHTML='<span>'+s.path.name+'</span><span class="track"><span class="fill" style="width:'+Math.round(s.pct*100)+'%;background:'+color(s.path.id)+'"></span></span><span class="num">'+s.done+'/'+s.total+'</span>';
+      m.appendChild(row);
+    });
+
+    var sN=Math.min(count('strat'),3), kN=Math.min(count('skill')+count('boost'),4), dN=count('studio');
+    document.getElementById('req').innerHTML =
+      '<div class="'+(sN>=3?'done':'')+'"><b>'+sN+'/3</b><span>Strategy</span></div>'+
+      '<div class="'+(kN>=4?'done':'')+'"><b>'+kN+'/4</b><span>Skills</span></div>'+
+      '<div class="'+(dN>=6?'done':'')+'"><b>'+dN+'/6</b><span>Studio</span></div>';
+
+    var msg;
+    if(!upperOpen()){
+      var left = FOUND.filter(function(c){return !has(c);}).length;
+      msg = left ? 'You have '+left+' foundation course'+(left>1?'s':'')+' left. Finish COMD 2400 and the Sophomore Portfolio Review to unlock the paths.' : 'Foundation complete.';
+    } else if(sN>=3 && kN>=4 && dN>=6){ msg='Every COMD requirement is checked. Time to talk graduation with your advisor.'; }
+    else if(top.done===0){ msg='Paths are open. Try a strategy course in the area that excites you most.'; }
+    else { msg='Stay on your line for a focused portfolio, or transfer to another line for a hybrid. Both count.'; }
+    document.getElementById('msg').textContent = msg;
+
+    var next=[], pool;
+    if(!upperOpen()){
+      pool = C.filter(function(c){ return c.type==='found' && eligible(c); });
+    } else {
+      var focus = top.done>0 ? top.path.id : null;
+      var studio = C.filter(function(c){ return c.type==='studio' && eligible(c); });
+      var pathC = focus ? C.filter(function(c){ return c.paths.indexOf(focus)>-1 && eligible(c) && ((c.type==='strat' && sN<3)||(c.type==='skill' && kN<4)); }) : [];
+      if(!focus){ pathC = PATHS.map(function(p){ return C.filter(function(c){ return c.type==='strat' && c.paths[0]===p.id && eligible(c); })[0]; }).filter(Boolean); }
+      pool = pathC.slice(0,3).concat(studio.slice(0,2));
+    }
+    pool.slice(0,4).forEach(function(c){ next.push('<li><span class="code">COMD '+c.code+'</span> '+c.name.replace(/&/g,'&amp;')+'</li>'); });
+    document.getElementById('next').innerHTML = next.length ? next.join('') : '<li>Nothing left to suggest. Nice work.</li>';
+    renderPlanner(top);
+    renderMarket();
+    renderAlign();
+  }
+
+  function esc(t){ return t.replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+  function renderAlign(){
+    var up = C.filter(function(c){ return (c.type==='strat'||isSkill(c)) && has(c.code); });
+    var el = document.getElementById('align');
+    if(!up.length){ el.innerHTML = '<div class="note">Check a 3000-level class to see how it lines up with the job market.</div>'; return; }
+    var g=0,f=0,d=0,n=0, items=[];
+    up.forEach(function(c){
+      var bo = bestOut(c.code);
+      if(bo===null){ n++; items.push('<div><span class="code">'+c.code+'</span> not yet linked to a job</div>'); return; }
+      var oc = bo>=3?'up':(bo<=-2?'down':'flat'); if(oc==='up') g++; else if(oc==='down') d++; else f++;
+      var best = feeds(c.code).slice().sort(function(a,b){ return b.out-a.out; })[0];
+      items.push('<div><span class="out '+oc+'">'+(oc==='up'?'↑':(oc==='down'?'↓':'→'))+'</span> <span class="code">'+c.code+'</span> best leads to '+best.name+' ('+(best.out>0?'+':'')+best.out+'%)</div>');
+    });
+    var t = up.length;
+    el.innerHTML = '<div class="stack" role="img" aria-label="'+g+' growing, '+f+' flat, '+d+' shrinking">'+
+      '<span style="width:'+(g/t*100)+'%;background:var(--good)"></span><span style="width:'+(f/t*100)+'%;background:var(--warn)"></span><span style="width:'+(d/t*100)+'%;background:var(--bad)"></span></div>'+
+      '<div class="note" style="margin-top:6px">'+g+' growing · '+f+' flat · '+d+' shrinking'+(n?' · '+n+' unlinked':'')+'</div>'+
+      '<div class="align-list">'+items.join('')+'</div>';
+  }
+  function reach(x){
+    var sRem = Math.max(0,3-count('strat')), kRem = Math.max(0,4-count('skill')-count('boost'));
+    var cov = x.comps.map(function(cp){ return cp[1].some(has); });
+    var now = cov.filter(Boolean).length, picks = [], studio = [];
+    x.comps.forEach(function(cp,i){
+      if(cov[i]) return;
+      var st = cp[1].filter(function(c){ return BY[c].type==='studio'; });
+      if(st.length){ cov[i] = true; if(studio.indexOf(st[0])<0) studio.push(st[0]); }
+    });
+    while(true){
+      var tally = {};
+      x.comps.forEach(function(cp,i){ if(cov[i]) return; cp[1].forEach(function(c){
+        var cc = BY[c]; if(has(c) || picks.indexOf(c)>-1) return;
+        if((cc.type==='strat' && sRem>0) || (isSkill(cc) && kRem>0)) tally[c] = (tally[c]||0)+1;
+      }); });
+      var best = Object.keys(tally).sort(function(a,b){ return tally[b]-tally[a]; })[0];
+      if(!best) break;
+      picks.push(best); if(BY[best].type==='strat') sRem--; else kRem--;
+      x.comps.forEach(function(cp,i){ if(!cov[i] && cp[1].indexOf(best)>-1) cov[i] = true; });
+    }
+    return {now:now, after:cov.filter(Boolean).length, picks:picks, studio:studio};
+  }
+  function pivotHtml(cur){
+    var sRem = Math.max(0,3-count('strat')), kRem = Math.max(0,4-count('skill')-count('boost'));
+    var list = ROLES.filter(function(x){ return x.id!==cur.id; }).map(function(x){ var r = reach(x); r.x = x; return r; })
+      .sort(function(a,b){ return (b.after/b.x.comps.length)-(a.after/a.x.comps.length) || b.x.out-a.x.out; });
+    var intro = (sRem+kRem) ? 'These use only your '+sRem+' strategy and '+kRem+' skills slot'+((sRem+kRem)>1?'s':'')+' left, plus senior studio. No extra courses.' : 'Your elective slots are full, so these show what your current classes plus senior studio already give you. No extra courses.';
+    return '<div class="pivot"><h2 style="font-size:18px">Thinking of changing direction?</h2><p>'+intro+'</p>'+ list.map(function(r){
+      var x = r.x, how = r.picks.length ? 'Use your slots on '+r.picks.map(function(c){ return '<span class="code">'+c+'</span>'; }).join(', ') : 'No slot changes needed';
+      if(r.studio.length) how += '. Senior studio adds '+r.studio.map(function(c){ return '<span class="code">'+c+'</span>'; }).join(', ');
+      return '<div class="pv"><span class="jn"><span class="dot" style="background:'+color(x.path)+'"></span>'+x.name+'</span>'+
+        '<span class="rch">'+r.now+' → '+r.after+'/'+x.comps.length+' <span class="out '+outCls(x.out)+'">'+outTxt(x.out)+'</span></span>'+
+        '<span class="how">'+how+'.</span><button type="button" class="btn" data-go="'+x.id+'">See this job</button></div>';
+    }).join('') + '</div>';
+  }
+  function fmtDate(d){ var p = d.split('-'); return ['January','February','March','April','May','June','July','August','September','October','November','December'][+p[1]-1]+' '+p[0]; }
+  function money(n){ return '$'+n.toLocaleString('en-US'); }
+  function outCls(p){ return p>=3?'up':(p<=-2?'down':'flat'); }
+  function outTxt(p){ return (p>0?'+':'')+p+'%'; }
+  function outWord(p){ return p>=3?'Growing':(p<=-2?'Shrinking':'Flat'); }
+  function roleFit(x){ return x.comps.filter(function(cp){ return cp[1].some(has); }).length; }
+  function renderMarket(){
+    var rows = ROLES.slice().sort(function(a,b){ return b.out-a.out || b.pay-a.pay; }).map(function(x){
+      var n = roleFit(x);
+      return '<tr class="'+(x.id===role && !document.getElementById('planner').classList.contains('locked')?'fit':'')+'"><td><span class="jn"><span class="dot" style="background:'+color(x.path)+'"></span>'+x.name+'</span></td>'+
+        '<td class="num"><span class="out '+outCls(x.out)+'">'+outTxt(x.out)+'</span> '+outWord(x.out)+'</td>'+
+        '<td class="num">'+money(x.pay)+'</td><td class="num">'+x.jobs.toLocaleString('en-US')+'</td>'+
+        '<td class="num">'+n+'/'+x.comps.length+'</td></tr>';
+    }).join('');
+    document.getElementById('market').innerHTML = '<div class="sec-head"><h2>The job market at a glance</h2><span>National figures from the U.S. Bureau of Labor Statistics. Pay is the median across all experience levels, so first jobs start lower.</span></div>'+
+      '<div class="tablewrap"><table><thead><tr><th>Job</th><th class="num">Outlook '+JOB.outlookPeriod+'</th><th class="num">Median pay</th><th class="num">U.S. jobs</th><th class="num">Your classes cover</th></tr></thead><tbody>'+rows+'</tbody></table></div><div class="src">Job data last updated '+fmtDate(JOB.updated)+'. Pay is '+JOB.payPeriod+'. Sources: <a href="https://www.bls.gov/ooh/" target="_blank" rel="noopener">BLS Occupational Outlook Handbook</a> and <a href="https://www.onetonline.org/" target="_blank" rel="noopener">O*NET</a>.</div>';
+  }
+  function leadStat(pid){
+    var x = ROLES.filter(function(q){ return q.path===pid; })[0];
+    if(!x) return '';
+    return '<div class="note">'+x.name+': '+money(x.pay)+' median pay, <span class="out '+outCls(x.out)+'">'+outTxt(x.out)+'</span> outlook to 2035</div>';
+  }
+  function renderPlanner(top){
+    var el = document.getElementById('planner');
+    var s = count('strat'), k = count('skill') + count('boost');
+    if(s<2 || k<2){
+      el.classList.add('locked');
+      el.innerHTML = '<div class="p-head"><h2>Career planner</h2><p>Unlocks after you finish 2 strategy and 2 skills courses. Then see which jobs your classes already point to, and what to take next to get there.</p></div>'+
+        '<div class="locks"><span class="'+(s>=2?'ok':'')+'">Strategy '+Math.min(s,2)+'/2</span><span class="'+(k>=2?'ok':'')+'">Skills '+Math.min(k,2)+'/2</span></div>';
+      return;
+    }
+    el.classList.remove('locked');
+    var fit = ROLES.map(function(x){
+      var n = x.comps.filter(function(cp){ return cp[1].some(has); }).length;
+      return {r:x, n:n, pct:n/x.comps.length};
+    }).sort(function(a,b){ return b.pct-a.pct || b.n-a.n; });
+    var r = picked ? ROLES.filter(function(x){ return x.id===role; })[0] : null;
+    if(!r){ r = fit[0].r; role = r.id; }
+
+    var html = '<div class="p-head"><h2>Jobs your classes point to</h2><p>Ranked by how much of each job your finished classes already cover. Tap one to see what employers ask for and how to use your remaining slots.</p></div><div class="roles" role="group" aria-label="Jobs ranked by fit">';
+    fit.forEach(function(f, i){
+      var x = f.r;
+      html += '<button type="button" class="role" id="role-'+x.id+'" data-role="'+x.id+'" aria-pressed="'+(x.id===r.id)+'"><span class="dot" style="background:'+color(x.path)+'"></span>'+x.name+' <span style="font-family:var(--mono);font-weight:400">'+f.n+'/'+x.comps.length+'</span>'+(i===0?' <span style="font-size:11px;font-weight:700;letter-spacing:.06em">BEST FIT</span>':'')+'</button>';
+    });
+    html += '</div>';
+
+    var covered = 0, gaps = [];
+    var rows = r.comps.map(function(cp){
+      var got = cp[1].filter(has);
+      if(got.length) covered++; else gaps.push(cp);
+      var cls = cp[1].map(function(code){
+        var on = has(code);
+        return '<span class="'+(on?'got':'')+'" title="'+esc(BY[code].name)+'"><span class="code">'+code+'</span>'+(on?' ✓':'')+'</span>';
+      }).join('');
+      return '<div class="comp"><div class="cls">'+cls+'</div><span class="arrow" aria-hidden="true">→</span><div class="t">'+esc(cp[0])+'</div><span class="status '+(got.length?'yes':'no')+'">'+(got.length?'You have it':'Not yet')+'</span></div>';
+    }).join('');
+
+    var cand = {};
+    gaps.forEach(function(cp){ cp[1].forEach(function(code){ if(!has(code)){ (cand[code] = cand[code] || []).push(cp[0]); } }); });
+    var list = Object.keys(cand).map(function(code){ return {c:BY[code], why:cand[code]}; })
+      .sort(function(a,b){ return b.why.length - a.why.length; });
+    var sRem = Math.max(0,3-s), kRem = Math.max(0,4-k);
+    var stratPick = list.filter(function(x){ return x.c.type==='strat'; }).slice(0,sRem);
+    var skillPick = list.filter(function(x){ return x.c.type==='skill' || x.c.type==='boost'; }).slice(0,kRem);
+    var studio = list.filter(function(x){ return x.c.type==='studio'; });
+    var extra = list.filter(function(x){ return x.c.type!=='studio' && stratPick.indexOf(x)<0 && skillPick.indexOf(x)<0; });
+    function li(x){ return '<li><span class="code">COMD '+x.c.code+'</span> '+esc(x.c.name)+'<span class="why">Builds: '+x.why.map(esc).join('; ')+'</span></li>'; }
+
+    var plan = '<div class="plan"><div><div class="sub">Job readiness</div><div class="big">'+covered+'/'+r.comps.length+'</div><div class="note">skills on this list covered by your courses</div></div>';
+    if(!gaps.length){
+      plan += '<div class="note"><b>You cover everything on this list.</b> Make sure your portfolio shows a project for each one.</div>';
+    } else {
+      if(stratPick.length) plan += '<div><div class="sub">Your '+sRem+' strategy slot'+(sRem>1?'s':'')+'</div><ul>'+stratPick.map(li).join('')+'</ul></div>';
+      if(skillPick.length) plan += '<div><div class="sub">Your '+kRem+' skills slot'+(kRem>1?'s':'')+'</div><ul>'+skillPick.map(li).join('')+'</ul></div>';
+      if(studio.length) plan += '<div><div class="sub">Coming in senior studio</div><ul>'+studio.map(li).join('')+'</ul></div>';
+      if(extra.length && !stratPick.length && !skillPick.length) plan += '<div><div class="sub">Slots full. Worth an extra elective</div><ul>'+extra.slice(0,2).map(li).join('')+'</ul></div>';
+    }
+    plan += '</div>';
+
+    var src = (r.src ? 'Skills adapted from <a href="'+r.src.url+'" target="_blank" rel="noopener">'+r.src.label+'</a>. ' : 'Skills drafted from typical postings, source to be confirmed. ') + 'Pay, jobs and outlook from the <a href="'+r.ooh+'" target="_blank" rel="noopener">BLS Occupational Outlook Handbook</a>. Class links are a faculty draft.';
+    var snap = '<div><div class="sub">About this job</div><p class="what">'+esc(r.what)+'<small>'+esc(r.entry)+'</small></p></div>'+
+      '<div class="snap"><div class="stat"><b>'+money(r.pay)+'</b><span>Median pay, U.S.</span></div>'+
+      '<div class="stat"><b class="out '+outCls(r.out)+'">'+outTxt(r.out)+'</b><span>'+outWord(r.out)+', '+JOB.outlookPeriod+'</span></div>'+
+      '<div class="stat"><b>'+r.jobs.toLocaleString('en-US')+'</b><span>Jobs in the U.S.</span></div>'+
+      '<div class="stat wide"><b>'+esc(r.where)+'</b><span>Where they work</span></div></div>';
+    html += snap + deepHtml(r.id) + '<div class="pgrid"><div class="comps"><div class="bridge-head"><span>Your classes</span><span></span><span>Build what employers ask for</span><span></span></div>'+rows+'<div class="src" style="margin-top:10px">'+src+'</div></div>'+plan+'</div>';
+    html += pivotHtml(r);
+    el.innerHTML = html;
+    el.querySelectorAll('[data-go]').forEach(function(b){ b.addEventListener('click', function(){ role = b.dataset.go; picked = true; render(); var f=document.getElementById('role-'+role); if(f){ f.focus(); f.scrollIntoView({block:'center'}); } }); });
+    el.querySelectorAll('.role').forEach(function(b){ b.addEventListener('click', function(){ role = b.dataset.role; picked = true; render(); var f=document.getElementById('role-'+role); if(f) f.focus(); }); });
+  }
+
+  function planData(){
+    var inc = {classes:document.getElementById('inc-classes').checked, career:document.getElementById('inc-career').checked, market:document.getElementById('inc-market').checked, pivot:document.getElementById('inc-pivot').checked};
+    var secs = [], unlocked = count('strat')>=2 && (count('skill')+count('boost'))>=2;
+    var r = ROLES.filter(function(x){ return x.id===role; })[0];
+    if(inc.classes){
+      var lines = ['Foundation: '+FOUND.filter(has).length+' of '+FOUND.length+' AAS courses'];
+      ['strat','skill','boost','studio'].forEach(function(t){
+        var lab = {strat:'Strategy',skill:'Skills',boost:'Boosters',studio:'Senior studio'}[t];
+        var got = C.filter(function(c){ return c.type===t && has(c.code); });
+        if(got.length) lines.push(lab+': '+got.map(function(c){ return 'COMD '+c.code+' '+c.name; }).join('; '));
+      });
+      lines.push('Requirements: strategy '+Math.min(count('strat'),3)+'/3, skills '+Math.min(count('skill')+count('boost'),4)+'/4, studio '+count('studio')+'/6');
+      var sc = scores().sort(function(a,b){ return b.pct-a.pct; })[0];
+      if(sc.done) lines.push('Strongest line: '+sc.path.name);
+      secs.push({h:'My classes', lines:lines});
+    }
+    if(inc.career){
+      if(!unlocked || !r){ secs.push({h:'Career goal', lines:['The career planner unlocks after 2 strategy and 2 skills courses.']}); }
+      else {
+        var l2 = [r.what, 'Median pay '+money(r.pay)+' ('+JOB.payPeriod+'). Outlook '+outTxt(r.out)+', '+outWord(r.out).toLowerCase()+' ('+JOB.outlookPeriod+'). '+r.jobs.toLocaleString('en-US')+' U.S. jobs.', 'Where they work: '+r.where, r.entry, ''];
+        r.comps.forEach(function(cp){
+          var got = cp[1].filter(has);
+          l2.push((got.length?'[x] ':'[  ] ')+cp[0]+'  (classes: '+cp[1].map(function(c){ return c+(has(c)?' taken':''); }).join(', ')+')');
+        });
+        var rc = reach(r);
+        if(rc.picks.length) l2.push('', 'Use my remaining slots on: '+rc.picks.map(function(c){ return 'COMD '+c+' '+BY[c].name; }).join('; '));
+        if(rc.studio.length) l2.push('Senior studio will add: '+rc.studio.map(function(c){ return 'COMD '+c+' '+BY[c].name; }).join('; '));
+        l2.push('Readiness: '+rc.now+' of '+r.comps.length+' now, '+rc.after+' of '+r.comps.length+' with this plan');
+        secs.push({h:'Career goal: '+r.name, lines:l2});
+      }
+    }
+    if(inc.market){
+      secs.push({h:'Job market ('+JOB.outlookPeriod+')', lines: ROLES.slice().sort(function(a,b){ return b.out-a.out; }).map(function(x){
+        return x.name+': '+outTxt(x.out)+' outlook, '+money(x.pay)+' median pay, '+x.jobs.toLocaleString('en-US')+' jobs, my classes cover '+roleFit(x)+'/'+x.comps.length; })});
+    }
+    if(inc.pivot && unlocked && r){
+      secs.push({h:'Other directions (no extra courses)', lines: ROLES.filter(function(x){ return x.id!==r.id; }).map(function(x){
+        var rc = reach(x); return x.name+': '+rc.now+' to '+rc.after+' of '+x.comps.length+(rc.picks.length?' by taking '+rc.picks.join(', '):' with no slot changes')+' ('+outTxt(x.out)+' outlook)'; })});
+    }
+    return secs;
+  }
+  var HEAD = 'My COMD plan';
+  function foot(){ return 'Made with COMD Path Finder, City Tech Communication Design. Not an official degree audit. Confirm with a COMD advisor and DegreeWorks. Job data updated '+fmtDate(JOB.updated)+' from BLS and O*NET.'; }
+  function today(){ return new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}); }
+  function planText(){
+    var t = HEAD+'\n'+today()+'\n';
+    planData().forEach(function(sec){ t += '\n'+sec.h.toUpperCase()+'\n'+sec.lines.join('\n')+'\n'; });
+    return t+'\n'+foot()+'\n';
+  }
+  function planPdf(){
+    var J = window.jspdf && window.jspdf.jsPDF; if(!J) return null;
+    var doc = new J({unit:'pt', format:'letter'}), W = 612, M = 54, y = M, maxW = W-2*M;
+    function need(h){ if(y+h > 792-M){ doc.addPage(); y = M; } }
+    function text(str, size, bold, color){
+      doc.setFont('helvetica', bold?'bold':'normal'); doc.setFontSize(size); doc.setTextColor(color||'#16161A');
+      doc.splitTextToSize(str||' ', maxW).forEach(function(l){ need(size*1.35); doc.text(l, M, y+size); y += size*1.35; });
+    }
+    text('City Tech - Communication Design', 9, false, '#5C5A55');
+    text(HEAD, 22, true); text(today(), 10, false, '#5C5A55'); y += 6;
+    planData().forEach(function(sec){
+      y += 10; need(30); text(sec.h, 13, true); doc.setDrawColor('#16161A'); doc.setLineWidth(1.2); doc.line(M, y+2, W-M, y+2); y += 8;
+      sec.lines.forEach(function(l){ if(l===''){ y += 6; return; } text(l, 10); y += 2; });
+    });
+    y += 14; text(foot(), 8, false, '#5C5A55');
+    return doc;
+  }
+  function note(m){ document.getElementById('save-note').textContent = m; }
+  var dl = null, hosted = !window.claude;
+  if(hosted){ document.getElementById('btn-print').hidden = false; }
+  else if(window.claude.use){ window.claude.use('downloads').then(function(d){ dl = d; }).catch(function(){}); }
+  document.getElementById('btn-pdf').addEventListener('click', function(){
+    var doc = planPdf();
+    if(!doc){ note('The PDF tool did not load. Try Copy as text instead.'); return; }
+    var blob = doc.output('blob'), name = 'my-comd-plan.pdf';
+    if(dl){
+      dl.save({filename:name, data:blob}).then(function(){ note('PDF saved.'); }).catch(function(e){
+        var c = e && e.code;
+        note(c==='declined' ? 'Save cancelled.' : c==='rate_limited' ? 'A save is already open. Finish that one first.' : 'Saving is not available here. Try Copy as text.');
+      });
+      return;
+    }
+    if(hosted){
+      var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click();
+      setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1000); note('PDF downloaded.'); return;
+    }
+    note('Saving is still loading. Try again in a moment, or use Copy as text.');
+  });
+  document.getElementById('btn-print').addEventListener('click', function(){
+    var html = '<h1>'+HEAD+'</h1><p class="small">'+today()+'</p>';
+    planData().forEach(function(sec){ html += '<h2>'+esc(sec.h)+'</h2>'+sec.lines.map(function(l){ return l===''?'<br>':'<p>'+esc(l)+'</p>'; }).join(''); });
+    html += '<p class="small" style="margin-top:14pt">'+esc(foot())+'</p>';
+    document.getElementById('printsheet').innerHTML = html; window.print();
+  });
+  document.getElementById('btn-copy').addEventListener('click', function(){
+    var t = planText();
+    function fallback(){ var ta = document.createElement('textarea'); ta.value = t; ta.style.position='absolute'; ta.style.left='-9999px'; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); note('Copied.'); }catch(e2){ note('Copy was blocked. Use the PDF instead.'); } ta.remove(); }
+    try{ navigator.clipboard.writeText(t).then(function(){ note('Copied. Paste it into an email or your notes.'); }, fallback); }catch(e){ fallback(); }
+  });
+  ['inc-classes','inc-career','inc-market','inc-pivot'].forEach(function(id){
+    var el = document.getElementById(id);
+    try{ var v = localStorage.getItem('comd-pf-'+id); if(v!==null) el.checked = v==='1'; }catch(e){}
+    el.addEventListener('change', function(){ try{ localStorage.setItem('comd-pf-'+id, el.checked?'1':'0'); }catch(e){} });
+  });
+
+  document.getElementById('btn-example').addEventListener('click', function(){ taken=new Set(EXAMPLE); isExample=true; render(); save(); });
+  document.getElementById('btn-clear').addEventListener('click', function(){ taken=new Set(); isExample=false; render(); save(); });
+
+  (function(){
+    if(window.parent === window) return;
+    var last = 0;
+    function send(){ var h = document.documentElement.scrollHeight; if(Math.abs(h-last) > 4){ last = h; try{ window.parent.postMessage({type:'comd-pathfinder-height', height:h}, '*'); }catch(e){} } }
+    try{ new ResizeObserver(send).observe(document.body); }catch(e){ setInterval(send, 800); }
+    window.addEventListener('load', send);
+  })();
+  build();
+  function applyData(job, rc){
+    if(job && job.roles){ JOB = job; ROLES.forEach(function(x){ var d = JOB.roles[x.id] || {}; Object.keys(d).forEach(function(k){ x[k] = d[k]; }); }); }
+    if(rc) RC = rc;
+  }
+  if(location.protocol !== 'file:'){
+    Promise.all(['data/job-data.json','data/role-content.json'].map(function(u){
+      return fetch(u, {cache:'no-cache'}).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; });
+    })).then(function(d){ if(d[0] || d[1]){ applyData(d[0], d[1]); render(); } });
+  }
+  if(!load()){ taken=new Set(EXAMPLE); isExample=true; }
+  render();
+})();
+</script>

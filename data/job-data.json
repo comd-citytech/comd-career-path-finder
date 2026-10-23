@@ -1,0 +1,73 @@
+{
+  "updated": "2026-10-22",
+  "outlookPeriod": "2025 to 2035",
+  "payPeriod": "May 2025",
+  "roles": {
+    "gd": {
+      "soc": "27-1024.00",
+      "pay": 62960,
+      "jobs": 253100,
+      "out": -2,
+      "where": "Self-employed 20%, design studios 9%, advertising and PR 8%",
+      "entry": "Bachelor's degree. Common first job out of a BFA.",
+      "what": "Creates logos, layouts, packaging and web graphics that communicate an idea.",
+      "ooh": "https://www.bls.gov/ooh/arts-and-design/graphic-designers.htm",
+      "onet": "https://www.onetonline.org/link/summary/27-1024.00"
+    },
+    "ad": {
+      "soc": "27-1011.00",
+      "pay": 114850,
+      "jobs": 140200,
+      "out": 4,
+      "where": "Self-employed 62%, advertising and PR 11%, publishing and media 4%",
+      "entry": "Bachelor's plus 5 or more years, usually starting as a graphic designer.",
+      "what": "Leads the visual style of campaigns and directs designers, photographers and video teams.",
+      "ooh": "https://www.bls.gov/ooh/arts-and-design/art-directors.htm",
+      "onet": "https://www.onetonline.org/link/summary/27-1011.00"
+    },
+    "cw": {
+      "soc": "27-3043.00",
+      "pay": 76910,
+      "jobs": 140300,
+      "out": 0,
+      "where": "Self-employed 65%, the rest mostly in advertising and media",
+      "entry": "Bachelor's degree. Figures cover all writers and authors.",
+      "what": "Writes ads, slogans and campaign copy, usually paired with an art director.",
+      "ooh": "https://www.bls.gov/ooh/media-and-communication/writers-and-authors.htm",
+      "onet": "https://www.onetonline.org/link/summary/27-3043.00"
+    },
+    "mo": {
+      "soc": "27-1014.00",
+      "pay": 102030,
+      "jobs": 51900,
+      "out": 0,
+      "where": "Self-employed 63%, film and video 10%, software 7%",
+      "entry": "Bachelor's degree. Figures cover animators and effects artists.",
+      "what": "Animates graphics, type and 3D for video, ads, games and apps.",
+      "ooh": "https://www.bls.gov/ooh/arts-and-design/multimedia-artists-and-animators.htm",
+      "onet": "https://www.onetonline.org/link/summary/27-1014.00"
+    },
+    "il": {
+      "soc": "27-1013.00",
+      "pay": 55490,
+      "jobs": 28900,
+      "out": -3,
+      "where": "Mostly freelance (58% of craft and fine artists)",
+      "entry": "A strong portfolio matters more than the degree. Figures include fine artists.",
+      "what": "Creates images for books, editorial, brands, games and products.",
+      "ooh": "https://www.bls.gov/ooh/arts-and-design/craft-and-fine-artists.htm",
+      "onet": "https://www.onetonline.org/link/summary/27-1013.00"
+    },
+    "ux": {
+      "soc": "15-1255.00",
+      "pay": 104000,
+      "jobs": 132700,
+      "out": 6,
+      "where": "Tech and media 27%, self-employed 13%, computer systems design 13%",
+      "entry": "Bachelor's degree, or a strong portfolio of shipped work.",
+      "what": "Designs websites and app screens people can use, and tests them with real users.",
+      "ooh": "https://www.bls.gov/ooh/computer-and-information-technology/web-developers.htm",
+      "onet": "https://www.onetonline.org/link/summary/15-1255.00"
+    }
+  }
+}

@@ -1,0 +1,42 @@
+name: Check data files
+
+on:
+  pull_request:
+    paths:
+      - "data/**"
+  push:
+    branches: [main]
+    paths:
+      - "data/**"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check that the data files are valid
+        run: |
+          python3 - <<'PY'
+          import json, sys
+          ok = True
+          for path in ["data/role-content.json", "data/job-data.json"]:
+              try:
+                  data = json.load(open(path, encoding="utf-8"))
+              except json.JSONDecodeError as e:
+                  print(f"::error file={path},line={e.lineno}::Formatting problem on line {e.lineno}: {e.msg}. Check for a missing comma or quote mark.")
+                  ok = False
+                  continue
+              if path.endswith("role-content.json"):
+                  fields = {"dayToDay": str, "whyThisJob": str, "searchTerms": list, "nycEmployers": list, "portfolioPieces": list}
+                  for job in ["gd", "ad", "cw", "mo", "il", "ux"]:
+                      if job not in data:
+                          print(f"::error file={path}::The job '{job}' is missing.")
+                          ok = False
+                          continue
+                      for name, kind in fields.items():
+                          if not isinstance(data[job].get(name), kind):
+                              print(f"::error file={path}::'{job}' → '{name}' should be {'text in quotes' if kind is str else 'a list like [\"a\", \"b\"]'}.")
+                              ok = False
+          print("All data files look good." if ok else "Fix the problems above, then commit again.")
+          sys.exit(0 if ok else 1)
+          PY
