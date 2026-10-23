@@ -1,0 +1,661 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Ten careers a City Tech Communication Design degree points at: what each job is, what it pays, which are growing, and the COMD courses that get you there.">
+<style>
+  :root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+  body{margin:0;font:14px system-ui,sans-serif}
+  img{max-width:100%}
+  [hidden]{display:none!important}
+</style>
+<title>Where COMD Takes You</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Figtree:wght@400;600;800;900&family=Archivo:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: a printed yearbook translated to scroll. Paired "pages" per spread, organic color shapes bleeding off the
+   edges, giant display type, oversized numerals carrying the data, folios in the outer corners. COMD brand palette:
+   electric blue and navy carry the type, sky, yellow, mint and pink carry the shapes. */
+:root{
+  --paper:#f4f4f7; --ink:#15153d; --ink-2:#5a5a7d; --rule:#d6d6e0;
+  --blue:#1b16e6; --navy:#1d1b4f; --sky:#57c5f2; --pink:#ed3d93; --yellow:#f6d04e; --mint:#a6f0ab; --grey:#e6e6ec;
+  --display:"Figtree","Helvetica Neue",Arial,sans-serif;
+  --serif:"EB Garamond",Georgia,"Times New Roman",serif;
+  --util:"Archivo","Helvetica Neue",Arial,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--util);font-size:16px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0;
+  overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--navy)}
+h1,h2,h3,h4{font-family:var(--display);font-weight:900;line-height:.92;letter-spacing:-.035em;margin:0;text-wrap:balance}
+p{margin:0}
+a{color:inherit}
+.num{font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+
+/* section jumper */
+.jump{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--navy);
+  margin-left:calc(-1 * max(16px,env(safe-area-inset-left,0px)));margin-right:calc(-1 * max(16px,env(safe-area-inset-right,0px)))}
+.jump .inner{max-width:1180px;margin:0 auto;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:7px}
+.jump .inner::-webkit-scrollbar{display:none}
+.jump a{flex:none;text-decoration:none;color:#fff;font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  padding:7px 11px;border-radius:2px;white-space:nowrap;opacity:.72}
+.jump a:hover{opacity:1}
+.jump a.on{background:var(--blue);opacity:1}
+.spread{scroll-margin-top:calc(54px + env(safe-area-inset-top,0px))}
+
+/* spread scaffolding */
+.spread{position:relative;max-width:1180px;margin:0 auto;padding-block:clamp(44px,7vw,92px);border-bottom:1px solid var(--rule)}
+.spread:last-of-type{border-bottom:0}
+.pages{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,72px);position:relative;z-index:2}
+.pages>*{min-width:0}
+.folio{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:baseline;margin-top:clamp(26px,4vw,48px);
+  font-family:var(--serif);font-size:26px;color:var(--ink)}
+.folio .run{font-family:var(--util);font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
+@media (max-width:860px){.pages{grid-template-columns:1fr;gap:34px}}
+
+/* blobs */
+.blob{position:absolute;z-index:0;pointer-events:none;opacity:.92}
+.blob svg{display:block;width:100%;height:auto}
+@media (max-width:860px){.blob{opacity:.55}}
+
+/* shared type roles */
+.eyebrow{font-family:var(--util);font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
+.serif-lede{font-family:var(--serif);font-size:clamp(20px,2.5vw,29px);line-height:1.3;font-feature-settings:"hlig" 1,"dlig" 1;max-width:30ch}
+.cols{column-count:2;column-gap:28px;font-size:14.5px;line-height:1.5}
+.cols p+p{margin-top:12px}
+@media (max-width:560px){.cols{column-count:1}}
+
+/* cover */
+.cover{padding-block:clamp(40px,7vw,80px) clamp(40px,6vw,72px)}
+.cover .kicker{font-family:var(--util);font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--blue)}
+.cover h1{font-size:clamp(58px,13.5vw,186px);margin-top:16px;letter-spacing:-.045em}
+.cover h1 .l2{display:block;color:var(--blue)}
+.cover .sub{margin-top:clamp(22px,3vw,34px);display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,64px)}
+.cover .sub>div{min-width:0}
+@media (max-width:860px){.cover .sub{grid-template-columns:1fr;gap:20px}}
+
+/* contents list */
+.toc{display:flex;flex-direction:column;gap:22px}
+.toc .row{display:grid;grid-template-columns:62px 1fr;gap:12px;align-items:baseline}
+.toc .pg{font-family:var(--display);font-weight:900;font-size:28px;letter-spacing:-.03em}
+.toc h3{font-size:clamp(26px,3.2vw,38px)}
+.toc .sm{font-size:14px;color:var(--ink-2);margin-top:6px;line-height:1.45}
+.vert{writing-mode:vertical-rl;transform:rotate(180deg);font-family:var(--display);font-weight:900;
+  font-size:clamp(44px,6.5vw,96px);letter-spacing:-.04em;line-height:.85;align-self:start}
+.contents-grid{display:grid;grid-template-columns:auto 1fr;gap:clamp(16px,3vw,40px)}
+@media (max-width:860px){.contents-grid{grid-template-columns:1fr}.vert{writing-mode:horizontal-tb;transform:none}}
+
+/* section opener */
+.opener{position:relative;padding-block:clamp(50px,8vw,110px);overflow:hidden}
+.opener .stack{position:relative;z-index:2}
+.opener .big{font-family:var(--display);font-weight:900;font-size:clamp(66px,16vw,220px);line-height:.8;letter-spacing:-.05em;
+  color:var(--blue);mix-blend-mode:multiply}
+.opener .big.b2{margin-left:clamp(20px,8vw,150px)}
+.opener .meta{position:relative;z-index:3;display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,60px);margin-top:clamp(26px,4vw,44px)}
+.opener .meta h4{font-size:clamp(20px,2.4vw,27px);font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.opener .meta p{font-size:15px;max-width:48ch}
+@media (max-width:860px){.opener .meta{grid-template-columns:1fr;gap:18px}}
+
+/* job chips on the opener */
+.chips{position:relative;z-index:3;display:flex;flex-wrap:wrap;gap:8px;margin-top:clamp(24px,3vw,38px)}
+.chips a{text-decoration:none;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:9px 14px;border:2px solid var(--ink);border-radius:999px;background:var(--paper)}
+.chips a:hover{background:var(--ink);color:var(--paper)}
+
+/* job spread */
+.job .tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--util);font-size:11px;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase}
+.job .tag i{width:11px;height:11px;border-radius:50%;background:var(--c);display:inline-block}
+.job h2{font-size:clamp(38px,6.4vw,78px);margin-top:14px}
+.job .body{font-size:16px;line-height:1.55;max-width:46ch;margin-top:18px}
+.job .body+.body{margin-top:12px}
+.quote{margin-top:clamp(24px,3vw,38px);font-family:var(--serif);font-size:clamp(21px,2.7vw,31px);line-height:1.22;
+  max-width:24ch;font-feature-settings:"hlig" 1,"dlig" 1}
+.quote .mark{color:var(--c)}
+.quote small{display:block;margin-top:10px;font-family:var(--util);font-size:12px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-2)}
+
+/* giant stat */
+.stat{margin-bottom:26px}
+.stat .huge{font-family:var(--display);font-weight:900;font-size:clamp(84px,15vw,172px);line-height:.78;letter-spacing:-.05em;color:var(--c)}
+.stat .cap{font-family:var(--util);font-weight:700;font-size:14px;margin-top:10px}
+.stat .cap span{display:block;font-weight:400;color:var(--ink-2);font-size:13.5px;margin-top:3px;max-width:34ch}
+.facts{border-top:2px solid var(--ink);display:flex;flex-direction:column}
+.facts>div{padding:13px 0;border-bottom:1px solid var(--rule)}
+.facts .k{font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
+.facts .v{font-size:15px;line-height:1.45;margin-top:5px}
+.facts .v.big{font-family:var(--display);font-weight:900;font-size:27px;letter-spacing:-.025em;line-height:1.05}
+.pill{display:inline-block;padding:3px 10px;border-radius:999px;font-family:var(--util);font-size:13px;font-weight:700;letter-spacing:.02em}
+.pill.up{background:var(--mint);color:var(--navy)}
+.pill.flat{background:var(--grey);color:var(--navy)}
+.pill.down{background:var(--pink);color:#fff}
+
+/* data spread */
+.datahead{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,64px);align-items:start;position:relative;z-index:2}
+@media (max-width:860px){.datahead{grid-template-columns:1fr;gap:20px}}
+.datatitle{position:relative;display:inline-block;justify-self:start;font-size:clamp(56px,10vw,142px)}
+.datatitle .plate{position:absolute;z-index:0;background:var(--blue);left:-.04em;right:-.04em;top:.05em;bottom:-.03em;border-radius:4px}
+.datatitle h2{position:relative;z-index:1;color:var(--paper);font-size:1em}
+.chart{margin-top:clamp(26px,4vw,44px);position:relative;z-index:2}
+.chart svg{width:100%;height:auto;display:block}
+.src{font-size:12.5px;color:var(--ink-2);margin-top:14px;max-width:84ch;line-height:1.55}
+.bignums{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,3vw,40px);margin-top:clamp(30px,4vw,52px);position:relative;z-index:2}
+.bignums .n{font-family:var(--display);font-weight:900;font-size:clamp(50px,8vw,104px);line-height:.82;letter-spacing:-.045em}
+.bignums .lab{font-weight:700;font-size:13.5px;margin-top:10px}
+.bignums .lab span{display:block;font-weight:400;color:var(--ink-2);margin-top:3px;line-height:1.4}
+@media (max-width:720px){.bignums{grid-template-columns:1fr;gap:22px}}
+
+/* combos */
+.combos{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(22px,3vw,38px) clamp(26px,4vw,56px);margin-top:clamp(24px,3vw,40px);position:relative;z-index:2}
+.combos>article{min-width:0;border-top:3px solid var(--c,var(--ink));padding-top:14px}
+.combos h4{font-size:clamp(21px,2.5vw,27px);font-weight:800;letter-spacing:-.025em;line-height:1.08}
+.combos .eq{font-size:12.5px;font-weight:600;letter-spacing:.05em;color:var(--ink-2);margin-top:6px;text-transform:uppercase}
+.combos .slots{font-size:14px;margin-top:10px;line-height:1.5}
+.combos .slots b{font-weight:700}
+.combos .why{font-family:var(--serif);font-size:17px;line-height:1.35;margin-top:9px}
+@media (max-width:720px){.combos{grid-template-columns:1fr}}
+.twice{margin-top:clamp(28px,4vw,46px);border-top:2px solid var(--ink);position:relative;z-index:2}
+.twice .r{display:grid;grid-template-columns:260px 1fr;gap:18px;padding:11px 0;border-bottom:1px solid var(--rule);align-items:baseline}
+.twice .c{font-weight:700;font-size:14.5px}
+.twice .f{font-size:14px;color:var(--ink-2)}
+.twice .f i{display:inline-block;width:9px;height:9px;border-radius:50%;margin:0 5px 0 0;vertical-align:baseline}
+@media (max-width:720px){.twice .r{grid-template-columns:1fr;gap:3px}}
+
+/* ladder */
+.ladder{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:clamp(26px,4vw,46px);align-items:end;position:relative;z-index:2}
+.ladder>div{min-width:0;padding:0 16px 0 0}
+.ladder .bar{height:var(--h);background:var(--c);border-radius:4px 4px 0 0;margin-bottom:14px}
+.ladder .yrs{font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.ladder h4{font-size:clamp(18px,2.1vw,23px);font-weight:800;letter-spacing:-.02em;line-height:1.1;margin:6px 0 6px}
+.ladder .pay{font-family:var(--display);font-weight:900;font-size:clamp(24px,3vw,32px);letter-spacing:-.03em;color:var(--pc,var(--c))}
+.ladder .d{font-size:13.5px;color:var(--ink-2);margin-top:8px;line-height:1.45}
+@media (max-width:860px){.ladder{grid-template-columns:1fr 1fr;gap:22px 0}.ladder .bar{display:none}}
+@media (max-width:480px){.ladder{grid-template-columns:1fr}}
+
+/* close */
+.close h2{font-size:clamp(34px,5.6vw,68px)}
+.rules{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:18px}
+.rules li{padding-left:16px;border-left:4px solid var(--blue);font-size:15px;line-height:1.5}
+.rules li:nth-child(2){border-color:var(--pink)}
+.rules li:nth-child(3){border-color:var(--yellow)}
+.rules li:nth-child(4){border-color:var(--sky)}
+.rules b{display:block;font-weight:700;font-size:16px;margin-bottom:2px}
+.cta{display:inline-block;margin-top:24px;padding:14px 22px;background:var(--blue);color:#fff;text-decoration:none;
+  font-weight:700;font-size:15px;border-radius:2px}
+a:focus-visible,.cta:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
+.colophon{max-width:1180px;margin:0 auto;padding-block:30px 48px;border-top:2px solid var(--ink);font-size:12.5px;
+  color:var(--ink-2);line-height:1.6}
+.src a,.cols a,.facts a,.colophon a,.job .body a,.opener .meta a{color:var(--blue);text-decoration:underline;
+  text-underline-offset:2px;text-decoration-thickness:1px}
+.src a:hover,.cols a:hover,.facts a:hover,.colophon a:hover{text-decoration-thickness:2px}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" result="n"/>
+  <feColorMatrix in="n" type="saturate" values="0"/>
+  <feComponentTransfer><feFuncA type="linear" slope="0.14"/></feComponentTransfer>
+  <feComposite operator="in" in2="SourceGraphic"/><feBlend in="SourceGraphic" mode="multiply"/></filter>
+</defs></svg>
+
+<nav class="jump" aria-label="Jump to section">
+  <div class="inner">
+    <a href="#cover">Cover</a>
+    <a href="#intro">Intro</a>
+    <a href="#jobs">The Jobs</a>
+    <a href="#data">Data</a>
+    <a href="#stack">Stack</a>
+    <a href="#ladder">Ladder</a>
+    <a href="#talk">Straight Talk</a>
+  </div>
+</nav>
+
+<!-- COVER -->
+<section class="spread cover" id="cover">
+  <div class="blob" style="top:-60px;right:-14%;width:46%"><svg viewBox="0 0 400 320" aria-hidden="true"><path filter="url(#grain)" fill="#ed3d93" d="M78 14c92-34 214-8 283 54 72 65 44 169-24 212-71 45-186 56-250 6C18 232-6 139 20 83 36 49 48 25 78 14Z"/></svg></div>
+  <div class="blob" style="bottom:-150px;left:-18%;width:28%"><svg viewBox="0 0 320 220" aria-hidden="true"><path filter="url(#grain)" fill="#f6d04e" d="M22 112C50 44 134 4 206 14c74 11 122 66 110 120-13 57-90 88-168 84C76 215 0 176 22 112Z"/></svg></div>
+  <div style="position:relative;z-index:2">
+    <div class="kicker">Ten jobs · One degree · Fall 2026</div>
+    <h1>Where COMD<span class="l2">takes you.</span></h1>
+    <div class="sub">
+      <p class="serif-lede">What communication design graduates actually do all day, what it pays when you are starting out, which jobs are growing, and which courses get you there.</p>
+      <div class="cols">
+        <p>Every number on these pages comes from the <a href="https://www.bls.gov/ooh/">U.S. Bureau of Labor Statistics</a>, the Department of Labor's <a href="https://www.onetonline.org/">O*NET database</a>, or <a href="https://www.roberthalf.com/us/en/insights/salary-guide">Robert Half's survey</a> of what employers post. Nothing here is a projection we made up, and nothing is a promise.</p>
+        <p>Read it to choose your courses on purpose. Department of Communication Design, New York City College of Technology, CUNY.</p>
+      </div>
+    </div>
+  </div>
+  <div class="folio"><span>1</span><span class="run">COMD Career Issue 2026</span></div>
+</section>
+
+<!-- CONTENTS + INTRO -->
+<section class="spread" id="intro">
+  <div class="blob" style="top:10%;right:-18%;width:40%"><svg viewBox="0 0 360 300" aria-hidden="true"><path filter="url(#grain)" fill="#57c5f2" d="M64 30c80-42 196-30 258 32 64 64 44 160-26 204-71 45-180 38-240-16C-4 196-14 72 64 30Z"/></svg></div>
+  <div class="pages">
+    <div class="contents-grid">
+      <div class="vert">Contents</div>
+      <div class="toc">
+        <div class="row"><div class="pg" style="color:var(--blue)">04</div><div><h3 style="color:var(--blue)">The Jobs</h3><p class="sm">Graphic designer · Visual and UX designer · Front-end developer · Motion designer and video editor · Copywriter · Illustrator · Wayfinding designer · Creative producer</p></div></div>
+        <div class="row"><div class="pg" style="color:var(--pink)">13</div><div><h3 style="color:var(--pink)">The Data</h3><p class="sm">What ten design jobs pay, side by side, and where New York sits</p></div></div>
+        <div class="row"><div class="pg" style="color:var(--navy)">14</div><div><h3 style="color:var(--navy)">Stack &amp; Combine</h3><p class="sm">Courses that count twice, and the seven combinations students actually land</p></div></div>
+        <div class="row"><div class="pg" style="color:var(--blue)">16</div><div><h3 style="color:var(--blue)">The Ladder</h3><p class="sm">Designer to art director to creative director, and what changes at each rung</p></div></div>
+        <div class="row"><div class="pg" style="color:var(--pink)">17</div><div><h3 style="color:var(--pink)">Straight Talk</h3><p class="sm">What the market looks like right now and how to position yourself in it</p></div></div>
+      </div>
+    </div>
+    <div>
+      <h2 style="font-size:clamp(56px,9vw,124px)">Intro</h2>
+      <p class="serif-lede" style="margin-top:22px;max-width:36ch">The job our degree is named for is shrinking, slowly. Every other job it points at is not. That is the whole story of this issue, and it is better news than it sounds.</p>
+      <div class="cols" style="margin-top:22px">
+        <p>Graphic design employment is projected to fall two percent through 2035. The government's own explanation is that AI tools let one designer do what two did. The same sentence shows up in the outlook for writers and for illustrators.</p>
+        <p>But a COMD degree points at ten jobs, not one. Five of them are growing. The best-paying ones are graphic design plus a second thing: code, motion, research, or the ability to run a project.</p>
+        <p>Most of what you need for those second things is already in the course catalog. Several courses feed three careers at once. The pages that follow show which, so that four skills slots can open more than one door.</p>
+        <p>Read the cards for the work. Read the data spread for the money. Read the combinations for what to register for in April.</p>
+      </div>
+    </div>
+  </div>
+  <div class="folio"><span class="run">Contents &amp; Intro</span><span>2</span></div>
+</section>
+
+<!-- SECTION OPENER: THE JOBS -->
+<section class="spread opener" id="jobs">
+  <div class="blob" style="top:-10%;left:-12%;width:58%"><svg viewBox="0 0 520 420" aria-hidden="true"><path filter="url(#grain)" fill="#57c5f2" d="M96 22C214-26 388 2 466 92c76 88 54 226-50 288-104 63-280 50-368-34C-30 272-22 70 96 22Z"/></svg></div>
+  <div class="stack">
+    <div class="big" style="color:#000">The</div>
+    <div class="big b2" style="color:var(--blue)">Jobs</div>
+  </div>
+  <div class="meta">
+    <h4>Eight spreads, ten titles, and the honest version of each one.</h4>
+    <p>Starting pay on every card is the lowest ten percent of earners in government data, the figure closest to a first job. The median is where half the field sits. New York runs twenty-five to forty percent above these numbers, and costs more too.</p>
+  </div>
+  <div class="chips">
+    <a href="#gd">Graphic designer</a>
+    <a href="#ux">Visual &amp; UX</a>
+    <a href="#frontend">Front-end</a>
+    <a href="#motion">Motion &amp; video</a>
+    <a href="#copy">Copywriter</a>
+    <a href="#illo">Illustrator</a>
+    <a href="#wayfinding">Wayfinding</a>
+    <a href="#producer">Producer</a>
+  </div>
+  <div class="folio"><span>4</span><span class="run">The Jobs</span></div>
+</section>
+
+<!-- GRAPHIC DESIGNER -->
+<section class="spread job" id="gd" style="--c:var(--blue)">
+  <div class="pages">
+    <div>
+      <span class="tag"><i></i>Graphic Design track</span>
+      <h2>Graphic<br>Designer</h2>
+      <p class="body">Turn a message into something people see: logos, layouts, packaging, social posts, decks, web graphics. You take a brief, make concepts, present them, take the notes, and get the final files out the door for print or screen. Most of the job is typography, hierarchy, and making a brand feel consistent everywhere it shows up.</p>
+      <p class="body">It is the biggest door into the field, with 253,000 people in it. It is also the most crowded.</p>
+      <p class="quote"><span class="mark">&ldquo;</span>The three jobs on this list that pay the most are graphic design plus one more skill.<small>Code, motion, or research</small></p>
+    </div>
+    <div>
+      <div class="stat"><div class="huge num">$63K</div><div class="cap">National median<span>$79,280 in the New York metro, twenty-six percent above national</span></div></div>
+      <div class="facts">
+        <div><div class="k">Starting out</div><div class="v big num">$40K–53K</div></div>
+        <div><div class="k">Outlook to 2035</div><div class="v"><span class="pill down">−2%</span></div><div class="v" style="color:var(--ink-2);font-size:13.5px">AI tools let one designer do more. Still 16,000 openings a year from turnover.</div></div>
+        <div><div class="k">Know cold</div><div class="v">InDesign, Illustrator, Photoshop, Figma. Presentation design is the skill employers ask for and nobody teaches.</div></div>
+        <div><div class="k">COMD courses</div><div class="v num">3501 Identity · 3402 Brand Strategy · 3527 Adv. Typography · 4611 Publication · 3412 Packaging · 3532 Production</div></div>
+        <div><div class="k">Look it up</div><div class="v"><a href="https://www.bls.gov/ooh/arts-and-design/graphic-designers.htm">BLS: Graphic Designers</a> · <a href="https://www.onetonline.org/link/summary/27-1024.00">O*NET 27-1024.00</a></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="folio"><span class="run">The Jobs</span><span>5</span></div>
+</section>
+
+<!-- VISUAL + UX -->
+<section class="spread job" id="ux" style="--c:var(--pink)">
+  <div class="blob" style="bottom:-30%;right:-16%;width:40%"><svg viewBox="0 0 360 300" aria-hidden="true"><path filter="url(#grain)" fill="#a6f0ab" d="M70 26c86-38 206-22 266 44 60 67 36 168-36 208-73 41-184 34-240-22C0 196-16 64 70 26Z"/></svg></div>
+  <div class="pages">
+    <div>
+      <span class="tag"><i></i>Web and UX track</span>
+      <h2>Visual &amp;<br>UX Designer</h2>
+      <p class="body">Two jobs that share a tool and a team, but not a day. A visual designer makes screens look right: layout, type, color, icons, the design system that keeps an app consistent. A UX designer figures out whether the thing works: interviews users, maps the journey, prototypes, tests, and argues for the user in the room with product managers and engineers.</p>
+      <p class="body">Both get posted as product designer, UI designer, and digital designer. Search all of them.</p>
+      <p class="quote"><span class="mark">&ldquo;</span>Highest pay and best outlook on this list, and the most competitive entry.<small>Shipped work beats a portfolio of posters</small></p>
+    </div>
+    <div>
+      <div class="stat"><div class="huge num">$104K</div><div class="cap">National median<span>The top ten percent clear $200,000</span></div></div>
+      <div class="facts">
+        <div><div class="k">Starting out</div><div class="v big num">$54K–70K</div><div class="v" style="color:var(--ink-2);font-size:13.5px">As a junior visual or production designer. UX Designer postings open at $98,500 but assume a few years in.</div></div>
+        <div><div class="k">Outlook to 2035</div><div class="v"><span class="pill up">+6%</span></div><div class="v" style="color:var(--ink-2);font-size:13.5px">The only Bright Outlook job on the list. E-commerce drives it; AI tools slow it.</div></div>
+        <div><div class="k">Know cold</div><div class="v">Figma with components and auto layout. Then research and testing, or design systems. Accessibility is the 2026 differentiator.</div></div>
+        <div><div class="k">COMD courses</div><div class="v num">3562 UX/UI · 3563 Web Analytics · 3551 Web Design II · 3652 Web Design III · 3662 Rich Media · 3507 Creative Project Mgmt</div></div>
+        <div><div class="k">Look it up</div><div class="v"><a href="https://www.bls.gov/ooh/computer-and-information-technology/web-developers.htm">BLS: Web Developers and Digital Designers</a> · <a href="https://www.onetonline.org/link/summary/15-1255.00">O*NET 15-1255.00</a></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="folio"><span>6</span><span class="run">The Jobs</span></div>
+</section>
+
+<!-- FRONT-END -->
+<section class="spread job" id="frontend" style="--c:var(--navy)">
+  <div class="pages">
+    <div>
+      <span class="tag"><i></i>Web and UX track · new</span>
+      <h2>Front-End<br>Developer</h2>
+      <p class="body">Build what the designer designed. Write the HTML, CSS, and JavaScript that makes a site work in a browser, make it responsive and accessible, hook it to the back end, fix what breaks. On small teams you also design. On large ones you work from a Figma file and a ticket queue.</p>
+      <p class="quote"><span class="mark">&ldquo;</span>Designers who can code are rare, and they get hired.<small>A portfolio of working work</small></p>
+    </div>
+    <div>
+      <div class="stat"><div class="huge num">$93K</div><div class="cap">National median<span>$120,000 in tech and media. Top ten percent over $162,000.</span></div></div>
+      <div class="facts">
+        <div><div class="k">Starting out</div><div class="v big num">$48K</div></div>
+        <div><div class="k">Outlook to 2034</div><div class="v"><span class="pill up">+4%</span></div><div class="v" style="color:var(--ink-2);font-size:13.5px">Second-most-posted design-adjacent title on job boards.</div></div>
+        <div><div class="k">Know cold</div><div class="v">HTML, CSS and JavaScript without a framework first. Then React, Git, a build tool. Accessibility and performance get you past the first interview.</div></div>
+        <div><div class="k">COMD courses</div><div class="v num">3551 Web Design II · 3663 Dynamic Web I · 3652 Web Design III · 3563 Web Analytics. Plan on outside practice.</div></div>
+        <div><div class="k">Look it up</div><div class="v"><a href="https://www.bls.gov/ooh/computer-and-information-technology/web-developers.htm">BLS: Web Developers and Digital Designers</a> · <a href="https://www.onetonline.org/link/summary/15-1254.00">O*NET 15-1254.00</a></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="folio"><span class="run">The Jobs</span><span>7</span></div>
+</section>
+
+<!-- MOTION -->
+<section class="spread job" id="motion" style="--c:var(--blue)">
+  <div class="blob" style="top:-18%;left:-14%;width:38%"><svg viewBox="0 0 340 290" aria-hidden="true"><path filter="url(#grain)" fill="#57c5f2" d="M58 30C140-14 258-4 310 62c52 67 24 164-52 200-77 36-186 18-234-44C-19 160-24 74 58 30Z"/></svg></div>
+  <div class="pages">
+    <div>
+      <span class="tag"><i></i>Motion track</span>
+      <h2>Motion<br>&amp; Video</h2>
+      <p class="body">A motion designer makes graphics move: title sequences, animated logos, explainers, social ads, interface animation, 3D product spins. A video editor cuts footage into a story and delivers it in six aspect ratios. Many first jobs in motion are editing jobs, and New York has more of them than almost anywhere.</p>
+      <p class="quote"><span class="mark">&ldquo;</span>A reel of thirty good seconds gets more interviews than a portfolio of thirty pages.<small>Sixty percent work over forty hours</small></p>
+    </div>
+    <div>
+      <div class="stat"><div class="huge num">$102K</div><div class="cap">Motion designer median<span>Video editor $75,420 national and $104,590 in New York</span></div></div>
+      <div class="facts">
+        <div><div class="k">Starting out</div><div class="v big num">$40K–59K</div><div class="v" style="color:var(--ink-2);font-size:13.5px">Video editing to motion. Agency motion postings run $76,750 to $108,500.</div></div>
+        <div><div class="k">Outlook</div><div class="v"><span class="pill flat">Motion 0%</span> <span class="pill up">Video +3%</span></div></div>
+        <div><div class="k">Know cold</div><div class="v">After Effects and Premiere. Then Cinema 4D or Blender, delivery specs, audio basics, and Figma for interface motion.</div></div>
+        <div><div class="k">COMD courses</div><div class="v num">3520 Principles in Motion · 3521 Strategies in Motion · 3621 Motion Techniques · 3640 3D Animation · 3540 2D Animation · 3620 Video Production · 3523 Storyboard · 3420 Storytelling</div></div>
+        <div><div class="k">Look it up</div><div class="v"><a href="https://www.bls.gov/ooh/arts-and-design/multimedia-artists-and-animators.htm">BLS: Special Effects Artists and Animators</a> · <a href="https://www.bls.gov/ooh/media-and-communication/film-and-video-editors-and-camera-operators.htm">BLS: Film and Video Editors</a> · <a href="https://www.onetonline.org/link/summary/27-1014.00">O*NET 27-1014.00</a></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="folio"><span>8</span><span class="run">The Jobs</span></div>
+</section>
+
+<!-- COPYWRITER -->
+<section class="spread job" id="copy" style="--c:var(--pink)">
+  <div class="pages">
+    <div>
+      <span class="tag"><i></i>Advertising track</span>
+      <h2>Copywriter<br>&amp; Content</h2>
+      <p class="body">Write the words that go with the pictures: headlines, taglines, scripts, captions, product names, email, website copy. In an agency you are paired with an art director and the two of you own the idea. In-house you keep a brand's voice consistent. Content designers do the same job inside apps: button labels, error messages, onboarding.</p>
+      <p class="quote"><span class="mark">&ldquo;</span>Employers want writers who can make the thing they are writing for. English majors mostly cannot.<small>Photoshop and Canva are on the copywriter skills list</small></p>
+    </div>
+    <div>
+      <div class="stat"><div class="huge num">$77K</div><div class="cap">National median<span>Higher than graphic design at every level. Top ten percent over $139,000.</span></div></div>
+      <div class="facts">
+        <div><div class="k">Starting out</div><div class="v big num">$44K</div><div class="v" style="color:var(--ink-2);font-size:13.5px">Copywriter postings open at $66,000.</div></div>
+        <div><div class="k">Outlook to 2035</div><div class="v"><span class="pill flat">0%</span></div><div class="v" style="color:var(--ink-2);font-size:13.5px">AI writing tools. Sixty-five percent are self-employed.</div></div>
+        <div><div class="k">Know cold</div><div class="v">Writing in a brand voice, fast, in many lengths. Photoshop, Canva, short-form video, enough SEO to know why a headline reads the way it does.</div></div>
+        <div><div class="k">COMD courses</div><div class="v num">3602 Copywriting · 3500 / 3600 Advertising Design · 3402 Brand Strategy · 3420 Storytelling · 3662 Strategic Content Creation · 4701 Design Team</div></div>
+        <div><div class="k">Look it up</div><div class="v"><a href="https://www.bls.gov/ooh/media-and-communication/writers-and-authors.htm">BLS: Writers and Authors</a> · <a href="https://www.onetonline.org/link/summary/27-3043.00">O*NET 27-3043.00</a></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="folio"><span class="run">The Jobs</span><span>9</span></div>
+</section>
+
+<!-- ILLUSTRATOR -->
+<section class="spread job" id="illo" style="--c:var(--navy)">
+  <div class="blob" style="bottom:-26%;right:-12%;width:36%"><svg viewBox="0 0 330 280" aria-hidden="true"><path filter="url(#grain)" fill="#f6d04e" d="M48 44C120-8 244-14 296 56c52 71 20 164-60 196-81 32-186 6-224-58C-26 130-24 96 48 44Z"/></svg></div>
+  <div class="pages">
+    <div>
+      <span class="tag"><i></i>Illustration track</span>
+      <h2>Illustrator</h2>
+      <p class="body">Make the picture: editorial spots, book covers, character design, infographics, packaging art, brand illustration systems, storyboards. Most illustrators are freelance and spend real time finding the next job, invoicing, and marketing themselves.</p>
+      <p class="quote"><span class="mark">&ldquo;</span>The hardest path to a salary, and the most upside if your work is distinctive.<small>Pair it with motion or infographics to get hired full-time</small></p>
+    </div>
+    <div>
+      <div class="stat"><div class="huge num">$55K</div><div class="cap">National median<span>And it does not count freelancers, which is most of the field</span></div></div>
+      <div class="facts">
+        <div><div class="k">In-house postings</div><div class="v big num">$55K–79K</div><div class="v" style="color:var(--ink-2);font-size:13.5px">Illustrator and infographics designer roles.</div></div>
+        <div><div class="k">Outlook to 2035</div><div class="v"><span class="pill down">−1%</span></div><div class="v" style="color:var(--ink-2);font-size:13.5px">AI image generation. 29,000 jobs nationally.</div></div>
+        <div><div class="k">Know cold</div><div class="v">Photoshop and Procreate, Illustrator for vector. Contracts, licensing, pricing. Those last three are on the government's own skills list.</div></div>
+        <div><div class="k">COMD courses</div><div class="v num">3313 Illustration 1 · 3513 Narrative Illustration · 3633 Adv. Strategies · 3413 Character Design · 3533 Special Topics · 3523 Storyboard · 3316 Adv. Image Editing · 4801 Portfolio</div></div>
+        <div><div class="k">Look it up</div><div class="v"><a href="https://www.bls.gov/ooh/arts-and-design/craft-and-fine-artists.htm">BLS: Craft and Fine Artists</a> · <a href="https://www.onetonline.org/link/summary/27-1013.00">O*NET 27-1013.00</a> · <a href="https://www.societyillustrators.org/">Society of Illustrators</a></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="folio"><span>10</span><span class="run">The Jobs</span></div>
+</section>
+
+<!-- WAYFINDING -->
+<section class="spread job" id="wayfinding" style="--c:var(--pink)">
+  <div class="pages">
+    <div>
+      <span class="tag"><i></i>Graphic Design track · new</span>
+      <h2>Wayfinding<br>Designer</h2>
+      <p class="body">Design how people find their way through a place: signage for hospitals, campuses and transit, museum exhibits, retail interiors, branded environments. You work with architects and fabricators, think in sightlines and sequence, and know what the ADA requires of a sign before you set the type.</p>
+      <p class="quote"><span class="mark">&ldquo;</span>Less competition than any other job here, and it rewards exactly what COMD teaches.<small>Type, systems and identity, at building scale</small></p>
+    </div>
+    <div>
+      <div class="stat"><div class="huge num">$75K</div><div class="cap">National median<span>Top ten percent over $135,000</span></div></div>
+      <div class="facts">
+        <div><div class="k">Starting out</div><div class="v big num">$42K</div></div>
+        <div><div class="k">Outlook to 2034</div><div class="v"><span class="pill flat">+2%</span></div><div class="v" style="color:var(--ink-2);font-size:13.5px">Small field, but New York's museums, hospitals and transit make it bigger here.</div></div>
+        <div><div class="k">Know cold</div><div class="v">Illustrator and InDesign for the system, SketchUp for showing it in space, enough AutoCAD to read an architect's drawing. ADA signage standards. <a href="https://www.segd.org/">SEGD</a> is the professional home.</div></div>
+        <div><div class="k">COMD courses</div><div class="v num">3505 Special Topics, wayfinding semester · 3292 3-D Design · 3601 Information Design · 3501 Identity · 3527 Adv. Typography</div></div>
+        <div><div class="k">Look it up</div><div class="v"><a href="https://www.bls.gov/ooh/arts-and-design/set-and-exhibit-designers.htm">BLS: Set and Exhibit Designers</a> · <a href="https://www.onetonline.org/link/summary/27-1027.00">O*NET 27-1027.00</a></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="folio"><span class="run">The Jobs</span><span>11</span></div>
+</section>
+
+<!-- PRODUCER -->
+<section class="spread job" id="producer" style="--c:var(--navy)">
+  <div class="pages">
+    <div>
+      <span class="tag"><i></i>Every track · new</span>
+      <h2>Creative<br>Producer</h2>
+      <p class="body">Make the project happen. Scope it, budget it, schedule it, book the photographer and the studio, keep the designers and writers on track, manage the client, deliver on time. In agencies it is producer or project manager. In-house it is creative operations. You rarely design, but you need to have designed to do it well.</p>
+      <p class="quote"><span class="mark">&ldquo;</span>If you are the one in every group project who made the schedule, this is a real career.<small>It pays more than most of the jobs it manages</small></p>
+    </div>
+    <div>
+      <div class="stat"><div class="huge num">$90K</div><div class="cap">National median<span>Top ten percent near $200,000, inflated by film and television</span></div></div>
+      <div class="facts">
+        <div><div class="k">Starting out</div><div class="v big num">$46K</div></div>
+        <div><div class="k">Outlook to 2034</div><div class="v"><span class="pill up">+5%</span></div><div class="v" style="color:var(--ink-2);font-size:13.5px">About 12,800 openings a year.</div></div>
+        <div><div class="k">Know cold</div><div class="v">Budgets and timelines in Sheets. Asana, Monday or JIRA. Vendor management. Enough Creative Cloud to open the file and see whether it is done.</div></div>
+        <div><div class="k">COMD courses</div><div class="v num">3507 Creative Project Management · 4701 Design Team · 4900 Internship. Business and communication electives help more here than anywhere.</div></div>
+        <div><div class="k">Look it up</div><div class="v"><a href="https://www.bls.gov/ooh/entertainment-and-sports/producers-and-directors.htm">BLS: Producers and Directors</a> · <a href="https://www.onetonline.org/link/summary/27-2012.00">O*NET 27-2012.00</a></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="folio"><span>12</span><span class="run">The Jobs</span></div>
+</section>
+
+<!-- DATA -->
+<section class="spread" id="data">
+  <div class="blob" style="top:30%;right:-16%;width:30%"><svg viewBox="0 0 300 260" aria-hidden="true"><path filter="url(#grain)" fill="#a6f0ab" d="M46 38C112-8 228-6 272 58c44 65 14 152-62 182-77 30-174 2-204-62C-24 114-20 84 46 38Z"/></svg></div>
+  <div class="datahead">
+    <div class="datatitle"><span class="plate"></span><h2>Data</h2></div>
+    <div>
+      <p class="serif-lede">Ten design jobs on one scale. The bar runs from the lowest ten percent of earners to the highest, and the tick is the median.</p>
+      <p style="font-size:14.5px;margin-top:14px;color:var(--ink-2)">Sorted by median, lowest first. Where a job has no published range, only the median is shown. New York runs well above all of it.</p>
+    </div>
+  </div>
+  <div class="chart">
+  <svg viewBox="0 0 1010 540" role="img" aria-label="Pay range by design job, lowest ten percent to highest ten percent, with the median marked. Illustrator lowest at 55 thousand, art director highest at 115 thousand.">
+    <style>
+      .lb{font-family:var(--util);font-size:14px;font-weight:600;fill:#15153d}
+      .ax{font-family:var(--util);font-size:12px;fill:#5a5a7d}
+      .md{font-family:var(--display);font-size:21px;font-weight:900;fill:#15153d;letter-spacing:-.02em}
+      .tk{fill:#15153d}
+    </style>
+    <g stroke="#d6d6e0" stroke-width="1">
+      <line x1="170" y1="30" x2="170" y2="480"/><line x1="343" y1="30" x2="343" y2="480"/>
+      <line x1="516" y1="30" x2="516" y2="480"/><line x1="688" y1="30" x2="688" y2="480"/><line x1="861" y1="30" x2="861" y2="480"/>
+    </g>
+    <g class="ax" text-anchor="middle">
+      <text x="170" y="505">$0</text><text x="343" y="505">$50K</text><text x="516" y="505">$100K</text><text x="688" y="505">$150K</text><text x="861" y="505">$200K</text>
+    </g>
+    <!-- Illustrator: median only 55,490 -->
+    <g><text class="lb" x="158" y="62" text-anchor="end">Illustrator</text>
+      <rect class="tk" x="362" y="48" width="4" height="22"/><text class="md" x="376" y="66">$55K</text>
+      <text class="ax" x="440" y="66">median only; most are freelance</text></g>
+    <!-- Graphic designer 39,520 / 62,960 / 104,910 -->
+    <g><text class="lb" x="158" y="104" text-anchor="end">Graphic designer</text>
+      <rect x="307" y="90" width="226" height="22" rx="3" fill="#1b16e6" opacity=".26"/>
+      <rect class="tk" x="386" y="90" width="4" height="22"/><text class="md" x="543" y="108">$63K</text></g>
+    <!-- Wayfinding 41,750 / 75,240 / 135,410 -->
+    <g><text class="lb" x="158" y="146" text-anchor="end">Wayfinding designer</text>
+      <rect x="314" y="132" width="324" height="22" rx="3" fill="#ed3d93" opacity=".32"/>
+      <rect class="tk" x="428" y="132" width="4" height="22"/><text class="md" x="648" y="150">$75K</text></g>
+    <!-- Video editor 39,000 / 75,420 / 154,000 -->
+    <g><text class="lb" x="158" y="188" text-anchor="end">Video editor</text>
+      <rect x="305" y="174" width="397" height="22" rx="3" fill="#57c5f2" opacity=".55"/>
+      <rect class="tk" x="429" y="174" width="4" height="22"/><text class="md" x="712" y="192">$75K</text></g>
+    <!-- Copywriter 44,310 / 76,910 / 139,870 -->
+    <g><text class="lb" x="158" y="230" text-anchor="end">Copywriter</text>
+      <rect x="323" y="216" width="330" height="22" rx="3" fill="#f6d04e" opacity=".75"/>
+      <rect class="tk" x="434" y="216" width="4" height="22"/><text class="md" x="663" y="234">$77K</text></g>
+    <!-- Producer 45,780 / 90,360 / 198,540 -->
+    <g><text class="lb" x="158" y="272" text-anchor="end">Creative producer</text>
+      <rect x="328" y="258" width="528" height="22" rx="3" fill="#1d1b4f" opacity=".24"/>
+      <rect class="tk" x="480" y="258" width="4" height="22"/><text class="md" x="866" y="276">$90K</text></g>
+    <!-- Front-end 48,100 / 92,650 / 162,290 -->
+    <g><text class="lb" x="158" y="314" text-anchor="end">Front-end developer</text>
+      <rect x="336" y="300" width="395" height="22" rx="3" fill="#1b16e6" opacity=".26"/>
+      <rect class="tk" x="488" y="300" width="4" height="22"/><text class="md" x="741" y="318">$93K</text></g>
+    <!-- Motion 58,600 / 102,030 / 177,110 -->
+    <g><text class="lb" x="158" y="356" text-anchor="end">Motion designer</text>
+      <rect x="372" y="342" width="410" height="22" rx="3" fill="#57c5f2" opacity=".55"/>
+      <rect class="tk" x="520" y="342" width="4" height="22"/><text class="md" x="792" y="360">$102K</text></g>
+    <!-- UX 53,750 / 104,000 / 201,550 -->
+    <g><text class="lb" x="158" y="398" text-anchor="end">UX / UI designer</text>
+      <rect x="356" y="384" width="510" height="22" rx="3" fill="#a6f0ab" opacity=".85"/>
+      <rect class="tk" x="527" y="384" width="4" height="22"/><text class="md" x="876" y="402">$104K</text></g>
+    <!-- Art director 64,900 / 114,850 / 213,050 -->
+    <g><text class="lb" x="158" y="440" text-anchor="end">Art director</text>
+      <rect x="394" y="426" width="512" height="22" rx="3" fill="#ed3d93" opacity=".32"/>
+      <rect class="tk" x="566" y="426" width="4" height="22"/><text class="md" x="916" y="444">$115K</text></g>
+  </svg>
+  </div>
+  <p class="src"><a href="https://www.bls.gov/oes/">U.S. Bureau of Labor Statistics, Occupational Employment and Wage Statistics</a>, May 2025, national. Video editor's tenth and ninetieth percentiles are from the 2023 release, the most recent published. Government data groups jobs more broadly than titles do: copywriters sit inside all writers, motion designers inside animators and effects artists, illustrators inside fine artists, wayfinding inside set and exhibit designers. Creative director is not counted separately; the government folds it into art directors.</p>
+  <div class="bignums">
+    <div><div class="n" style="color:var(--blue)">+26%</div><div class="lab">The New York premium<span>What a graphic designer earns in the New York metro above the national median</span></div></div>
+    <div><div class="n" style="color:var(--pink)">16,000</div><div class="lab">Graphic design openings a year<span>Even with employment shrinking, turnover keeps the door open</span></div></div>
+    <div><div class="n" style="color:var(--navy)">+6%</div><div class="lab">UX and web design growth<span>The only job on these pages the government flags Bright Outlook</span></div></div>
+  </div>
+  <div class="folio"><span>13</span><span class="run">The Data</span></div>
+</section>
+
+<!-- SECTION OPENER: STACK -->
+<section class="spread opener" id="stack">
+  <div class="blob" style="top:-6%;right:-14%;width:54%"><svg viewBox="0 0 480 400" aria-hidden="true"><path filter="url(#grain)" fill="#f6d04e" d="M92 28C204-18 368 6 434 96c64 88 36 216-66 268-102 52-262 34-342-48C-38 250-20 74 92 28Z"/></svg></div>
+  <div class="stack">
+    <div class="big" style="color:var(--navy)">Stack</div>
+    <div class="big b2" style="color:var(--blue)">&amp; Combine</div>
+  </div>
+  <div class="meta">
+    <h4>Three strategy slots. Four skills slots. Several courses that count twice.</h4>
+    <p>A few careful picks keep two doors open at once. These are the combinations COMD students actually land, written as the courses you would register for.</p>
+  </div>
+  <div class="folio"><span class="run">Stack &amp; Combine</span><span>14</span></div>
+</section>
+
+<!-- COMBOS -->
+<section class="spread">
+  <div class="combos">
+    <article style="--c:var(--blue)"><h4>The designer who codes</h4><div class="eq">Graphic designer + front-end</div><p class="slots"><b>Strategy</b> 3501, 3562, 3563<br><b>Skills</b> 3527, 3551, 3663, 3652</p><p class="why">Opens visual designer, front-end developer and graphic designer at once: the three fastest-growing, best-paying doors on the list.</p></article>
+    <article style="--c:var(--mint)"><h4>Brand to screen</h4><div class="eq">Graphic designer + visual / UX</div><p class="slots"><b>Strategy</b> 3501, 3402, 3562<br><b>Skills</b> 3527, 4611, 3551, 3662</p><p class="why">The most common path from a COMD portfolio into a product team.</p></article>
+    <article style="--c:var(--pink)"><h4>The agency creative</h4><div class="eq">Art director + copywriter + motion</div><p class="slots"><b>Strategy</b> 3602, 3500 or 3600, 3420<br><b>Skills</b> 3527, 3620, 3621, 3316</p><p class="why">Lands junior art director, junior copywriter or motion designer, depending on which half of the team you turn out to be.</p></article>
+    <article style="--c:var(--sky)"><h4>The motion illustrator</h4><div class="eq">Illustrator + motion</div><p class="slots"><b>Strategy</b> 3513, 3520, 3420<br><b>Skills</b> 3313, 3523, 3540, 3621</p><p class="why">Turns a drawing portfolio into a reel: the biggest single pay jump available to an illustration student.</p></article>
+    <article style="--c:var(--yellow)"><h4>The content designer</h4><div class="eq">Copywriter + graphic designer + motion</div><p class="slots"><b>Strategy</b> 3602, 3402, 3420<br><b>Skills</b> 3662, 3620, 3527, 3316</p><p class="why">Matches social, content and brand studio jobs that no single card covers.</p></article>
+    <article style="--c:var(--pink)"><h4>The spatial designer</h4><div class="eq">Graphic designer + wayfinding + producer</div><p class="slots"><b>Strategy</b> 3501, 3402, 3507<br><b>Skills</b> 3527, 3505, 3292, 3601</p><p class="why">A small field with little competition and New York's museums, hospitals and transit as clients.</p></article>
+    <article style="--c:var(--navy)"><h4>The one who runs the room</h4><div class="eq">Any track + creative producer</div><p class="slots">Add <b>3507</b> to whatever else you take, and treat <b>4701</b> and <b>4900</b> as the audition.</p><p class="why">Open to every student on these pages, and it pays more than most of the jobs it manages.</p></article>
+  </div>
+
+  <div class="twice">
+    <div class="r"><div class="c num">3527 Advanced Typography</div><div class="f"><i style="background:var(--blue)"></i>graphic design <i style="background:var(--pink)"></i>art direction <i style="background:var(--sky)"></i>wayfinding</div></div>
+    <div class="r"><div class="c num">3402 Brand Strategy</div><div class="f"><i style="background:var(--blue)"></i>graphic design <i style="background:var(--pink)"></i>copywriting <i style="background:var(--sky)"></i>wayfinding</div></div>
+    <div class="r"><div class="c num">3551 Web Design II</div><div class="f"><i style="background:var(--blue)"></i>graphic design <i style="background:var(--mint)"></i>visual and UX <i style="background:var(--navy)"></i>front-end</div></div>
+    <div class="r"><div class="c num">3562 UX/UI</div><div class="f"><i style="background:var(--blue)"></i>graphic design <i style="background:var(--mint)"></i>visual and UX</div></div>
+    <div class="r"><div class="c num">3620 Video Production</div><div class="f"><i style="background:var(--pink)"></i>art direction <i style="background:var(--yellow)"></i>motion <i style="background:var(--yellow)"></i>video editing</div></div>
+    <div class="r"><div class="c num">3420 Storytelling for Creatives</div><div class="f"><i style="background:var(--pink)"></i>copywriting <i style="background:var(--yellow)"></i>motion <i style="background:var(--yellow)"></i>video editing</div></div>
+    <div class="r"><div class="c num">3523 Storyboard Concepts</div><div class="f"><i style="background:var(--navy)"></i>illustration <i style="background:var(--yellow)"></i>motion</div></div>
+    <div class="r"><div class="c num">3313 Illustration 1 · 3711 Vector Art</div><div class="f"><i style="background:var(--navy)"></i>illustration <i style="background:var(--blue)"></i>graphic design</div></div>
+    <div class="r"><div class="c num">3316 Advanced Image Editing</div><div class="f"><i style="background:var(--navy)"></i>illustration <i style="background:var(--pink)"></i>art direction</div></div>
+    <div class="r"><div class="c num">3662 Strategic Content Creation</div><div class="f"><i style="background:var(--pink)"></i>copywriting <i style="background:var(--blue)"></i>graphic design <i style="background:var(--yellow)"></i>motion <i style="background:var(--pink)"></i>art direction</div></div>
+    <div class="r"><div class="c num">3507 Creative Project Management</div><div class="f"><i style="background:var(--navy)"></i>producer <i style="background:var(--mint)"></i>UX, and in practice every track</div></div>
+    <div class="r"><div class="c num">4701 Design Team · 4900 Internship</div><div class="f">everything: presenting, collaborating and handling clients are top tasks for every job here</div></div>
+  </div>
+  <div class="folio"><span>15</span><span class="run">Stack &amp; Combine</span></div>
+</section>
+
+<!-- LADDER -->
+<section class="spread" id="ladder">
+  <div class="blob" style="bottom:-20%;left:-14%;width:34%"><svg viewBox="0 0 320 270" aria-hidden="true"><path filter="url(#grain)" fill="#57c5f2" d="M54 36C128-10 248-6 290 62c42 69 8 158-70 186-79 28-176-4-204-70C-12 112-20 82 54 36Z"/></svg></div>
+  <div class="datahead">
+    <h2 style="font-size:clamp(48px,8vw,116px)">The Ladder</h2>
+    <div>
+      <p class="serif-lede">Most design careers climb the same four rungs, and pay roughly doubles from the bottom to the top.</p>
+      <p style="font-size:14.5px;margin-top:14px;color:var(--ink-2)">The government says most art directors spent five or more years as designers, illustrators, editors or photographers first. Robert Half asks for five to eight.</p>
+    </div>
+  </div>
+  <div class="ladder">
+    <div style="--c:var(--sky);--pc:var(--navy);--h:46px"><div class="bar"></div><div class="yrs">Years 0–2</div><h4>Junior &amp; production designer</h4><div class="pay num">$47–65K</div><p class="d">You execute. Someone else has the idea; you build the files and learn how work ships. Your portfolio got you hired. Speed and reliability get you promoted.</p></div>
+    <div style="--c:var(--mint);--pc:var(--navy);--h:74px"><div class="bar"></div><div class="yrs">Years 2–5</div><h4>Designer, then senior</h4><div class="pay num">$53–81K</div><p class="d">You own the concept, present it, and specialize. Digital, presentation and visual design pay $13K to $28K more. The ladder forks here toward UX and front-end.</p></div>
+    <div style="--c:var(--pink);--pc:var(--pink);--h:124px"><div class="bar"></div><div class="yrs">Years 5–8</div><h4>Art director</h4><div class="pay num">$85–124K</div><p class="d">You decide what the work looks like and direct the people who make it. $114,850 median; top ten percent over $213,000. The job is mostly meetings.</p></div>
+    <div style="--c:var(--blue);--pc:var(--blue);--h:172px"><div class="bar"></div><div class="yrs">Years 8–15</div><h4>Creative director</h4><div class="pay num">$103–166K</div><p class="d">You own the creative output of an agency, brand or studio. Sixty-two percent at this level are self-employed, which often means a studio of their own.</p></div>
+  </div>
+  <p class="src" style="margin-top:22px">In advertising, junior art director exists at the first rung: an agency pairs you with a junior copywriter from day one. It pays like a junior designer, but you skip a rung if the work is good.</p>
+  <div class="folio"><span class="run">The Ladder</span><span>16</span></div>
+</section>
+
+<!-- CLOSE -->
+<section class="spread close" id="talk">
+  <div class="blob" style="top:-14%;right:-12%;width:42%"><svg viewBox="0 0 380 320" aria-hidden="true"><path filter="url(#grain)" fill="#ed3d93" d="M78 26C174-20 304 2 356 82c52 81 20 190-72 226-93 36-220 10-262-66C-20 166-18 72 78 26Z"/></svg></div>
+  <div class="pages">
+    <div>
+      <span class="eyebrow">Straight talk</span>
+      <h2 style="margin-top:14px">The job called graphic designer is shrinking. The field is not.</h2>
+      <p class="serif-lede" style="margin-top:24px;max-width:34ch">AI tools let one designer do what two did. That is the government's own explanation, and it shows up in every design-adjacent job here.</p>
+      <p style="font-size:15.5px;margin-top:18px;max-width:46ch">It does not mean there are no jobs. It means the jobs go to people who bring something beyond layout. New York pays twenty-five to forty percent above national for most of this work and has more openings in advertising, publishing, media, museums and tech than anywhere except Los Angeles and the Bay Area. You picked the right place to study this.</p>
+      <a class="cta" href="index.html">Find your closest job in the Path Finder</a>
+    </div>
+    <ul class="rules">
+      <li><b>Pick a second skill early.</b> Every job here over $90,000 is graphic design plus one thing: code, motion, research, or production. Choose yours by your third semester.</li>
+      <li><b>Learn the tools employers list.</b> Across ten jobs: Creative Cloud, Figma, PowerPoint and Keynote, After Effects, HTML and CSS. Two of those are easy to self-teach and most of your competition will not bother.</li>
+      <li><b>Use AI tools and say so.</b> Employers list them as required skills. Show a workflow that uses them well.</li>
+      <li><b>Search the titles, not the job.</b> Product designer, digital designer, brand designer, production artist, content designer, motion designer, video editor, junior art director.</li>
+    </ul>
+  </div>
+  <div class="folio"><span>17</span><span class="run">Straight Talk</span></div>
+</section>
+
+<p class="colophon">Pay and growth figures come from the U.S. Bureau of Labor Statistics <a href="https://www.bls.gov/ooh/">Occupational Outlook Handbook</a> and <a href="https://www.bls.gov/oes/">Occupational Employment and Wage Statistics</a> (wages May 2025; projections 2025 to 2035, or 2024 to 2034 for front-end development, video editing, wayfinding and producing), the Department of Labor's <a href="https://www.onetonline.org/">O*NET database</a>, and the <a href="https://www.roberthalf.com/us/en/insights/salary-guide">Robert Half 2027 Salary Guide</a>. Starting out is the lowest ten percent of earners; established is the median. Course lists match the <a href="index.html">COMD Career Path Finder</a>. Front-end developer, video editor, wayfinding designer and creative producer are proposed additions pending faculty review. Updated each fall when new figures are released. Department of Communication Design, New York City College of Technology, CUNY.</p>
+
+<script>
+(function(){
+  var links = Array.prototype.slice.call(document.querySelectorAll('.jump a'));
+  var map = {};
+  links.forEach(function(a){ var id = a.getAttribute('href').slice(1); var el = document.getElementById(id); if(el) map[id] = a; });
+  var ids = Object.keys(map);
+  if(!ids.length) return;
+  // a job spread counts toward The Jobs
+  var jobIds = ['gd','ux','frontend','motion','copy','illo','wayfinding','producer'];
+  jobIds.forEach(function(id){ var el = document.getElementById(id); if(el) map[id] = map['jobs']; });
+  var watched = ids.concat(jobIds).map(function(id){ return document.getElementById(id); }).filter(Boolean);
+  var current = null;
+  function setOn(a){ if(a === current) return; links.forEach(function(l){ l.classList.remove('on'); }); if(a) a.classList.add('on'); current = a; }
+  var io = new IntersectionObserver(function(entries){
+    var best = null;
+    entries.forEach(function(e){ if(e.isIntersecting) { if(!best || e.boundingClientRect.top < best.boundingClientRect.top) best = e; } });
+    if(best) setOn(map[best.target.id]);
+  }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+  watched.forEach(function(el){ io.observe(el); });
+  setOn(map['cover']);
+})();
+</script>
+</body>
+</html>
