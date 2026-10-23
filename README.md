@@ -12,6 +12,7 @@ It is a planning tool, not a degree audit. Students should always confirm their 
 | `data/job-data.json` | Pay, number of jobs and outlook from the U.S. Bureau of Labor Statistics and O*NET | Updated automatically twice a year (May 15 and September 15) |
 | `index.html` | The page itself, including the course list and the class-to-skill links | Department chair, after faculty review |
 | `career-map.html` | Career Map prototype: pick an entry-level job and see the 3 strategy and 4 skills courses for it. Separate page; `index.html` is unchanged | Department chair, after faculty review |
+| `career-magazine.html` | "Where COMD Takes You": the student-facing career magazine. Ten jobs, what each pays, which are growing, the courses that count twice, and the designer-to-creative-director ladder. Standalone page; nothing else depends on it | Department chair, after faculty review |
 | `data/career-map.json` | Career Map content: courses (with an `offered` flag), entry-level NYC jobs, their course plans, internship and senior project focus, NYC pay | Faculty suggest edits; chair approves |
 
 ### Editing the Career Map
@@ -35,6 +36,14 @@ The chair reviews the suggestion and publishes it. A check runs on every suggest
 - Keep text inside straight double quotes: `"like this"`.
 - If your text needs a double quote inside it, type `\"`.
 - Every item in a list needs a comma after it, except the last one.
+
+## The career magazine
+
+`career-magazine.html` is the student-facing read. The Path Finder is a tool students open when they are planning a semester; the magazine is something they read, share, and show their families. It covers ten jobs rather than six, adds the courses that feed more than one career, and ends with the designer to art director to creative director ladder.
+
+Four jobs on it are proposed additions pending faculty review and are not yet in the Path Finder: front-end web developer, video editor, environmental and wayfinding designer, and creative producer. If faculty approve them, their course lists should become Path Finder mappings in `data/career-map.json`.
+
+Every figure links out to its source on the BLS or O*NET page it came from, so a student or a reviewer can check any number without leaving the page. Pay figures are refreshed each fall from the same release that updates `data/job-data.json`.
 
 ## Suggesting changes to courses or class-to-skill links
 
