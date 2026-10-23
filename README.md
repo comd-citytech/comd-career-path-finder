@@ -11,6 +11,12 @@ It is a planning tool, not a degree audit. Students should always confirm their 
 | `data/role-content.json` | Job descriptions: a day on the job, why students should look into it, job board search terms, NYC employers, portfolio pieces | Faculty |
 | `data/job-data.json` | Pay, number of jobs and outlook from the U.S. Bureau of Labor Statistics and O*NET | Updated automatically twice a year (May 15 and September 15) |
 | `index.html` | The page itself, including the course list and the class-to-skill links | Department chair, after faculty review |
+| `career-map.html` | Career Map prototype: pick an entry-level job and see the 3 strategy and 4 skills courses for it. Separate page; `index.html` is unchanged | Department chair, after faculty review |
+| `data/career-map.json` | Career Map content: courses (with an `offered` flag), entry-level NYC jobs, their course plans, internship and senior project focus, NYC pay | Faculty suggest edits; chair approves |
+
+### Editing the Career Map
+
+Open `data/career-map.json` and edit it the same way as `role-content.json`. Each job needs exactly 3 `strategy` and 4 `skills` course codes. To retire a course, set `"offered": false`. It stays on the map, faded, and the check flags any job plan that still recommends it.
 
 ## How faculty suggest an edit
 

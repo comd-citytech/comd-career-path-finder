@@ -19,7 +19,7 @@ jobs:
           python3 - <<'PY'
           import json, sys
           ok = True
-          for path in ["data/role-content.json", "data/job-data.json"]:
+          for path in ["data/role-content.json", "data/job-data.json", "data/career-map.json"]:
               try:
                   data = json.load(open(path, encoding="utf-8"))
               except json.JSONDecodeError as e:
@@ -37,6 +37,42 @@ jobs:
                           if not isinstance(data[job].get(name), kind):
                               print(f"::error file={path}::'{job}' → '{name}' should be {'text in quotes' if kind is str else 'a list like [\"a\", \"b\"]'}.")
                               ok = False
+              if path.endswith("career-map.json"):
+                  roles = json.load(open("data/role-content.json", encoding="utf-8"))
+                  paths = {p["id"] for p in data.get("paths", [])}
+                  courses = {c["code"]: c for c in data.get("courses", [])}
+                  for c in courses.values():
+                      if c.get("type") not in ("strategy", "skills"):
+                          print(f"::error file={path}::COMD {c['code']}: 'type' should be \"strategy\" or \"skills\".")
+                          ok = False
+                      for p in c.get("paths", []):
+                          if p not in paths:
+                              print(f"::error file={path}::COMD {c['code']} lists a line '{p}' that doesn't exist.")
+                              ok = False
+                  for job in data.get("jobs", []):
+                      name = job.get("title", job.get("id", "?"))
+                      if job.get("path") not in paths:
+                          print(f"::error file={path}::'{name}' is on a line that doesn't exist.")
+                          ok = False
+                      if job.get("role") not in roles:
+                          print(f"::error file={path}::'{name}' links to Path Finder job '{job.get('role')}', which doesn't exist.")
+                          ok = False
+                      for kind, need in (("strategy", 3), ("skills", 4)):
+                          picks = job.get(kind, [])
+                          if len(picks) != need:
+                              print(f"::error file={path}::'{name}' needs exactly {need} {kind} courses. It has {len(picks)}.")
+                              ok = False
+                          for code in picks:
+                              c = courses.get(code)
+                              if not c:
+                                  print(f"::error file={path}::'{name}' recommends COMD {code}, which isn't in the course list.")
+                                  ok = False
+                              elif c["type"] != kind:
+                                  print(f"::error file={path}::'{name}' lists COMD {code} as {kind}, but it's a {c['type']} course.")
+                                  ok = False
+                              elif not c.get("offered"):
+                                  print(f"::error file={path}::'{name}' recommends COMD {code}, which is marked as not offered.")
+                                  ok = False
           print("All data files look good." if ok else "Fix the problems above, then commit again.")
           sys.exit(0 if ok else 1)
           PY
