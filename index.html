@@ -179,6 +179,7 @@ h2{margin:0; font-size:20px; font-weight:800}
 .incl .lbl{font-weight:700}
 .incl.fields{gap:12px 20px}
 .fld{display:inline-flex; flex-direction:column; gap:4px; font-size:13px; font-weight:700}
+.fld select{font:inherit; font-weight:400; font-size:15px; border:1.5px solid var(--line); background:var(--bg); color:var(--ink); padding:6px 8px; min-height:38px; width:220px; max-width:100%}
 .fld input{font:inherit; font-weight:400; font-size:15px; border:1.5px solid var(--line); background:var(--bg); color:var(--ink); padding:6px 8px; min-height:38px; width:220px; max-width:100%}
 .fld input:focus{border-color:var(--ink)}
 .btn.solid{background:var(--ink); color:var(--bg)}
@@ -246,7 +247,7 @@ h2{margin:0; font-size:20px; font-weight:800}
     </div>
     <div class="incl fields">
       <label class="fld" for="pl-name">Name (optional)<input id="pl-name" type="text" autocomplete="name"></label>
-      <label class="fld" for="pl-cat">Catalog year (optional)<input id="pl-cat" type="text" placeholder="e.g. 2025-2026"></label>
+      <label class="fld" for="pl-grad">Expected graduation (optional)<select id="pl-grad"><option value="">Choose a semester</option></select></label>
     </div>
     <div class="incl">
       <label><input type="checkbox" id="pl-share"> I'm sharing this plan with my advisor or the department</label>
@@ -975,7 +976,7 @@ h2{margin:0; font-size:20px; font-weight:800}
   function buildPlanPdf(J, m){
     var doc = new J({unit:'pt', format:'letter'}), W = 612, H = 792, M = 40, CW = W - 2*M;
     var INK = '#16161A', MUTED = '#5C5A55', RULE = '#2A2A2A', HAIR = '#9A978F';
-    var FILL = {elect:'#E9D7E0', req:'#D6E2F0', gen:'#FBF1CF', head:'#3A3A3A'};
+    var FILL = {elect:'#E9D7E0', req:'#D6E2F0', gen:'#FBF1CF', head:'#3A3A3A', taken:'#555555'};
     var FACE = 'helvetica';
     if(m.fonts && m.fonts.regular && m.fonts.bold){
       try{
@@ -1005,17 +1006,17 @@ h2{margin:0; font-size:20px; font-weight:800}
       }
       var fx = 372, fw = W - M - fx;
       field('Name', m.name, fx, M + 2, fw);
-      var parts = [['Catalog year', m.catalogYear], ['Date', m.dateShort || m.today]];
+      var parts = [['Graduating', m.grad], ['Date', m.dateShort || m.today]];
       if(m.emplid !== null) parts.push(['EmplID', m.emplid]);
       var pw = (fw - (parts.length - 1)*10) / parts.length;
       parts.forEach(function(p, i){ field(p[0], p[1], fx + i*(pw + 10), M + 30, pw); });
       doc.setDrawColor(INK); doc.setLineWidth(1.6); doc.line(M, M + 62, W - M, M + 62);
       return M + 88;
     }
-    function tag(label, x, y, solid){
-      font(6.5, true, solid ? '#FFFFFF' : INK);
+    function tag(label, x, y, solid, onDark){
+      font(6.5, true, (solid || onDark) ? '#FFFFFF' : INK);
       var tw = doc.getTextWidth(label) + 8;
-      doc.setDrawColor(INK); doc.setLineWidth(0.7);
+      doc.setDrawColor(onDark ? '#FFFFFF' : INK); doc.setLineWidth(0.7);
       if(solid){ doc.setFillColor(INK); doc.rect(x - tw/2, y - 7, tw, 10, 'F'); } else { doc.rect(x - tw/2, y - 7, tw, 10, 'S'); }
       doc.text(label, x, y + 0.6, {align:'center'});
     }
@@ -1035,8 +1036,8 @@ h2{margin:0; font-size:20px; font-weight:800}
     y += 14;
     var legend = [['elect','COMD elective'],['req','COMD required'],['gen','General education']], lx = M;
     legend.forEach(function(l){ doc.setFillColor(FILL[l[0]]); doc.setDrawColor(RULE); doc.setLineWidth(0.5); doc.rect(lx, y, 10, 10, 'FD'); font(8, false, MUTED); doc.text(l[1], lx + 14, y + 8); lx += 18 + doc.getTextWidth(l[1]) + 14; });
-    tag('TAKEN', lx + 18, y + 8, true); font(8, false, MUTED); doc.text('finished', lx + 36, y + 8);
-    tag('PLANNED', lx + 98, y + 8, false); font(8, false, MUTED); doc.text('suggested for your goal', lx + 124, y + 8);
+    doc.setFillColor(FILL.taken); doc.setDrawColor(RULE); doc.setLineWidth(0.5); doc.rect(lx, y, 10, 10, 'FD'); font(8, false, MUTED); doc.text('Taken', lx + 14, y + 8); lx += 18 + doc.getTextWidth('Taken') + 14;
+    tag('SUGGESTED', lx + 24, y + 8, false); font(8, false, MUTED); doc.text('toward your career goal', lx + 52, y + 8);
     y += 22;
     var cols = m.grid.length, colW = CW / cols, headH = 24, rowH = 62;
     var rows = Math.max.apply(null, m.grid.map(function(c){ return c.cells.length; }));
@@ -1046,7 +1047,8 @@ h2{margin:0; font-size:20px; font-weight:800}
       font(10, true, '#FFFFFF'); doc.text(col.title, x + colW/2, y + 15.5, {align:'center'});
       for(var ri = 0; ri < rows; ri++){
         var c = col.cells[ri], cy = y + headH + ri*rowH;
-        var kind = !c ? 'gen' : (c.type === 'skill' || c.type === 'strat') ? 'elect' : c.type;
+        var kind = !c ? 'gen' : c.status === 'taken' ? 'taken' : (c.type === 'skill' || c.type === 'strat') ? 'elect' : c.type;
+        var dark = kind === 'taken';
         doc.setFillColor(FILL[kind]); doc.setDrawColor(RULE); doc.setLineWidth(0.6); doc.rect(x, cy, colW, rowH, 'FD');
         if(!c) continue;
         font(8.5, true);
@@ -1055,10 +1057,10 @@ h2{margin:0; font-size:20px; font-weight:800}
         var s = c.sub ? wrap(c.sub, tw) : [];
         if(t.length + s.length > 5){ s = s.slice(0, Math.max(0, 5 - t.length)); }
         var blockH = t.length*10 + s.length*9.5 + (c.status ? 13 : 0), ty = cy + (rowH - blockH)/2 + 8;
-        font(8.5, true); ty = lines(t, x + colW/2, ty, 10, 'center');
-        font(8, false, '#333333'); ty = lines(s, x + colW/2, ty, 9.5, 'center');
-        if(c.status === 'taken') tag('TAKEN', x + colW/2, ty + 6, true);
-        if(c.status === 'planned') tag('PLANNED', x + colW/2, ty + 6, false);
+        font(8.5, true, dark ? '#FFFFFF' : INK); ty = lines(t, x + colW/2, ty, 10, 'center');
+        font(8, false, dark ? '#FFFFFF' : '#333333'); ty = lines(s, x + colW/2, ty, 9.5, 'center');
+        if(c.status === 'taken') tag('TAKEN', x + colW/2, ty + 6, false, true);
+        if(c.status === 'planned') tag('SUGGESTED', x + colW/2, ty + 6, false);
         if(c.type === 'gen') box(x + 5, cy + 5, 7, false);
       }
     });
@@ -1068,7 +1070,7 @@ h2{margin:0; font-size:20px; font-weight:800}
     stand.forEach(function(s, i){ var sx = M + i*(CW/4); font(7.5, true, MUTED); doc.text(s[0].toUpperCase(), sx, y); font(12, true); doc.text(s[1], sx, y + 15); });
     y += 34;
     var notes = [];
-    if(m.career) notes.push('Planned courses fill your open slots with the classes that best build toward ' + m.career.job + '. You can take other courses in those slots.');
+    if(m.career) notes.push('Suggested courses fill your open slots with the classes that best build toward ' + m.career.job + '. They are suggestions only. You can take any other course in those slots.');
     notes.push('Writing Intensive: COMD 3504 Communication Design Theory and COMD 4900 Internship are WI. Check DegreeWorks for your WI requirements.');
     notes.push('COMD 4900 Internship needs COMD 4730, COMD 4701, or approval first. If you change the order of your semesters, keep 4701 before your internship.');
     notes.push('Mark the small boxes on general education courses yourself. This planner only tracks COMD courses.');
@@ -1223,7 +1225,7 @@ h2{margin:0; font-size:20px; font-weight:800}
     var extras = planData().filter(function(sec){ return sec.h.indexOf('Job market')===0 || sec.h.indexOf('Other directions')===0; });
     return {
       seqKind:seqKind, grid:grid, career:career, extras: extras.length ? extras : null,
-      name:val('pl-name'), catalogYear:val('pl-cat'), emplid: document.getElementById('pl-share').checked ? val('pl-emplid') : null,
+      name:val('pl-name'), grad:val('pl-grad'), emplid: document.getElementById('pl-share').checked ? val('pl-emplid') : null,
       fonts:FONTS, logo:LOGO, dutiesCredit:JOB.dutiesCredit||'', today:today(), dateShort:new Date().toLocaleDateString('en-US'), foot:foot(),
       tally:{strat:Math.min(count('strat'),3), skill:Math.min(count('skill')+count('boost'),4), studio:count('studio'), line: top.done ? top.path.name : ''}
     };
@@ -1242,6 +1244,11 @@ h2{margin:0; font-size:20px; font-weight:800}
     var J = window.jspdf && window.jspdf.jsPDF; if(!J) return null;
     return buildPlanPdf(J, planModel());
   }
+  (function(){
+    var sel = document.getElementById('pl-grad'), d = new Date(), mo = d.getMonth(), yr = d.getFullYear();
+    var i = mo <= 4 ? 0 : mo <= 6 ? 1 : 2, names = ['Spring','Summer','Fall'];
+    for(var n = 0; n < 7; n++){ var o = document.createElement('option'); o.textContent = names[i] + ' ' + yr; o.value = o.textContent; sel.appendChild(o); i++; if(i > 2){ i = 0; yr++; } }
+  })();
   document.getElementById('pl-share').addEventListener('change', function(){ document.getElementById('emplid-wrap').hidden = !this.checked; if(!this.checked) document.getElementById('pl-emplid').value = ''; });
   window.COMDPathFinder = {pdf: function(){ return planPdf(); }};
   function note(m){ document.getElementById('save-note').textContent = m; }
