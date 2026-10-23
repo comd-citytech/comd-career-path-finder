@@ -248,7 +248,7 @@ h2{margin:0; font-size:20px; font-weight:800}
   <section class="market" id="market"></section>
 
   <section class="saveplan" aria-labelledby="save-h">
-    <div class="sec-head"><h2 id="save-h">Save my plan</h2><span>Your plan as a two-page PDF: your semester sequence filled in with your classes, and your career direction with space for advisor notes. Your checked classes also stay saved in this browser.</span></div>
+    <div class="sec-head"><h2 id="save-h">Save my plan</h2><span>Your plan as a PDF to bring to advising: your semester sequence filled in with your classes, advising notes, and your career direction with the job market. Your checked classes also stay saved in this browser.</span></div>
     <div class="incl" role="group" aria-label="Which sequence">
       <span class="lbl">Sequence</span>
       <label><input type="radio" name="seq" id="seq-4" checked> 4 semesters</label>
@@ -263,7 +263,7 @@ h2{margin:0; font-size:20px; font-weight:800}
       <label class="fld" for="pl-emplid" id="emplid-wrap" hidden>EmplID<input id="pl-emplid" type="text" inputmode="numeric" maxlength="8"></label>
     </div>
     <div class="incl" role="group" aria-label="Optional third page">
-      <span class="lbl">Add a third page</span>
+      <span class="lbl">On the career page, also include</span>
       <label><input type="checkbox" id="inc-market" checked> Job market table</label>
       <label><input type="checkbox" id="inc-pivot"> Other directions I could take</label>
     </div>
@@ -997,7 +997,6 @@ h2{margin:0; font-size:20px; font-weight:800}
     var doc = new J({unit:'pt', format:'letter'}), W = 612, H = 792, M = 40, CW = W - 2*M;
     var INK = '#16161A', MUTED = '#5C5A55', RULE = '#2A2A2A', HAIR = '#9A978F';
     var FILL = {elect:'#E9D7E0', req:'#D6E2F0', gen:'#FBF1CF', head:'#3A3A3A'};
-    var BAR = ['#7ADFD3', '#245B9C', '#E2A64C'];
     var FACE = 'helvetica';
     if(m.fonts && m.fonts.regular && m.fonts.bold){
       try{
@@ -1090,70 +1089,7 @@ h2{margin:0; font-size:20px; font-weight:800}
     notes.push('Mark the small boxes on general education courses yourself. This planner only tracks COMD courses.');
     bullets(notes, M, y, CW, 8.5, 11);
 
-    /* Page 2: the job */
-    doc.addPage();
-    y = header('My Career Direction');
-    if(m.career){
-      var cr = m.career;
-      font(7.5, true, MUTED); doc.text('MY CAREER GOAL', M, y);
-      font(20, true); doc.text(cr.job, M, y + 21);
-      font(9.5, false); y = lines(wrap(cr.what, CW), M, y + 38, 12.5) + 10;
-
-      font(10, true); doc.text('National pay range', M, y); font(7.5, false, MUTED); doc.text('U.S. Bureau of Labor Statistics, ' + cr.payPeriod, W - M, y, {align:'right'});
-      y += 16;
-      var seg = CW/3, pts = [[cr.pay10, 'STARTING OUT', 'Lowest 10% earn less than this. Many first jobs land near here.'], [cr.pay, 'MEDIAN', 'Half of all workers earn more, half earn less.'], [cr.pay90, 'TOP EARNERS', 'Highest 10% earn more than this, usually after years of experience.']];
-      pts.forEach(function(p, i){
-        var cx = M + seg*i + seg/2;
-        font(7, true, MUTED); doc.text(p[1], cx, y, {align:'center'});
-        font(15, true); doc.text(p[0], cx, y + 19, {align:'center'});
-        doc.setFillColor(BAR[i]); doc.triangle(cx - 4, y + 25, cx + 4, y + 25, cx, y + 30, 'F');
-        doc.rect(M + seg*i + (i ? 1 : 0), y + 33, seg - (i ? 1 : 0) - (i < 2 ? 1 : 0), 8, 'F');
-        font(7.5, false, MUTED); lines(wrap(p[2], seg - 18), cx, y + 53, 9, 'center');
-      });
-      y += 76;
-      if(cr.payNote){ font(7.5, false, MUTED); doc.text(cr.payNote, M, y); y += 11; }
-      y += 4;
-      var stats = [[cr.out, cr.outWord + ', ' + cr.outPeriod], [cr.jobs, 'Jobs in the U.S.']], bw = (CW - 2*8) / 3.2;
-      stats.forEach(function(s, i){
-        var bx = M + i*(bw + 8); doc.setDrawColor(INK); doc.setLineWidth(0.7); doc.rect(bx, y, bw, 40, 'S');
-        font(14, true); doc.text(s[0], bx + 8, y + 18); font(7.5, false, MUTED); doc.text(s[1], bx + 8, y + 32);
-      });
-      var wx = M + 2*(bw + 8), ww = W - M - wx; doc.setDrawColor(INK); doc.rect(wx, y, ww, 40, 'S');
-      font(7, true, MUTED); doc.text('WHERE THEY WORK', wx + 8, y + 11);
-      font(8, false); lines(wrap(cr.where, ww - 16).slice(0, 2), wx + 8, y + 22, 9.5);
-      y += 50;
-      font(8, false, MUTED); y = lines(wrap(cr.entry, CW), M, y, 10) + 10;
-
-      y = section('What the job involves', y);
-      var half = Math.ceil(cr.duties.length / 2), dw = (CW - 16) / 2;
-      var y1 = bullets(cr.duties.slice(0, half), M, y, dw, 8.5, 10.5), y2 = bullets(cr.duties.slice(half), M + dw + 16, y, dw, 8.5, 10.5);
-      y = Math.max(y1, y2) + 2;
-      font(6.5, false, MUTED); y = lines(wrap(m.dutiesCredit, CW), M, y, 8) + 12;
-
-      var c1 = 22, c2 = CW*0.52, need = 40 + cr.comps.length*24;
-      if(y + need > H - 56){ doc.addPage(); y = header('My Career Direction'); }
-      doc.setFillColor(INK); doc.rect(M, y, CW, 18, 'F');
-      font(7.5, true, '#FFFFFF'); doc.text('HAVE IT', M + 4, y + 12); doc.text('WHAT EMPLOYERS ASK FOR', M + c1 + 22, y + 12); doc.text('CLASSES THAT TEACH IT', M + c1 + 22 + c2, y + 12);
-      y += 18;
-      cr.comps.forEach(function(cp, i){
-        font(8.5, cp.has); var sl = wrap(cp.skill, c2 - 10);
-        font(8, false); var cl = wrap(cp.classes, CW - c1 - 22 - c2 - 6);
-        var h = Math.max(20, Math.max(sl.length, cl.length)*10 + 8);
-        if(i % 2){ doc.setFillColor('#F2F1EC'); doc.rect(M, y, CW, h, 'F'); }
-        box(M + 9, y + (h - 9)/2, 9, cp.has);
-        font(8.5, cp.has); lines(sl, M + c1 + 22, y + 12.5, 10);
-        font(8, false, '#333333'); lines(cl, M + c1 + 22 + c2, y + 12.5, 10);
-        y += h;
-      });
-      doc.setDrawColor(INK); doc.setLineWidth(0.8); doc.line(M, y, W - M, y); y += 15;
-      font(9.5, true); doc.text('Readiness: ' + cr.now + ' of ' + cr.total + ' now, ' + cr.after + ' of ' + cr.total + ' with this plan', M, y); y += 13;
-      if(cr.plan){ font(8.5, false); lines(wrap(cr.plan, CW), M, y, 11); }
-    } else {
-      font(14, true); doc.text('Career goal: not chosen yet', M, y + 6);
-      font(9.5, false, MUTED); lines(wrap('The career planner opens after you finish 2 strategy and 2 skills courses. Until then, use the next page to think about where you want to go, and talk it through with your advisor.', CW), M, y + 24, 12);
-    }
-
-    /* Page 3: reflection and advising */
+    /* Page 2: advising notes (college) */
     doc.addPage();
     y = header('Advising Notes');
     function prompt(q, hint, py, ph){
@@ -1180,13 +1116,61 @@ h2{margin:0; font-size:20px; font-weight:800}
     var sy = y + bh - 20; doc.line(ax + 10, sy, ax + aw*0.62, sy); doc.line(ax + aw*0.68, sy, ax + aw - 10, sy);
     font(7, false, MUTED); doc.text('Advisor signature', ax + 10, sy + 9); doc.text('Date', ax + aw*0.68, sy + 9);
 
-    /* Optional: exploring options */
+    /* Final page(s): career direction and the job market */
+    doc.addPage();
+    y = header('My Career Direction');
+    function room(h){ if(y + h > H - 56){ doc.addPage(); y = header('My Career Direction'); } }
+    if(m.career){
+      var cr = m.career;
+      font(7.5, true, MUTED); doc.text('MY CAREER GOAL', M, y);
+      font(20, true); doc.text(cr.job, M, y + 21);
+      font(9.5, false); y = lines(wrap(cr.what, CW), M, y + 38, 12.5) + 8;
+      font(8, false, MUTED); y = lines(wrap(cr.entry, CW), M, y, 10) + 12;
+
+      y = section('What the job involves', y);
+      var half = Math.ceil(cr.duties.length / 2), dw = (CW - 16) / 2;
+      var y1 = bullets(cr.duties.slice(0, half), M, y, dw, 8.5, 10.5), y2 = bullets(cr.duties.slice(half), M + dw + 16, y, dw, 8.5, 10.5);
+      y = Math.max(y1, y2) + 2;
+      font(6.5, false, MUTED); y = lines(wrap(m.dutiesCredit, CW), M, y, 8) + 14;
+
+      var c1 = 22, c2 = CW*0.52;
+      room(60 + cr.comps.length*24);
+      y = section('How my classes build these skills', y);
+      doc.setFillColor(INK); doc.rect(M, y - 6, CW, 18, 'F');
+      font(7.5, true, '#FFFFFF'); doc.text('HAVE IT', M + 4, y + 6); doc.text('WHAT EMPLOYERS ASK FOR', M + c1 + 22, y + 6); doc.text('CLASSES THAT TEACH IT', M + c1 + 22 + c2, y + 6);
+      y += 12;
+      cr.comps.forEach(function(cp, i){
+        font(8.5, cp.has); var sl = wrap(cp.skill, c2 - 10);
+        font(8, false); var cl = wrap(cp.classes, CW - c1 - 22 - c2 - 6);
+        var h = Math.max(20, Math.max(sl.length, cl.length)*10 + 8);
+        if(i % 2){ doc.setFillColor('#F2F1EC'); doc.rect(M, y, CW, h, 'F'); }
+        box(M + 9, y + (h - 9)/2, 9, cp.has);
+        font(8.5, cp.has); lines(sl, M + c1 + 22, y + 12.5, 10);
+        font(8, false, '#333333'); lines(cl, M + c1 + 22 + c2, y + 12.5, 10);
+        y += h;
+      });
+      doc.setDrawColor(INK); doc.setLineWidth(0.8); doc.line(M, y, W - M, y); y += 15;
+      font(9.5, true); doc.text('Readiness: ' + cr.now + ' of ' + cr.total + ' now, ' + cr.after + ' of ' + cr.total + ' with this plan', M, y); y += 13;
+      if(cr.plan){ font(8.5, false); y = lines(wrap(cr.plan, CW), M, y, 11); }
+      y += 18;
+
+      room(90);
+      y = section('The job market: ' + cr.job.replace(/^Junior /, ''), y);
+      var facts = [['Starting pay', cr.pay10, 'lowest 10% earn less'], ['Median pay', cr.pay, 'half earn more'], ['Top pay', cr.pay90, 'highest 10% earn more'], ['Outlook', cr.out, cr.outWord.toLowerCase() + ', ' + cr.outPeriod], ['U.S. jobs', cr.jobs, '']];
+      var fw5 = CW / facts.length;
+      facts.forEach(function(f, i){ var fx = M + i*fw5; font(7, true, MUTED); doc.text(f[0].toUpperCase(), fx, y); font(13, true); doc.text(f[1], fx, y + 16); font(7, false, MUTED); doc.text(f[2], fx, y + 26); });
+      y += 40;
+      font(8, false, MUTED); y = lines(wrap('Where they work: ' + cr.where + '. ' + (cr.payNote ? cr.payNote + ' ' : '') + 'Pay is national, ' + cr.payPeriod + ', from the U.S. Bureau of Labor Statistics. First jobs usually start near the low end.', CW), M, y, 10) + 16;
+    } else {
+      font(14, true); doc.text('Career goal: not chosen yet', M, y + 6);
+      font(9.5, false, MUTED); y = lines(wrap('The career planner opens after you finish 2 strategy and 2 skills courses. Come back then to see which jobs your classes point to.', CW), M, y + 24, 12) + 20;
+    }
+
     if(m.extras){
-      doc.addPage();
-      y = header('Exploring My Options');
       m.extras.forEach(function(sec){
+        room(60);
         y = section(sec.h, y);
-        sec.lines.forEach(function(l){ font(9, false); var w = wrap(l, CW - 12); if(y + w.length*11 > H - 60){ doc.addPage(); y = header('Exploring My Options'); } y = bullets([l], M, y, CW, 9, 11) + 2; });
+        sec.lines.forEach(function(l){ font(9, false); room(wrap(l, CW - 12).length*11 + 6); y = bullets([l], M, y, CW, 9, 11) + 2; });
         y += 14;
       });
     }
