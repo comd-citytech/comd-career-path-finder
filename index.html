@@ -160,6 +160,8 @@ h2{margin:0; font-size:20px; font-weight:800}
 .chip .mk{font-weight:700; font-size:13px}
 .chip[aria-pressed="true"] .mk{color:inherit}
 .chip.full{opacity:.45}
+.chip.off{opacity:.6; border-style:dashed}
+.chip .mk.note{font-weight:400}
 .legend{display:flex; flex-wrap:wrap; gap:6px 16px; font-size:12px; color:var(--muted)}
 .stack{display:flex; height:12px; background:var(--line); overflow:hidden}
 .stack span{display:block; height:100%}
@@ -667,7 +669,7 @@ h2{margin:0; font-size:20px; font-weight:800}
     {id:'adv', name:'Advertising',    blurb:'Ideas that sell and stick', careers:['Junior art director','Junior copywriter','Creative producer'], any:null},
     {id:'mot', name:'Motion',         blurb:'Design that moves', careers:['Motion designer','Video editor','3D generalist'], any:null},
     {id:'ill', name:'Illustration',   blurb:'Images that tell stories', careers:['Illustrator','Storyboard artist','Character designer'], any:'strat'},
-    {id:'web', name:'Web / UX',       blurb:'Screens people use', careers:['Product / UX designer','Front-end web developer','Web designer'], any:'skill'}
+    {id:'web', name:'Web / UX',       blurb:'Screens people use', careers:['Product / UX designer','Front-end web developer','Web designer'], any:['strat','skill']}
   ];
   var C = [
     ['1100','GD Principles I','found',[],[]],
@@ -721,6 +723,10 @@ h2{margin:0; font-size:20px; font-weight:800}
     ['4830','Senior Project','studio',[]],
     ['4801','The Portfolio','studio',[]]
   ].map(function(r){ return {code:r[0], name:r[1], type:r[2], paths:r[3], pre:r[4]||[]}; });
+  // Not offered recently. Same list as "offered": false in data/career-map.json.
+  // Students can still check them off, but the page never suggests them.
+  var OFF = ['3530','3652'];
+  C.forEach(function(c){ c.off = OFF.indexOf(c.code)>-1; });
   var BY = {}; C.forEach(function(c){ BY[c.code]=c; });
   var FOUND = C.filter(function(c){return c.type==='found';}).map(function(c){return c.code;});
   var EXAMPLE = FOUND.concat(['3501','3402','3527','3551']);
@@ -840,13 +846,13 @@ h2{margin:0; font-size:20px; font-weight:800}
 
   function chip(c){
     var b = document.createElement('button');
-    b.type='button'; b.className='chip'; b.dataset.code=c.code;
+    b.type='button'; b.className='chip'+(c.off?' off':''); b.dataset.code=c.code;
     b.id = 'c-'+c.code+'-'+Math.random().toString(36).slice(2,6);
     var dots = c.paths.map(function(p){ return '<span class="dot" style="background:'+color(p)+'"></span>'; }).join('');
     var bo = (c.type==='found') ? null : bestOut(c.code), mk = '';
     if(bo!==null){ var oc = bo>=3?'up':(bo<=-2?'down':'flat'); mk = ' <span class="mk out '+oc+'" title="Leads to a job with '+(bo>0?'+':'')+bo+'% outlook">'+(oc==='up'?'↑':(oc==='down'?'↓':'→'))+'</span>'; }
-    b.innerHTML = '<span class="box" aria-hidden="true"></span>'+(dots?'<span class="dots" aria-hidden="true">'+dots+'</span>':'')+'<span><span class="code">'+c.code+'</span> '+c.name.replace(/&/g,'&amp;')+mk+'</span>';
-    b.setAttribute('aria-label', 'COMD '+c.code+' '+c.name);
+    b.innerHTML = '<span class="box" aria-hidden="true"></span>'+(dots?'<span class="dots" aria-hidden="true">'+dots+'</span>':'')+'<span><span class="code">'+c.code+'</span> '+c.name.replace(/&/g,'&amp;')+mk+(c.off?' <span class="mk note">· not offered recently</span>':'')+'</span>';
+    b.setAttribute('aria-label', 'COMD '+c.code+' '+c.name+(c.off?', not offered recently':''));
     b.addEventListener('click', function(){
       var cap = document.getElementById('cap-note');
       if(!has(c.code)){
@@ -874,7 +880,7 @@ h2{margin:0; font-size:20px; font-weight:800}
         wrap.innerHTML = '<div class="sub">'+(t==='strat'?'Strategy':'Skills')+'</div>';
         var chips = document.createElement('div'); chips.className='chips';
         C.filter(function(c){ return c.type===t && c.paths.indexOf(path.id)>-1; }).forEach(function(c){ chips.appendChild(chip(c)); });
-        if(path.any===t){ var a=document.createElement('span'); a.className='any'; a.textContent='+ 1 from any path'; chips.appendChild(a); }
+        if([].concat(path.any).indexOf(t)>-1){ var a=document.createElement('span'); a.className='any'; a.textContent='+ 1 from any path'; chips.appendChild(a); }
         wrap.appendChild(chips); body.appendChild(wrap);
       });
       row.appendChild(head); row.appendChild(body); p.appendChild(row);
@@ -892,7 +898,7 @@ h2{margin:0; font-size:20px; font-weight:800}
   }
 
   function eligible(c){
-    if(has(c.code)) return false;
+    if(has(c.code) || c.off) return false;
     if(c.type==='found') return c.pre.every(has);
     if(!upperOpen()) return false;
     if(c.type==='studio'){
@@ -1001,7 +1007,7 @@ h2{margin:0; font-size:20px; font-weight:800}
     while(true){
       var tally = {};
       x.comps.forEach(function(cp,i){ if(cov[i]) return; cp[1].forEach(function(c){
-        var cc = BY[c]; if(has(c) || picks.indexOf(c)>-1) return;
+        var cc = BY[c]; if(has(c) || cc.off || picks.indexOf(c)>-1) return;
         if((cc.type==='strat' && sRem>0) || (isSkill(cc) && kRem>0)) tally[c] = (tally[c]||0)+1;
       }); });
       var best = Object.keys(tally).sort(function(a,b){ return tally[b]-tally[a]; })[0];
@@ -1095,7 +1101,7 @@ h2{margin:0; font-size:20px; font-weight:800}
     }).join('');
 
     var cand = {};
-    gaps.forEach(function(cp){ cp[1].forEach(function(code){ if(!has(code)){ (cand[code] = cand[code] || []).push(cp[0]); } }); });
+    gaps.forEach(function(cp){ cp[1].forEach(function(code){ if(!has(code) && !BY[code].off){ (cand[code] = cand[code] || []).push(cp[0]); } }); });
     var list = Object.keys(cand).map(function(code){ return {c:BY[code], why:cand[code]}; })
       .sort(function(a,b){ return b.why.length - a.why.length; });
     var sRem = Math.max(0,3-s), kRem = Math.max(0,4-k);

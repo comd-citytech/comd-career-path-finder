@@ -1,6 +1,7 @@
 {
   "_note": "Career Map data. Faculty can suggest edits through a pull request. 'offered': false keeps a course on the map, faded, and never recommends it. Each job needs exactly 3 strategy and 4 skills courses that are offered. 'role' links the job to the Path Finder job of the same code in role-content.json and job-data.json.",
   "updated": "2026-10-23",
+  "retired": ["3507", "3540", "3316", "3292", "3532"],
   "paths": [
     {"id": "adv", "name": "Advertising", "blurb": "Agency and campaign work"},
     {"id": "gd", "name": "Graphic Design", "blurb": "Brand, print and packaging"},
