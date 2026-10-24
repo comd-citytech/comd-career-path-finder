@@ -21,6 +21,7 @@ This repository is the single source of truth for COMD course and career data. C
 - Retired. Never list or recommend these: COMD 3507, 3540, 3316, 3292, 3532. They are in `retired` in `data/career-map.json`, and the check fails if any of them appear in the pages or data.
 - Not offered recently. Show them faded, never recommend them: COMD 3530, 3652 (`"offered": false` in `data/career-map.json`, `OFF` in `index.html`). Students can still check them off in the Path Finder if they took them.
 - COMD 3662 is Strategic Content Creation (the catalog still says Rich Media). It serves Advertising, Graphic Design and Motion, not Web/UX.
+- COMD 3402 Brand Strategy for Creatives is a strategy course in marketing and strategic thinking, not logos or brand identity systems (that is 3501). It serves graphic design, copywriting and art direction, not Illustration.
 - COMD 3711 Vector Art Editing sits under Illustration.
 - COMD 3505 Special Topics in GD alternates between expressive typography and wayfinding.
 - COMD 3562 UX/UI is always offered.
