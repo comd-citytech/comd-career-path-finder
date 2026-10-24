@@ -4,10 +4,14 @@ on:
   pull_request:
     paths:
       - "data/**"
+      - "index.html"
+      - "career-map.html"
   push:
     branches: [main]
     paths:
       - "data/**"
+      - "index.html"
+      - "career-map.html"
 
 jobs:
   check:
@@ -73,6 +77,28 @@ jobs:
                               elif not c.get("offered"):
                                   print(f"::error file={path}::'{name}' recommends COMD {code}, which is marked as not offered.")
                                   ok = False
+          import re
+          cm = json.load(open("data/career-map.json", encoding="utf-8"))
+          retired = set(cm.get("retired", []))
+          files = ["index.html", "career-map.html", "data/career-map.json", "data/role-content.json"]
+          for f in files:
+              text = open(f, encoding="utf-8").read()
+              if f == "data/career-map.json":
+                  text = text.replace(json.dumps(cm.get("retired", [])), "")
+                  text = re.sub(r'"retired":\s*\[[^\]]*\]', "", text)
+              for code in sorted(retired):
+                  if re.search(r"(?<!\d)" + code + r"(?!\d)", text):
+                      print(f"::error file={f}::COMD {code} is retired but still appears here. Remove it.")
+                      ok = False
+          idx = open("index.html", encoding="utf-8").read()
+          pf = {m.group(1) for m in re.finditer(r"\['(\d{4})','[^']*','(?:strat|skill)'", idx)}
+          mp = {c["code"] for c in cm.get("courses", [])}
+          for code in sorted(pf - mp):
+              print(f"::error file=data/career-map.json::COMD {code} is in the Path Finder (index.html) but not in the Career Map course list.")
+              ok = False
+          for code in sorted(mp - pf):
+              print(f"::error file=index.html::COMD {code} is in the Career Map course list but not in the Path Finder (index.html).")
+              ok = False
           print("All data files look good." if ok else "Fix the problems above, then commit again.")
           sys.exit(0 if ok else 1)
           PY

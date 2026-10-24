@@ -16,7 +16,9 @@ It is a planning tool, not a degree audit. Students should always confirm their 
 
 ### Editing the Career Map
 
-Open `data/career-map.json` and edit it the same way as `role-content.json`. Each job needs exactly 3 `strategy` and 4 `skills` course codes. To retire a course, set `"offered": false`. It stays on the map, faded, and the check flags any job plan that still recommends it.
+Open `data/career-map.json` and edit it the same way as `role-content.json`. Each job needs exactly 3 `strategy` and 4 `skills` course codes. If a course hasn't been offered recently, set `"offered": false`. It stays on the map, faded, and the check flags any job plan that still recommends it. To retire a course for good, add its code to `"retired"` and remove it from both pages. The check fails if a retired course shows up anywhere, or if the two pages' course lists don't match.
+
+`CLAUDE.md` lists the current course decisions. Claude reads it before working in this repo, so the same rules apply in every chat.
 
 ## How faculty suggest an edit
 
