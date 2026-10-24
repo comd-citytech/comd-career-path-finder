@@ -4,10 +4,16 @@ on:
   pull_request:
     paths:
       - "data/**"
+      - "index.html"
+      - "career-map.html"
+      - "career-magazine.html"
   push:
     branches: [main]
     paths:
       - "data/**"
+      - "index.html"
+      - "career-map.html"
+      - "career-magazine.html"
 
 jobs:
   check:
@@ -73,6 +79,39 @@ jobs:
                               elif not c.get("offered"):
                                   print(f"::error file={path}::'{name}' recommends COMD {code}, which is marked as not offered.")
                                   ok = False
+          import re
+          cm = json.load(open("data/career-map.json", encoding="utf-8"))
+          retired = set(cm.get("retired", []))
+          files = ["index.html", "career-map.html", "career-magazine.html", "data/career-map.json", "data/role-content.json"]
+          for f in files:
+              text = open(f, encoding="utf-8").read()
+              if f == "data/career-map.json":
+                  text = text.replace(json.dumps(cm.get("retired", [])), "")
+                  text = re.sub(r'"retired":\s*\[[^\]]*\]', "", text)
+              for code in sorted(retired):
+                  if re.search(r"(?<!\d)" + code + r"(?!\d)", text):
+                      print(f"::error file={f}::COMD {code} is retired but still appears here. Remove it.")
+                      ok = False
+          idx = open("index.html", encoding="utf-8").read()
+          pf = {m.group(1) for m in re.finditer(r"\['(\d{4})','[^']*','(?:strat|skill)'", idx)}
+          mp = {c["code"] for c in cm.get("courses", [])}
+          for code in sorted(pf - mp):
+              print(f"::error file=data/career-map.json::COMD {code} is in the Path Finder (index.html) but not in the Career Map course list.")
+              ok = False
+          for code in sorted(mp - pf):
+              print(f"::error file=index.html::COMD {code} is in the Career Map course list but not in the Path Finder (index.html).")
+              ok = False
+          off_map = {c["code"] for c in cm.get("courses", []) if not c.get("offered")}
+          m = re.search(r"var OFF = \[([^\]]*)\]", idx)
+          off_pf = set(re.findall(r"\d{4}", m.group(1))) if m else set()
+          if off_pf != off_map:
+              print(f"::error file=index.html::Not-offered courses differ. Path Finder OFF list: {sorted(off_pf)}. Career Map 'offered': false: {sorted(off_map)}.")
+              ok = False
+          mag = open("career-magazine.html", encoding="utf-8").read()
+          for code in sorted(off_map):
+              if re.search(r"(?<!\d)" + code + r"(?!\d)", mag):
+                  print(f"::error file=career-magazine.html::COMD {code} hasn't been offered recently, so the magazine shouldn't recommend it.")
+                  ok = False
           print("All data files look good." if ok else "Fix the problems above, then commit again.")
           sys.exit(0 if ok else 1)
           PY

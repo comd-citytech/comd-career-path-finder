@@ -17,7 +17,9 @@ It is a planning tool, not a degree audit. Students should always confirm their 
 
 ### Editing the Career Map
 
-Open `data/career-map.json` and edit it the same way as `role-content.json`. Each job needs exactly 3 `strategy` and 4 `skills` course codes. To retire a course, set `"offered": false`. It stays on the map, faded, and the check flags any job plan that still recommends it.
+Open `data/career-map.json` and edit it the same way as `role-content.json`. Each job needs exactly 3 `strategy` and 4 `skills` course codes. If a course hasn't been offered recently, set `"offered": false`. It stays on the map, faded, and the check flags any job plan that still recommends it. To retire a course for good, add its code to `"retired"` and remove it from both pages. The check fails if a retired course shows up anywhere, or if the two pages' course lists don't match.
+
+`CLAUDE.md` lists the current course decisions. Claude reads it before working in this repo, so the same rules apply in every chat.
 
 ## How faculty suggest an edit
 
@@ -41,9 +43,9 @@ The chair reviews the suggestion and publishes it. A check runs on every suggest
 
 `career-magazine.html` is the student-facing read. The Path Finder is a tool students open when they are planning a semester; the magazine is something they read, share, and show their families. It covers nine jobs rather than six, adds the courses that feed more than one career, and ends with the designer to art director to creative director ladder.
 
-Three jobs on it are proposed additions pending faculty review and are not yet in the Path Finder: front-end web developer, video editor, and creative producer. If faculty approve them, their course lists should become Path Finder mappings in `data/career-map.json`.
+Three jobs on it are proposed additions pending faculty review: front-end web developer, video editor, and creative producer. They are in the Path Finder already. The Career Map has a video editor plan; front-end developer and creative producer don't have Career Map plans yet.
 
-The magazine does not list COMD 3507, and it no longer carries an environmental and wayfinding designer spread. Note that `index.html` still offers 3507 in the Path Finder course list and in six job skill mappings; those are separate edits.
+The course lists on each job card come from the courses the Path Finder links to that job, leaving out courses not offered recently. When a course changes in `index.html` or `data/career-map.json`, update the magazine in the same pull request. The data check fails if a retired course appears on any of the three pages.
 
 Every figure links out to its source on the BLS or O*NET page it came from, so a student or a reviewer can check any number without leaving the page. Pay figures are refreshed each fall from the same release that updates `data/job-data.json`.
 
