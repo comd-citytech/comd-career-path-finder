@@ -35,6 +35,7 @@ When the chair changes a course decision, update this list in the same commit as
 - `index.html`: the live Path Finder (start from your classes). Embedded on the department WordPress site. Change it only with the chair's approval.
 - `career-map.html`: the Career Map (start from a job). A separate page, so it doesn't replace the original.
 - `career-magazine.html`: the student-facing career magazine. It has no data feed, so any course or figure change must be copied into it by hand in the same pull request.
+- `hub.html`: one address for all three pages, with a tab for each. It holds no course or career data, so it needs no change when the data changes. If a page is added, renamed or removed, update its tab.
 
 All three pages must agree. When a course is retired, renamed, moved to another line, or marked not offered, update `index.html`, `data/career-map.json` and `career-magazine.html` together. When `data/job-data.json` changes, update the magazine's pay and outlook figures.
 

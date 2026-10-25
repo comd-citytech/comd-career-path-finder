@@ -13,6 +13,7 @@ It is a planning tool, not a degree audit. Students should always confirm their 
 | `index.html` | The page itself, including the course list and the class-to-skill links | Department chair, after faculty review |
 | `career-map.html` | Career Map prototype: pick an entry-level job and see the 3 strategy and 4 skills courses for it. Separate page; `index.html` is unchanged | Department chair, after faculty review |
 | `career-magazine.html` | "Where COMD @ City Tech Takes You": the student-facing career magazine. Nine jobs, what each pays, which are growing, the courses that count twice, and the designer-to-creative-director ladder. Standalone page; nothing else depends on it | Department chair, after faculty review |
+| `hub.html` | One address for all three pages. A tab bar on top switches between the Path Finder, the Career Map and the magazine. It holds no data of its own | Department chair |
 | `data/career-map.json` | Career Map content: courses (with an `offered` flag), entry-level NYC jobs, their course plans, internship and senior project focus, NYC pay | Faculty suggest edits; chair approves |
 
 ### Editing the Career Map
@@ -48,6 +49,33 @@ Three jobs on it are proposed additions pending faculty review: front-end web de
 The course lists on each job card come from the courses the Path Finder links to that job, leaving out courses not offered recently. When a course changes in `index.html` or `data/career-map.json`, update the magazine in the same pull request. The data check fails if a retired course appears on any of the three pages.
 
 Every figure links out to its source on the BLS or O*NET page it came from, so a student or a reviewer can check any number without leaving the page. Pay figures are refreshed each fall from the same release that updates `data/job-data.json`.
+
+## One address for all three pages
+
+`hub.html` puts the Path Finder, the Career Map and the magazine behind three tabs: **Start from my classes**, **Start from a job** and **Explore careers**. Each page loads the first time a student opens its tab and keeps its place after that. The three pages themselves are unchanged.
+
+The address always matches what the student is looking at, so a copied link opens the same tab, job or section:
+
+| Link | Opens |
+| --- | --- |
+| `hub.html#pathfinder` | Path Finder |
+| `hub.html#map` | Career Map |
+| `hub.html#map/web-designer` | Career Map with a job picked. Use the job's id from `data/career-map.json` |
+| `hub.html#magazine` | Career Magazine, from the cover |
+| `hub.html#magazine/ladder` | Magazine at a section: `intro`, `jobs`, `data`, `stack`, `ladder` or `talk` |
+
+The tab names in these links stay the same if the tab labels change, so links already shared keep working.
+
+When the Career Map or the magazine links to the Path Finder, the hub switches tabs instead of opening the Path Finder inside the other tab.
+
+The selected page fills the window under the tabs and scrolls on its own. That keeps the magazine's section menu and the Path Finder's side panel pinned as students scroll. To embed it on WordPress, give the frame a fixed height close to the screen height:
+
+```html
+<iframe src="https://comd-citytech.github.io/comd-career-path-finder/hub.html"
+  title="COMD Career Tools" style="width:100%;height:90vh;min-height:640px;border:0"></iframe>
+```
+
+Inside WordPress, the browser shows the WordPress page's address, not the hub's. To send someone to a specific tab or job, link to the hub address above, or set the frame's `src` to it (for example `.../hub.html#map`) on a WordPress page of its own.
 
 ## Suggesting changes to courses or class-to-skill links
 

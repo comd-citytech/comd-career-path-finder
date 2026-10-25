@@ -7,6 +7,7 @@ on:
       - "index.html"
       - "career-map.html"
       - "career-magazine.html"
+      - "hub.html"
   push:
     branches: [main]
     paths:
@@ -14,6 +15,7 @@ on:
       - "index.html"
       - "career-map.html"
       - "career-magazine.html"
+      - "hub.html"
 
 jobs:
   check:
@@ -82,7 +84,7 @@ jobs:
           import re
           cm = json.load(open("data/career-map.json", encoding="utf-8"))
           retired = set(cm.get("retired", []))
-          files = ["index.html", "career-map.html", "career-magazine.html", "data/career-map.json", "data/role-content.json"]
+          files = ["index.html", "career-map.html", "career-magazine.html", "hub.html", "data/career-map.json", "data/role-content.json"]
           for f in files:
               text = open(f, encoding="utf-8").read()
               if f == "data/career-map.json":
