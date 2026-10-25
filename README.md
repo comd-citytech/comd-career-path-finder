@@ -54,9 +54,19 @@ Every figure links out to its source on the BLS or O*NET page it came from, so a
 
 `hub.html` puts the Path Finder, the Career Map and the magazine behind three tabs: **Start from my classes**, **Start from a job** and **Explore careers**. Each page loads the first time a student opens its tab and keeps its place after that. The three pages themselves are unchanged.
 
-- Link to a tab with `hub.html#pathfinder`, `hub.html#map` or `hub.html#magazine`.
-- Link to a job in the Career Map with `hub.html#map/` plus the job's id from `data/career-map.json`, for example `hub.html#map/web-designer`.
-- When the Career Map or the magazine links to the Path Finder, the hub switches tabs instead of opening the Path Finder inside the other tab.
+The address always matches what the student is looking at, so a copied link opens the same tab, job or section:
+
+| Link | Opens |
+| --- | --- |
+| `hub.html#pathfinder` | Path Finder |
+| `hub.html#map` | Career Map |
+| `hub.html#map/web-designer` | Career Map with a job picked. Use the job's id from `data/career-map.json` |
+| `hub.html#magazine` | Career Magazine, from the cover |
+| `hub.html#magazine/ladder` | Magazine at a section: `intro`, `jobs`, `data`, `stack`, `ladder` or `talk` |
+
+The tab names in these links stay the same if the tab labels change, so links already shared keep working.
+
+When the Career Map or the magazine links to the Path Finder, the hub switches tabs instead of opening the Path Finder inside the other tab.
 
 The selected page fills the window under the tabs and scrolls on its own. That keeps the magazine's section menu and the Path Finder's side panel pinned as students scroll. To embed it on WordPress, give the frame a fixed height close to the screen height:
 
@@ -64,6 +74,8 @@ The selected page fills the window under the tabs and scrolls on its own. That k
 <iframe src="https://comd-citytech.github.io/comd-career-path-finder/hub.html"
   title="COMD Career Tools" style="width:100%;height:90vh;min-height:640px;border:0"></iframe>
 ```
+
+Inside WordPress, the browser shows the WordPress page's address, not the hub's. To send someone to a specific tab or job, link to the hub address above, or set the frame's `src` to it (for example `.../hub.html#map`) on a WordPress page of its own.
 
 ## Suggesting changes to courses or class-to-skill links
 

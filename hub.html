@@ -102,26 +102,52 @@ main iframe[hidden]{display:none}
   }
   function tabFor(key){ return tabs.filter(function(t){ return t.dataset.key === key; })[0]; }
 
-  // Links inside a page that point at one of the other pages switch tabs here instead of loading inside that tab.
-  function watchLinks(key, f){
-    var doc;
-    try{ doc = f.contentDocument; }catch(e){ return; }
-    if(!doc) return;
+  var subs = {};      // where each tab was last (a Career Map job, a magazine section)
+  var current = null;
+
+  function setHash(key, sub, push){
+    var hash = '#' + key + (sub ? '/' + sub : '');
+    if(location.hash === hash) return;
+    try{ history[push ? 'pushState' : 'replaceState'](null, '', hash); }catch(e){}
+  }
+
+  // Runs each time a page loads in its tab.
+  function hookFrame(key, f){
+    var w, doc;
+    try{ w = f.contentWindow; doc = f.contentDocument; }catch(e){ return; }
+    if(!w || !doc) return;
+
+    // Keep the hub's address in step with the page, so a copied link opens the same job or section.
+    function sync(){
+      var s = '';
+      try{ s = decodeURIComponent((w.location.hash || '').replace(/^#/, '')); }catch(e){}
+      subs[key] = s;
+      if(current === key) setHash(key, s, false);
+    }
+    ['pushState', 'replaceState'].forEach(function(m){
+      var orig = w.history[m];
+      w.history[m] = function(){ var r = orig.apply(this, arguments); sync(); return r; };
+    });
+    w.addEventListener('hashchange', sync);
+    sync();
+
+    // Links that point at one of the other pages switch tabs instead of loading inside this one.
     doc.addEventListener('click', function(e){
       if(e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       var a = e.target.closest && e.target.closest('a[href]');
       if(!a || (a.target && a.target !== '_self')) return;
       var u;
-      try{ u = new URL(a.getAttribute('href'), f.contentWindow.location.href); }catch(err){ return; }
+      try{ u = new URL(a.getAttribute('href'), w.location.href); }catch(err){ return; }
       if(u.origin !== location.origin) return;
       var file = u.pathname.split('/').pop() || 'index.html';
       var to = BY_FILE[file];
       if(!to || to === key) return;
       e.preventDefault();
-      show(to, u.hash.replace(/^#/, ''), true);
+      show(to, u.hash.replace(/^#/, '') || null, true);
     });
   }
 
+  // sub: a spot inside the page to open, or null to leave the page where the student left it.
   function frameFor(key, sub){
     var t = tabFor(key);
     var src = t.dataset.src + (sub ? '#' + encodeURIComponent(sub) : '');
@@ -132,13 +158,14 @@ main iframe[hidden]{display:none}
       f.setAttribute('role', 'tabpanel');
       f.setAttribute('aria-labelledby', t.id);
       f.title = t.querySelector('small').textContent;
-      f.addEventListener('load', function(){ if(!f.hidden) loading.hidden = true; watchLinks(key, f); });
+      f.addEventListener('load', function(){ if(!f.hidden) loading.hidden = true; hookFrame(key, f); });
       f.src = src;
       main.appendChild(f);
       frames[key] = f;
-    } else if(sub){
-      // Already loaded and asked for a specific spot (a job in the Career Map, say): reload it there.
-      // The pages read their hash when they start, so a hash change alone would not move them.
+      subs[key] = sub || '';
+    } else if(sub && sub !== subs[key]){
+      // The pages read their address when they start, so reload the page at the requested spot.
+      subs[key] = sub;
       try{ f.contentWindow.location.replace(src); f.contentWindow.location.reload(); }catch(e){ f.src = src; }
     }
     return f;
@@ -146,6 +173,7 @@ main iframe[hidden]{display:none}
 
   function show(key, sub, push){
     var f = frameFor(key, sub);
+    current = key;
     tabs.forEach(function(t){
       var on = t.dataset.key === key;
       t.setAttribute('aria-selected', on ? 'true' : 'false');
@@ -153,15 +181,12 @@ main iframe[hidden]{display:none}
     });
     Object.keys(frames).forEach(function(k){ frames[k].hidden = k !== key; });
     loading.hidden = !!(f.contentDocument && f.contentDocument.readyState === 'complete');
-    var hash = '#' + key + (sub ? '/' + sub : '');
-    if(location.hash !== hash){
-      try{ history[push ? 'pushState' : 'replaceState'](null, '', hash); }catch(e){}
-    }
+    setHash(key, subs[key] || '', push);
     document.title = tabFor(key).querySelector('small').textContent + ' · COMD Career Tools';
   }
 
   tabs.forEach(function(t, i){
-    t.addEventListener('click', function(){ show(t.dataset.key, '', true); });
+    t.addEventListener('click', function(){ show(t.dataset.key, null, true); });
     t.addEventListener('keydown', function(e){
       var n = {ArrowRight:1, ArrowLeft:-1}[e.key];
       var to = null;
@@ -171,13 +196,13 @@ main iframe[hidden]{display:none}
       if(!to) return;
       e.preventDefault();
       to.focus();
-      show(to.dataset.key, '', true);
+      show(to.dataset.key, null, true);
     });
   });
 
-  window.addEventListener('popstate', function(){ var p = parse(location.hash); show(p.key, p.sub, false); });
+  window.addEventListener('popstate', function(){ var p = parse(location.hash); show(p.key, p.sub || null, false); });
   var p = parse(location.hash);
-  show(p.key, p.sub, false);
+  show(p.key, p.sub || null, false);
 })();
 </script>
 </body>
