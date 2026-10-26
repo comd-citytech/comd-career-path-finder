@@ -186,6 +186,8 @@ h2{margin:0; font-size:20px; font-weight:800}
 .fld select{font:inherit; font-weight:400; font-size:15px; border:1.5px solid var(--line); background:var(--bg); color:var(--ink); padding:6px 8px; min-height:38px; width:220px; max-width:100%}
 .fld input{font:inherit; font-weight:400; font-size:15px; border:1.5px solid var(--line); background:var(--bg); color:var(--ink); padding:6px 8px; min-height:38px; width:220px; max-width:100%}
 .fld input:focus{border-color:var(--ink)}
+.advisor{display:flex; flex-direction:column; gap:4px; border-top:1.5px solid var(--line); padding-top:14px; font-size:15px}
+.advisor a{color:var(--ink); font-weight:600}
 .btn.solid{background:var(--ink); color:var(--bg)}
 .btn.solid:hover{opacity:.85}
 .howto{background:var(--surface); border:1.5px solid var(--line); padding:18px 20px; display:flex; flex-direction:column; gap:10px}
@@ -238,39 +240,6 @@ h2{margin:0; font-size:20px; font-weight:800}
     </ol>
   </section>
 
-  <section class="planner" id="planner" aria-live="polite"></section>
-
-  <section class="market" id="market"></section>
-
-  <section class="saveplan" aria-labelledby="save-h">
-    <div class="sec-head"><h2 id="save-h">Save my plan</h2><span>Your plan as a PDF to bring to advising: your semester sequence filled in with your classes, advising notes, and your career direction with the job market. Your checked classes also stay saved in this browser.</span></div>
-    <div class="incl" role="group" aria-label="Which sequence">
-      <span class="lbl">Sequence</span>
-      <label><input type="radio" name="seq" id="seq-4" checked> 4 semesters</label>
-      <label><input type="radio" name="seq" id="seq-5"> 5 semesters</label>
-    </div>
-    <div class="incl fields">
-      <label class="fld" for="pl-name">Name (optional)<input id="pl-name" type="text" autocomplete="name"></label>
-      <label class="fld" for="pl-grad">Expected graduation (optional)<select id="pl-grad"><option value="">Choose a semester</option></select></label>
-    </div>
-    <div class="incl">
-      <label><input type="checkbox" id="pl-share"> I'm sharing this plan with my advisor or the department</label>
-      <label class="fld" for="pl-emplid" id="emplid-wrap" hidden>EmplID<input id="pl-emplid" type="text" inputmode="numeric" maxlength="8"></label>
-    </div>
-    <div class="incl" role="group" aria-label="Optional third page">
-      <span class="lbl">On the career page, also include</span>
-      <label><input type="checkbox" id="inc-market" checked> Job market table</label>
-      <label><input type="checkbox" id="inc-pivot"> Other directions I could take</label>
-    </div>
-    <p class="note" style="margin:0">Your name and EmplID are never saved or sent anywhere. They only go into the PDF you download.</p>
-    <div class="bar">
-      <button class="btn solid" type="button" id="btn-pdf">Download PDF</button>
-      <button class="btn" type="button" id="btn-print" hidden>Print</button>
-      <button class="btn" type="button" id="btn-copy">Copy as text</button>
-      <span class="note" id="save-note" role="status"></span>
-    </div>
-  </section>
-
   <div class="layout">
     <aside class="panel" aria-live="polite">
       <div class="lead" id="lead"></div>
@@ -314,6 +283,43 @@ h2{margin:0; font-size:20px; font-weight:800}
       <p class="foot">This is an exploration tool, not an official degree audit. It covers COMD major courses only. Confirm your plan with a COMD advisor and DegreeWorks before registering.</p>
     </div>
   </div>
+
+  <section class="planner" id="planner" aria-live="polite"></section>
+
+  <section class="market" id="market"></section>
+
+  <section class="saveplan" aria-labelledby="save-h">
+    <div class="sec-head"><h2 id="save-h">Save my plan</h2><span>Your plan as a PDF to bring to advising: your semester sequence filled in with your classes, advising notes, and your career direction with the job market. Your checked classes also stay saved in this browser.</span></div>
+    <div class="incl" role="group" aria-label="Which sequence">
+      <span class="lbl">Sequence</span>
+      <label><input type="radio" name="seq" id="seq-4" checked> 4 semesters</label>
+      <label><input type="radio" name="seq" id="seq-5"> 5 semesters</label>
+    </div>
+    <div class="incl fields">
+      <label class="fld" for="pl-name">Name (optional)<input id="pl-name" type="text" autocomplete="name"></label>
+      <label class="fld" for="pl-grad">Expected graduation (optional)<select id="pl-grad"><option value="">Choose a semester</option></select></label>
+    </div>
+    <div class="incl">
+      <label><input type="checkbox" id="pl-share"> I'm sharing this plan with my advisor or the department</label>
+      <label class="fld" for="pl-emplid" id="emplid-wrap" hidden>EmplID<input id="pl-emplid" type="text" inputmode="numeric" maxlength="8"></label>
+    </div>
+    <div class="incl" role="group" aria-label="Optional third page">
+      <span class="lbl">On the career page, also include</span>
+      <label><input type="checkbox" id="inc-market" checked> Job market table</label>
+      <label><input type="checkbox" id="inc-pivot"> Other directions I could take</label>
+    </div>
+    <p class="note" style="margin:0">Your name and EmplID are never saved or sent anywhere. They only go into the PDF you download.</p>
+    <div class="bar">
+      <button class="btn solid" type="button" id="btn-pdf">Download PDF</button>
+      <button class="btn" type="button" id="btn-print" hidden>Print</button>
+      <button class="btn" type="button" id="btn-copy">Copy as text</button>
+      <span class="note" id="save-note" role="status"></span>
+    </div>
+    <div class="advisor">
+      <b>Next step: review your plan with your advisor.</b>
+      <span>Find your advisor on the <a href="https://openlab.citytech.cuny.edu/comd-advisement/find-your-advisor/" target="_blank" rel="noopener">COMD Advisement site</a>, or contact the department at <a href="mailto:communicationdesign@citytech.cuny.edu">communicationdesign@citytech.cuny.edu</a>.</span>
+    </div>
+  </section>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -1309,6 +1315,14 @@ h2{margin:0; font-size:20px; font-weight:800}
     font(8, true); doc.text('RESOURCES', M + 10, y + 16);
     font(8.5, false);
     lines(['DegreeWorks degree audit', 'CUNYfirst registration', 'City Tech College Catalog', 'Writing Intensive course list', 'Academic Calendar', 'COMD advisement and Sophomore Review', 'COMD Career Path Finder'], M + 10, y + 32, 13.5);
+    var fy = y + 32 + 7*13.5 + 12, fw2 = rw - 20, ADV = 'https://openlab.citytech.cuny.edu/comd-advisement/find-your-advisor/', MAIL = 'communicationdesign@citytech.cuny.edu';
+    doc.setDrawColor(HAIR); doc.setLineWidth(0.5); doc.line(M + 10, fy - 10, M + rw - 10, fy - 10);
+    font(8, true); doc.text('FIND YOUR ADVISOR', M + 10, fy + 2);
+    font(8.5, false); fy = lines(wrap('Review this plan with your advisor.', fw2), M + 10, fy + 16, 11);
+    font(8.5, true); doc.textWithLink('COMD Advisement: Find Your Advisor', M + 10, fy + 2, {url: ADV});
+    font(7, false, MUTED); fy = lines(wrap('openlab.citytech.cuny.edu/comd-advisement/find-your-advisor', fw2), M + 10, fy + 12, 9);
+    font(8.5, false); doc.text('Or email the department:', M + 10, fy + 6);
+    font(8.5, true); doc.textWithLink(MAIL, M + 10, fy + 18, {url: 'mailto:' + MAIL});
     var ax = M + rw + 10, aw = CW - rw - 10;
     doc.setDrawColor(INK); doc.rect(ax, y, aw, bh, 'S');
     font(8, true); doc.text('ADVISOR NOTES', ax + 10, y + 16);
