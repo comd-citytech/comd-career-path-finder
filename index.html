@@ -1315,6 +1315,14 @@ h2{margin:0; font-size:20px; font-weight:800}
     font(8, true); doc.text('RESOURCES', M + 10, y + 16);
     font(8.5, false);
     lines(['DegreeWorks degree audit', 'CUNYfirst registration', 'City Tech College Catalog', 'Writing Intensive course list', 'Academic Calendar', 'COMD advisement and Sophomore Review', 'COMD Career Path Finder'], M + 10, y + 32, 13.5);
+    var fy = y + 32 + 7*13.5 + 12, fw2 = rw - 20, ADV = 'https://openlab.citytech.cuny.edu/comd-advisement/find-your-advisor/', MAIL = 'communicationdesign@citytech.cuny.edu';
+    doc.setDrawColor(HAIR); doc.setLineWidth(0.5); doc.line(M + 10, fy - 10, M + rw - 10, fy - 10);
+    font(8, true); doc.text('FIND YOUR ADVISOR', M + 10, fy + 2);
+    font(8.5, false); fy = lines(wrap('Review this plan with your advisor.', fw2), M + 10, fy + 16, 11);
+    font(8.5, true); doc.textWithLink('COMD Advisement: Find Your Advisor', M + 10, fy + 2, {url: ADV});
+    font(7, false, MUTED); fy = lines(wrap('openlab.citytech.cuny.edu/comd-advisement/find-your-advisor', fw2), M + 10, fy + 12, 9);
+    font(8.5, false); doc.text('Or email the department:', M + 10, fy + 6);
+    font(8.5, true); doc.textWithLink(MAIL, M + 10, fy + 18, {url: 'mailto:' + MAIL});
     var ax = M + rw + 10, aw = CW - rw - 10;
     doc.setDrawColor(INK); doc.rect(ax, y, aw, bh, 'S');
     font(8, true); doc.text('ADVISOR NOTES', ax + 10, y + 16);
