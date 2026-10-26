@@ -856,7 +856,7 @@ h2{margin:0; font-size:20px; font-weight:800}
     b.type='button'; b.className='chip'+(c.off?' off':''); b.dataset.code=c.code;
     b.id = 'c-'+c.code+'-'+Math.random().toString(36).slice(2,6);
     var dots = c.paths.map(function(p){ return '<span class="dot" style="background:'+color(p)+'"></span>'; }).join('');
-    var bo = (c.type==='found') ? null : bestOut(c.code), mk = '';
+    var bo = (c.type==='found' || c.type==='studio') ? null : bestOut(c.code), mk = '';
     if(bo!==null){ var oc = bo>=3?'up':(bo<=-2?'down':'flat'); mk = ' <span class="mk out '+oc+'" title="Leads to a job with '+(bo>0?'+':'')+bo+'% outlook">'+(oc==='up'?'↑':(oc==='down'?'↓':'→'))+'</span>'; }
     b.innerHTML = '<span class="box" aria-hidden="true"></span>'+(dots?'<span class="dots" aria-hidden="true">'+dots+'</span>':'')+'<span><span class="code">'+c.code+'</span> '+c.name.replace(/&/g,'&amp;')+mk+(c.off?' <span class="mk note">· not offered recently</span>':'')+'</span>';
     b.setAttribute('aria-label', 'COMD '+c.code+' '+c.name+(c.off?', not offered recently':''));
