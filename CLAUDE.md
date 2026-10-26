@@ -39,6 +39,10 @@ When the chair changes a course decision, update this list in the same commit as
 
 All three pages must agree. When a course is retired, renamed, moved to another line, or marked not offered, update `index.html`, `data/career-map.json` and `career-magazine.html` together. When `data/job-data.json` changes, update the magazine's pay and outlook figures.
 
+## Footnote
+
+Every page (Path Finder, Career Map, magazine) and the Path Finder PDF carry the same footnote. Its exact text lives in `data/footnote.txt`. When the chair changes it, update `data/footnote.txt`, `index.html` (the page footer and `NOTE` for the PDF), `career-map.html` and `career-magazine.html` in the same pull request. The check fails if any page doesn't match.
+
 ## Writing
 
 Students are the audience: sophomores choosing a concentration and juniors picking electives. Use plain language. No em dashes.
