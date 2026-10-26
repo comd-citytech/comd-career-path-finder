@@ -52,9 +52,8 @@ main iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:bl
 main iframe[hidden]{display:none}
 .loading{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:14px;pointer-events:none}
 
+@media (max-width:960px){ .bar{gap:0} .brand{display:none} }
 @media (max-width:760px){
-  .bar{gap:0}
-  .brand{display:none}
   [role=tab]{padding:10px 8px 8px;text-align:center}
   [role=tab] b{font-size:14px}
   [role=tab] small{font-size:10px;letter-spacing:.04em}
@@ -67,14 +66,14 @@ main iframe[hidden]{display:none}
   <div class="bar">
     <div class="brand">COMD Career Tools<span>City Tech</span></div>
     <div role="tablist" aria-label="Career tools">
-      <button role="tab" id="tab-pathfinder" aria-controls="panel-pathfinder" data-key="pathfinder" data-src="index.html">
-        <b>Start from my classes</b><small>Path Finder</small>
-      </button>
       <button role="tab" id="tab-map" aria-controls="panel-map" data-key="map" data-src="career-map.html">
-        <b>Start from a job</b><small>Career Map</small>
+        <b>Start with a Track</b><small>Degree Map</small>
+      </button>
+      <button role="tab" id="tab-pathfinder" aria-controls="panel-pathfinder" data-key="pathfinder" data-src="index.html">
+        <b>From Tracks to Jobs</b><small>Path Finder</small>
       </button>
       <button role="tab" id="tab-magazine" aria-controls="panel-magazine" data-key="magazine" data-src="career-magazine.html">
-        <b>Explore careers</b><small>Career Magazine</small>
+        <b>Exploring the Job Market</b><small>Career Deep Dive</small>
       </button>
     </div>
   </div>
@@ -98,7 +97,7 @@ main iframe[hidden]{display:none}
     var key = i < 0 ? h : h.slice(0, i);
     var sub = i < 0 ? '' : h.slice(i + 1);
     var ok = tabs.some(function(t){ return t.dataset.key === key; });
-    return ok ? {key:key, sub:sub} : {key:'pathfinder', sub:''};
+    return ok ? {key:key, sub:sub} : {key:tabs[0].dataset.key, sub:''};
   }
   function tabFor(key){ return tabs.filter(function(t){ return t.dataset.key === key; })[0]; }
 
