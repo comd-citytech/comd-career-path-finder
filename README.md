@@ -52,17 +52,17 @@ Every figure links out to its source on the BLS or O*NET page it came from, so a
 
 ## One address for all three pages
 
-`hub.html` puts the Path Finder, the Career Map and the magazine behind three tabs: **Start from my classes**, **Start from a job** and **Explore careers**. Each page loads the first time a student opens its tab and keeps its place after that. The three pages themselves are unchanged.
+`hub.html` puts the three pages behind three tabs, in this order: **Start with a Track** (Degree Map, `career-map.html`), **From Tracks to Jobs** (Path Finder, `index.html`) and **Exploring the Job Market** (Career Deep Dive, `career-magazine.html`). The hub opens on the first tab. Each page loads the first time a student opens its tab and keeps its place after that. The three pages themselves are unchanged.
 
 The address always matches what the student is looking at, so a copied link opens the same tab, job or section:
 
 | Link | Opens |
 | --- | --- |
-| `hub.html#pathfinder` | Path Finder |
-| `hub.html#map` | Career Map |
-| `hub.html#map/web-designer` | Career Map with a job picked. Use the job's id from `data/career-map.json` |
-| `hub.html#magazine` | Career Magazine, from the cover |
-| `hub.html#magazine/ladder` | Magazine at a section: `intro`, `jobs`, `data`, `stack`, `ladder` or `talk` |
+| `hub.html#map` | Start with a Track (Degree Map) |
+| `hub.html#map/web-designer` | Degree Map with a job picked. Use the job's id from `data/career-map.json` |
+| `hub.html#pathfinder` | From Tracks to Jobs (Path Finder) |
+| `hub.html#magazine` | Exploring the Job Market (Career Deep Dive), from the cover |
+| `hub.html#magazine/ladder` | Career Deep Dive at a section: `intro`, `jobs`, `data`, `stack`, `ladder` or `talk` |
 
 The tab names in these links stay the same if the tab labels change, so links already shared keep working.
 
