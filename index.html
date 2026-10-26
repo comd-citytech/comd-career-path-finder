@@ -84,6 +84,8 @@ h2{margin:0; font-size:20px; font-weight:800}
 .next .code{font-family:var(--mono); font-weight:600}
 .msg{font-size:14px; background:var(--bg); padding:10px 12px}
 .foot{font-size:12px; color:var(--muted); max-width:70ch}
+.site-foot{max-width:none; border-top:1.5px solid var(--line); padding-top:16px; font-size:13px; line-height:1.55}
+.site-foot p{margin:0; max-width:90ch}
 .planner{background:var(--surface); border:1.5px solid var(--ink); padding:20px; display:flex; flex-direction:column; gap:18px}
 .planner.locked{border-style:dashed; border-color:var(--muted)}
 .p-head{display:flex; flex-wrap:wrap; gap:8px 16px; align-items:baseline; justify-content:space-between}
@@ -280,7 +282,6 @@ h2{margin:0; font-size:20px; font-weight:800}
         <div class="chips" id="studio"></div>
       </section>
 
-      <p class="foot">This is an exploration tool, not an official degree audit. It covers COMD major courses only. Confirm your plan with a COMD advisor and DegreeWorks before registering.</p>
     </div>
   </div>
 
@@ -320,6 +321,8 @@ h2{margin:0; font-size:20px; font-weight:800}
       <span>Find your advisor on the <a href="https://openlab.citytech.cuny.edu/comd-advisement/find-your-advisor/" target="_blank" rel="noopener">COMD Advisement site</a>, or contact the department at <a href="mailto:communicationdesign@citytech.cuny.edu">communicationdesign@citytech.cuny.edu</a>.</span>
     </div>
   </section>
+
+  <footer class="foot site-foot"><p>This tool helps COMD students explore how their courses connect to careers after college. It is not an official degree audit. Pay and job outlook come from the U.S. Bureau of Labor Statistics, and job skills from O*NET. The course-to-career connections were drafted with Claude, an AI assistant, and are being reviewed by COMD faculty. Confirm with your COMD advisor.</p></footer>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -1185,7 +1188,8 @@ h2{margin:0; font-size:20px; font-weight:800}
     return secs;
   }
   var HEAD = 'My COMD plan';
-  function foot(){ return 'Made with COMD Career Path Finder, City Tech Communication Design. Not an official degree audit. Confirm with a COMD advisor and DegreeWorks. Job data updated '+fmtDate(JOB.updated)+' from BLS and O*NET.'; }
+  var NOTE = 'This tool helps COMD students explore how their courses connect to careers after college. It is not an official degree audit. Pay and job outlook come from the U.S. Bureau of Labor Statistics, and job skills from O*NET. The course-to-career connections were drafted with Claude, an AI assistant, and are being reviewed by COMD faculty. Confirm with your COMD advisor.';
+  function foot(){ return NOTE + ' Job data updated ' + fmtDate(JOB.updated) + '. COMD Career Path Finder, City Tech Communication Design.'; }
   function today(){ return new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}); }
   function planText(){
     var t = HEAD+'\n'+today()+'\n';
@@ -1394,9 +1398,10 @@ h2{margin:0; font-size:20px; font-weight:800}
     var total = doc.internal.getNumberOfPages();
     for(var pg = 1; pg <= total; pg++){
       doc.setPage(pg);
-      font(7, false, MUTED);
-      lines(wrap(m.foot, CW - 60), M, H - 30, 9);
-      doc.text('Page ' + pg + ' of ' + total, W - M, H - 30, {align:'right'});
+      font(6.8, false, MUTED);
+      var fl = wrap(m.foot, CW - 60), fy0 = H - 22 - (fl.length - 1)*8.2;
+      lines(fl, M, fy0, 8.2);
+      doc.text('Page ' + pg + ' of ' + total, W - M, fy0, {align:'right'});
     }
     return doc;
   }
