@@ -1840,8 +1840,17 @@ h2{margin:0; font-size:20px; font-weight:800}
     doc.setFillColor(FILL.taken); doc.setDrawColor(RULE); doc.setLineWidth(0.5); doc.rect(lx, y, 10, 10, 'FD'); font(8, false, MUTED); doc.text('Taken', lx + 14, y + 8); lx += 18 + doc.getTextWidth('Taken') + 14;
     tag('SUGGESTED', lx + 24, y + 8, false); font(8, false, MUTED); doc.text('toward your career goal', lx + 52, y + 8);
     y += 22;
-    var cols = m.grid.length, colW = CW / cols, headH = 24, rowH = 62;
+    var notes = [];
+    if(m.career) notes.push('Suggested courses fill your open slots with the classes that best build toward ' + m.career.job + '. They are suggestions only. You can take any other course in those slots.');
+    notes.push('Writing Intensive: COMD 3504 Communication Design Theory and COMD 4900 Internship are WI. Check DegreeWorks for your WI requirements.');
+    notes.push('COMD 4900 Internship needs COMD 4730, COMD 4701, or approval first. If you change the order of your semesters, keep 4701 before your internship.');
+    notes.push('General education and art history from your checklist: AAS ' + m.genAas + ', BFA ' + m.genBfa + '. Courses you checked are marked TAKEN. Confirm the exact courses in DegreeWorks.');
+    var cols = m.grid.length, colW = CW / cols, headH = 24;
     var rows = Math.max.apply(null, m.grid.map(function(c){ return c.cells.length; }));
+    /* Rows grow to fill the page: measure the notes and footer below the grid, then share the space left. */
+    font(8.5, false); var notesH = notes.reduce(function(h, t){ return h + wrap(t, CW - 12).length*11 + 3; }, 0);
+    font(6.8, false); var footTop = H - 22 - (wrap(m.foot, CW - 60).length - 1)*8.2 - 8;
+    var rowH = Math.max(62, Math.min(96, Math.floor((footTop - 18 - y - headH - 20 - 22 - 34 - notesH) / rows)));
     m.grid.forEach(function(col, ci){
       var x = M + ci*colW;
       doc.setFillColor(FILL.head); doc.setDrawColor(RULE); doc.setLineWidth(0.6); doc.rect(x, y, colW, headH, 'FD');
@@ -1870,11 +1879,6 @@ h2{margin:0; font-size:20px; font-weight:800}
     var stand = [['Strategy', m.tally.strat + ' of 3'], ['Skills', m.tally.skill + ' of 4'], ['Studio courses', m.tally.studio + ' of 6'], ['Strongest line', m.tally.line || 'Not chosen yet']];
     stand.forEach(function(s, i){ var sx = M + i*(CW/4); font(7.5, true, MUTED); doc.text(s[0].toUpperCase(), sx, y); hfont(12.5); doc.text(s[1], sx, y + 15); });
     y += 34;
-    var notes = [];
-    if(m.career) notes.push('Suggested courses fill your open slots with the classes that best build toward ' + m.career.job + '. They are suggestions only. You can take any other course in those slots.');
-    notes.push('Writing Intensive: COMD 3504 Communication Design Theory and COMD 4900 Internship are WI. Check DegreeWorks for your WI requirements.');
-    notes.push('COMD 4900 Internship needs COMD 4730, COMD 4701, or approval first. If you change the order of your semesters, keep 4701 before your internship.');
-    notes.push('General education and art history from your checklist: AAS ' + m.genAas + ', BFA ' + m.genBfa + '. Courses you checked are marked TAKEN. Confirm the exact courses in DegreeWorks.');
     bullets(notes, M, y, CW, 8.5, 11);
 
     /* Page 2: advising notes (college) */
