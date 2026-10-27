@@ -39,6 +39,10 @@ When the chair changes a course decision, update this list in the same commit as
 
 All three pages must agree. When a course is retired, renamed, moved to another line, or marked not offered, update `index.html`, `data/career-map.json` and `career-magazine.html` together. When `data/job-data.json` changes, update the magazine's pay and outlook figures.
 
+## Jobs
+
+The same nine jobs appear on every page, under the same names: Graphic designer, Junior art director, Copywriter, Motion designer, Video editor, Illustrator, Visual & UX designer, Front-end developer, Creative producer. The `ROLES` list in `index.html` holds those names. The Career Map can list several entry-level titles under one job (its `role` field), but every job needs at least one Career Map entry and a magazine spread. When a job is added, renamed or removed, change `index.html`, `data/career-map.json` and `career-magazine.html` in the same pull request. The check fails if a job is missing from the Career Map or the magazine.
+
 ## Footnote
 
 Every page (Path Finder, Career Map, magazine) and the Path Finder PDF carry the same footnote. Its exact text lives in `data/footnote.txt`. When the chair changes it, update `data/footnote.txt`, `index.html` (the page footer and `NOTE` for the PDF), `career-map.html` and `career-magazine.html` in the same pull request. The check fails if any page doesn't match.

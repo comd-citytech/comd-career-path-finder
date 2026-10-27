@@ -1,224 +1,764 @@
 {
-  "_note": "Career Map data. Faculty can suggest edits through a pull request. 'offered': false keeps a course on the map, faded, and never recommends it. Each job needs exactly 3 strategy and 4 skills courses that are offered. 'role' links the job to the Path Finder job of the same code in role-content.json and job-data.json.",
-  "updated": "2026-10-23",
-  "retired": ["3507", "3540", "3316", "3292", "3532"],
-  "paths": [
-    {"id": "adv", "name": "Advertising", "blurb": "Agency and campaign work"},
-    {"id": "gd", "name": "Graphic Design", "blurb": "Brand, print and packaging"},
-    {"id": "mot", "name": "Motion", "blurb": "Animation, video and motion graphics"},
-    {"id": "ill", "name": "Illustration", "blurb": "Publishing, product and character work", "anyStrategy": true},
-    {"id": "web", "name": "Web / UX", "blurb": "Websites, apps and digital products", "anyStrategy": true}
+ "_note": "Career Map data. Faculty can suggest edits through a pull request. 'offered': false keeps a course on the map, faded, and never recommends it. Each job needs exactly 3 strategy and 4 skills courses that are offered. 'role' links the job to the Path Finder job of the same code in role-content.json and job-data.json.",
+ "updated": "2026-10-23",
+ "retired": [
+  "3507",
+  "3540",
+  "3316",
+  "3292",
+  "3532"
+ ],
+ "paths": [
+  {
+   "id": "adv",
+   "name": "Advertising",
+   "blurb": "Agency and campaign work"
+  },
+  {
+   "id": "gd",
+   "name": "Graphic Design",
+   "blurb": "Brand, print and packaging"
+  },
+  {
+   "id": "mot",
+   "name": "Motion",
+   "blurb": "Animation, video and motion graphics"
+  },
+  {
+   "id": "ill",
+   "name": "Illustration",
+   "blurb": "Publishing, product and character work",
+   "anyStrategy": true
+  },
+  {
+   "id": "web",
+   "name": "Web / UX",
+   "blurb": "Websites, apps and digital products",
+   "anyStrategy": true
+  }
+ ],
+ "courses": [
+  {
+   "code": "3602",
+   "name": "Copywriting for Creatives",
+   "type": "strategy",
+   "paths": [
+    "adv"
+   ],
+   "offered": true
+  },
+  {
+   "code": "3500",
+   "name": "Campaign Development",
+   "type": "strategy",
+   "paths": [
+    "adv"
+   ],
+   "offered": true
+  },
+  {
+   "code": "3600",
+   "name": "Advertising Portfolio Development",
+   "type": "strategy",
+   "paths": [
+    "adv"
+   ],
+   "offered": true
+  },
+  {
+   "code": "3501",
+   "name": "Identity Design",
+   "type": "strategy",
+   "paths": [
+    "gd"
+   ],
+   "offered": true
+  },
+  {
+   "code": "3601",
+   "name": "Information Design",
+   "type": "strategy",
+   "paths": [
+    "gd"
+   ],
+   "offered": true
+  },
+  {
+   "code": "3402",
+   "name": "Brand Strategy for Creatives",
+   "type": "strategy",
+   "paths": [
+    "gd"
+   ],
+   "offered": true
+  },
+  {
+   "code": "3420",
+   "name": "Storytelling for Creatives",
+   "type": "strategy",
+   "paths": [
+    "mot"
+   ],
+   "offered": true
+  },
+  {
+   "code": "3520",
+   "name": "Principles in Motion Design",
+   "type": "strategy",
+   "paths": [
+    "mot"
+   ],
+   "offered": true
+  },
+  {
+   "code": "3521",
+   "name": "Strategies in Motion Design",
+   "type": "strategy",
+   "paths": [
+    "mot"
+   ],
+   "offered": true
+  },
+  {
+   "code": "3513",
+   "name": "Narrative Illustration",
+   "type": "strategy",
+   "paths": [
+    "ill"
+   ],
+   "offered": true
+  },
+  {
+   "code": "3633",
+   "name": "Advanced Strategies in Illustration",
+   "type": "strategy",
+   "paths": [
+    "ill"
+   ],
+   "offered": true,
+   "twice": true
+  },
+  {
+   "code": "3562",
+   "name": "UX/UI",
+   "type": "strategy",
+   "paths": [
+    "web"
+   ],
+   "offered": true
+  },
+  {
+   "code": "3563",
+   "name": "Web Analytics & Traffic",
+   "type": "strategy",
+   "paths": [
+    "web"
+   ],
+   "offered": true
+  },
+  {
+   "code": "3527",
+   "name": "Advanced Typography",
+   "type": "skills",
+   "paths": [
+    "adv",
+    "gd"
+   ],
+   "offered": true
+  },
+  {
+   "code": "3620",
+   "name": "Video Production for Commercials",
+   "type": "skills",
+   "paths": [
+    "adv",
+    "mot"
+   ],
+   "offered": true
+  },
+  {
+   "code": "3662",
+   "name": "Strategic Content Creation",
+   "type": "skills",
+   "paths": [
+    "adv",
+    "gd",
+    "mot"
+   ],
+   "offered": true
+  },
+  {
+   "code": "3330",
+   "name": "Photography II",
+   "type": "skills",
+   "paths": [
+    "adv"
+   ],
+   "offered": true
+  },
+  {
+   "code": "3530",
+   "name": "Adv. Photo Studio",
+   "type": "skills",
+   "paths": [
+    "adv"
+   ],
+   "offered": false
+  },
+  {
+   "code": "4611",
+   "name": "Publication Design",
+   "type": "skills",
+   "paths": [
+    "gd"
+   ],
+   "offered": true
+  },
+  {
+   "code": "3505",
+   "name": "Special Topics: Expressive Type / Wayfinding",
+   "type": "skills",
+   "paths": [
+    "gd"
+   ],
+   "offered": true,
+   "twice": true
+  },
+  {
+   "code": "3412",
+   "name": "Packaging Design",
+   "type": "skills",
+   "paths": [
+    "gd"
+   ],
+   "offered": true
+  },
+  {
+   "code": "3621",
+   "name": "Motion Design Techniques",
+   "type": "skills",
+   "paths": [
+    "mot"
+   ],
+   "offered": true
+  },
+  {
+   "code": "3640",
+   "name": "3D Animation I",
+   "type": "skills",
+   "paths": [
+    "mot"
+   ],
+   "offered": true
+  },
+  {
+   "code": "3313",
+   "name": "Illustration 1: Basic Illustration",
+   "type": "skills",
+   "paths": [
+    "ill"
+   ],
+   "offered": true
+  },
+  {
+   "code": "3413",
+   "name": "Character Design",
+   "type": "skills",
+   "paths": [
+    "ill"
+   ],
+   "offered": true
+  },
+  {
+   "code": "3533",
+   "name": "Special Topics in Illustration",
+   "type": "skills",
+   "paths": [
+    "ill"
+   ],
+   "offered": true,
+   "twice": true
+  },
+  {
+   "code": "3523",
+   "name": "Storyboard Concepts",
+   "type": "skills",
+   "paths": [
+    "ill"
+   ],
+   "offered": true
+  },
+  {
+   "code": "3711",
+   "name": "Vector Art Editing",
+   "type": "skills",
+   "paths": [
+    "ill"
+   ],
+   "offered": true
+  },
+  {
+   "code": "3551",
+   "name": "Web Design II",
+   "type": "skills",
+   "paths": [
+    "web"
+   ],
+   "offered": true
+  },
+  {
+   "code": "3663",
+   "name": "Dynamic Web I",
+   "type": "skills",
+   "paths": [
+    "web"
+   ],
+   "offered": true
+  },
+  {
+   "code": "3652",
+   "name": "Web Design III",
+   "type": "skills",
+   "paths": [
+    "web"
+   ],
+   "offered": false
+  }
+ ],
+ "jobs": [
+  {
+   "id": "art-director",
+   "path": "adv",
+   "role": "ad",
+   "title": "Junior Art Director",
+   "also": "",
+   "where": "Creative department at an ad agency",
+   "why": "The NYC posting asked for strong Photoshop and InDesign, print experience, a portfolio of student or spec work, and After Effects or Premiere as a plus. Stay on the Advertising line and add type, photo, video and content skills.",
+   "postedPay": "$50K to $55K a year (McCann / Omnicom, NYC)",
+   "robertHalf": "",
+   "strategy": [
+    "3602",
+    "3500",
+    "3600"
+   ],
+   "skills": [
+    "3527",
+    "3330",
+    "3620",
+    "3662"
+   ],
+   "internship": "Creative department at an ad agency, ideally paired with a copywriter",
+   "seniorProject": "An integrated campaign for one brand: print, a video spot and social, with concept boards."
+  },
+  {
+   "id": "social-designer",
+   "path": "adv",
+   "role": "cw",
+   "title": "Social Media Designer",
+   "also": "Also listed as Designer / Social Media Creator",
+   "where": "PR firm, agency, or in-house brand team",
+   "why": "These jobs mix design, short video and writing. Swap the portfolio course for Storytelling for Creatives, and spend your skills courses on content and video.",
+   "postedPay": "$51K to $74K a year (M Booth, NYC). A larger tech brand listed $80K to $95K (Fiverr, NYC).",
+   "robertHalf": "",
+   "strategy": [
+    "3602",
+    "3500",
+    "3420"
+   ],
+   "skills": [
+    "3662",
+    "3620",
+    "3621",
+    "3527"
+   ],
+   "internship": "Social team at an agency, PR firm, or brand",
+   "seniorProject": "A social campaign system: templates, short motion posts and a month of planned content."
+  },
+  {
+   "id": "creative-producer",
+   "path": "adv",
+   "role": "cp",
+   "title": "Junior Creative Producer",
+   "also": "Also listed as Associate Producer or Production Coordinator",
+   "where": "Agency, media company, or in-house content studio",
+   "why": "Producers keep the work on budget and on time and keep the client happy. Campaign Development and Strategies in Motion Design teach planning; video and content courses show you what a shoot and a content calendar take.",
+   "postedPay": "$75K to $85K a year (NBCUniversal, NYC, Associate Content Producer)",
+   "robertHalf": "",
+   "strategy": [
+    "3500",
+    "3521",
+    "3563"
+   ],
+   "skills": [
+    "3620",
+    "3662",
+    "3523",
+    "3330"
+   ],
+   "internship": "A production or project team at an agency, studio or media company",
+   "seniorProject": "Produce a real project from brief to delivery: budget, schedule, shoot plan and final assets, with the paperwork to show it."
+  },
+  {
+   "id": "graphic-designer",
+   "path": "gd",
+   "role": "gd",
+   "title": "Junior Graphic Designer",
+   "also": "Also listed as Junior Designer",
+   "where": "In-house brand team or design studio",
+   "why": "Hiring managers look for strong type and for one idea held together across many pieces. Take the full Graphic Design line.",
+   "postedPay": "$66K (maman, NYC) and $70K to $80K (Related, NYC). PayScale puts most NYC junior graphic designers between $45K and $66K.",
+   "robertHalf": "Graphic Designer: $72K low, $94K mid, $111K high (2027 guide)",
+   "strategy": [
+    "3501",
+    "3601",
+    "3402"
+   ],
+   "skills": [
+    "3527",
+    "4611",
+    "3505",
+    "3412"
+   ],
+   "internship": "A design studio or a brand's in-house creative team",
+   "seniorProject": "An identity system carried across print, packaging, signage and digital."
+  },
+  {
+   "id": "packaging-designer",
+   "path": "gd",
+   "role": "gd",
+   "title": "Junior Packaging Designer",
+   "also": "",
+   "where": "Consumer products company or packaging agency",
+   "why": "Packaging teams want proof you can build a file a printer can use. Copywriting helps because every package has to sell in a few words.",
+   "postedPay": "$52K to $65K (Best Brands Consumer Products, Edison NJ)",
+   "robertHalf": "Package Designer: $76K low, $92K mid, $113K high (2026 guide)",
+   "strategy": [
+    "3501",
+    "3402",
+    "3602"
+   ],
+   "skills": [
+    "3412",
+    "3527",
+    "3711",
+    "3505"
+   ],
+   "internship": "A packaging agency or a consumer brand's design team",
+   "seniorProject": "A product line with real dielines, printed prototypes and shelf mockups."
+  },
+  {
+   "id": "production-artist",
+   "path": "gd",
+   "role": "gd",
+   "title": "Production Artist",
+   "also": "",
+   "where": "Agency, publisher, or a retailer's in-house studio",
+   "why": "Production artists keep big campaigns accurate, and it's a common first job. Campaign Development shows you how a campaign is planned before you build all its pieces.",
+   "postedPay": "$19 to $38 an hour on NYC listings (ZipRecruiter)",
+   "robertHalf": "Production Artist: $74K low, $89K mid, $103K high (2027 guide)",
+   "strategy": [
+    "3501",
+    "3601",
+    "3500"
+   ],
+   "skills": [
+    "4611",
+    "3527",
+    "3412",
+    "3711"
+   ],
+   "internship": "In-house studio at a retailer, publisher, or agency",
+   "seniorProject": "One campaign or catalog rolled out across many sizes and formats, with print-ready files and a spec sheet."
+  },
+  {
+   "id": "motion-designer",
+   "path": "mot",
+   "role": "mo",
+   "title": "Junior Motion Designer",
+   "also": "Also listed as Jr. Motion Graphics Designer / Animator",
+   "where": "Agency, media company, or sports and entertainment brand",
+   "why": "A motion reel gets you hired. Take the full Motion line, and borrow Storyboard Concepts so your reel shows planning as well as finish.",
+   "postedPay": "$25 to $27 an hour (Serino Coyne, NYC, a combined editor and motion role). MSG Sports has also posted a Junior Motion Designer role.",
+   "robertHalf": "Motion Designer: $105K low, $124K mid, $148K high (2027 guide)",
+   "strategy": [
+    "3420",
+    "3520",
+    "3521"
+   ],
+   "skills": [
+    "3621",
+    "3640",
+    "3620",
+    "3523"
+   ],
+   "internship": "A motion studio or a media company's in-house team",
+   "seniorProject": "An animated brand package: logo animation, title cards and social cutdowns."
+  },
+  {
+   "id": "brand-motion",
+   "path": "mot",
+   "role": "mo",
+   "title": "Brand + Motion Designer",
+   "also": "",
+   "where": "In-house brand team or agency",
+   "why": "More brand teams want one person who can design the system and make it move. Borrow Identity Design from Graphic Design and add Advanced Typography.",
+   "postedPay": "$62K to $85K (Precision, NYC)",
+   "robertHalf": "",
+   "strategy": [
+    "3520",
+    "3521",
+    "3501"
+   ],
+   "skills": [
+    "3621",
+    "3527",
+    "3662",
+    "3620"
+   ],
+   "internship": "A brand team that makes its own content",
+   "seniorProject": "A brand identity that moves: the static system plus rules for how it animates."
+  },
+  {
+   "id": "video-editor",
+   "path": "mot",
+   "role": "ve",
+   "title": "Junior Video Editor",
+   "also": "Also listed as Jr. Editor",
+   "where": "Production company, agency, or media company",
+   "why": "Editors are judged on pacing and story. Video Production for Commercials and Photography II build your camera and lighting eye.",
+   "postedPay": "$25 to $27 an hour (Serino Coyne, NYC, a combined editor and motion role)",
+   "robertHalf": "Video Editor: $83K low, $99K mid, $123K high (2027 guide)",
+   "strategy": [
+    "3420",
+    "3520",
+    "3521"
+   ],
+   "skills": [
+    "3620",
+    "3621",
+    "3662",
+    "3330"
+   ],
+   "internship": "A post-production house or an agency's video team",
+   "seniorProject": "A short commercial or mini documentary you shoot, cut, color and mix, plus social cutdowns."
+  },
+  {
+   "id": "childrens-books",
+   "path": "ill",
+   "role": "il",
+   "title": "Junior Designer, Children's Books",
+   "also": "",
+   "where": "Art department at a book publisher",
+   "why": "Publishing art departments hire people who can draw and also lay out a page. Borrow Storytelling for Creatives, and take Publication Design and Advanced Typography from Graphic Design.",
+   "postedPay": "$55K (Simon & Schuster, Little Simon / Simon Spotlight imprints, NYC)",
+   "robertHalf": "Illustrator: $76K low, $90K mid, $107K high (2027 guide)",
+   "strategy": [
+    "3513",
+    "3633",
+    "3420"
+   ],
+   "skills": [
+    "3413",
+    "3523",
+    "4611",
+    "3527"
+   ],
+   "internship": "A publisher's art department or a magazine",
+   "seniorProject": "A picture book dummy or a series of book covers, with type."
+  },
+  {
+   "id": "print-textile",
+   "path": "ill",
+   "role": "il",
+   "title": "Junior Print / Textile Designer",
+   "also": "",
+   "where": "Apparel or consumer goods brand",
+   "why": "Brands need a steady supply of graphics and patterns, and some lines are built on licensed characters. Clean vector work and seamless repeats are the job, and Identity Design helps you design for a label's look.",
+   "postedPay": "The NYC-area posting we found (Jersey City) did not list pay. Junior apparel design roles in Manhattan listed $55K to $75K.",
+   "robertHalf": "Illustrator: $76K low, $90K mid, $107K high (2027 guide)",
+   "strategy": [
+    "3513",
+    "3633",
+    "3501"
+   ],
+   "skills": [
+    "3711",
+    "3533",
+    "3313",
+    "3413"
+   ],
+   "internship": "Print or graphics team at an apparel brand",
+   "seniorProject": "A seasonal collection of prints with repeat patterns, colorways and product mockups."
+  },
+  {
+   "id": "ux-ui",
+   "path": "web",
+   "role": "ux",
+   "title": "Junior UX/UI Designer",
+   "also": "Also listed as Junior Product Designer",
+   "where": "Tech company, agency, or public agency",
+   "why": "Product teams hire from case studies that show research, testing and a clear reason for each choice. Information Design trains you to make complex content clear, and motion helps you prototype how screens behave.",
+   "postedPay": "$49K to $83K on NYC junior UX listings (ZipRecruiter). Most NYC product design openings ask for experience, so many people start through an internship or contract role.",
+   "robertHalf": "UX Designer: $134K low, $165K mid, $198K high (2027 guide). This is where the role goes with experience.",
+   "strategy": [
+    "3562",
+    "3563",
+    "3601"
+   ],
+   "skills": [
+    "3551",
+    "3663",
+    "3527",
+    "3621"
+   ],
+   "internship": "Product team at a startup, agency, or city agency",
+   "seniorProject": "A researched and tested app or service, with a case study that explains your decisions."
+  },
+  {
+   "id": "web-designer",
+   "path": "web",
+   "role": "ux",
+   "title": "Web Designer",
+   "also": "Also listed as Webflow Designer",
+   "where": "Web agency or in-house marketing team",
+   "why": "A site that is live and working beats any mockup. Marketing sites are brand work on screen, so Identity Design, Advanced Typography and content skills pay off.",
+   "postedPay": "$21 to $37 an hour on NYC Webflow designer listings (ZipRecruiter). PayScale shows about $51K for NYC web designers with under a year of experience.",
+   "robertHalf": "",
+   "strategy": [
+    "3562",
+    "3563",
+    "3501"
+   ],
+   "skills": [
+    "3551",
+    "3663",
+    "3527",
+    "3662"
+   ],
+   "internship": "A web or digital agency",
+   "seniorProject": "A live website launched for a real client."
+  },
+  {
+   "id": "digital-designer",
+   "path": "web",
+   "role": "ux",
+   "title": "Digital Designer",
+   "also": "",
+   "where": "In-house marketing or e-commerce team",
+   "why": "Digital designers handle everything a brand puts on a screen. Campaign Development, content and motion give you range across formats.",
+   "postedPay": "We didn't find a junior listing with pay. Robert Half names digital designers among the roles employers most want for 2026.",
+   "robertHalf": "Digital Designer: $93K low, $112K mid, $137K high (2027 guide)",
+   "strategy": [
+    "3562",
+    "3563",
+    "3500"
+   ],
+   "skills": [
+    "3551",
+    "3662",
+    "3621",
+    "3527"
+   ],
+   "internship": "In-house e-commerce or marketing team",
+   "seniorProject": "One campaign built as a system across a landing page, email and display ads."
+  },
+  {
+   "id": "front-end-developer",
+   "path": "web",
+   "role": "fe",
+   "title": "Junior Front-End Developer",
+   "also": "Also listed as Junior Web Developer or Junior Frontend Engineer",
+   "where": "Agency, tech company, or an in-house web team",
+   "why": "Front-end developers build what designers design. Web Design II and Dynamic Web I are the core; UX/UI teaches you to work from a designer's files, and analytics shows you how the site performs.",
+   "postedPay": "About $66K to $115K a year (Glassdoor, salaries reported by junior front-end developers in NYC, 2026; not a single listing)",
+   "robertHalf": "",
+   "strategy": [
+    "3562",
+    "3563",
+    "3601"
+   ],
+   "skills": [
+    "3551",
+    "3663",
+    "3527",
+    "3621"
+   ],
+   "internship": "A web team at an agency, studio or tech company where you ship real pages",
+   "seniorProject": "A responsive, accessible website you design and code yourself, live online."
+  }
+ ],
+ "sources": [
+  [
+   "COMD Advisement Sheet (degree map)",
+   "https://docs.google.com/document/d/1G6ajLcefwZUwbaY_1X4qIqRkFG9c5hajsexl6dwXRys/edit"
   ],
-  "courses": [
-    {"code": "3602", "name": "Copywriting for Creatives", "type": "strategy", "paths": ["adv"], "offered": true},
-    {"code": "3500", "name": "Campaign Development", "type": "strategy", "paths": ["adv"], "offered": true},
-    {"code": "3600", "name": "Advertising Portfolio Development", "type": "strategy", "paths": ["adv"], "offered": true},
-    {"code": "3501", "name": "Identity Design", "type": "strategy", "paths": ["gd"], "offered": true},
-    {"code": "3601", "name": "Information Design", "type": "strategy", "paths": ["gd"], "offered": true},
-    {"code": "3402", "name": "Brand Strategy for Creatives", "type": "strategy", "paths": ["gd"], "offered": true},
-    {"code": "3420", "name": "Storytelling for Creatives", "type": "strategy", "paths": ["mot"], "offered": true},
-    {"code": "3520", "name": "Principles in Motion Design", "type": "strategy", "paths": ["mot"], "offered": true},
-    {"code": "3521", "name": "Strategies in Motion Design", "type": "strategy", "paths": ["mot"], "offered": true},
-    {"code": "3513", "name": "Narrative Illustration", "type": "strategy", "paths": ["ill"], "offered": true},
-    {"code": "3633", "name": "Advanced Strategies in Illustration", "type": "strategy", "paths": ["ill"], "offered": true, "twice": true},
-    {"code": "3562", "name": "UX/UI", "type": "strategy", "paths": ["web"], "offered": true},
-    {"code": "3563", "name": "Web Analytics & Traffic", "type": "strategy", "paths": ["web"], "offered": true},
-
-    {"code": "3527", "name": "Advanced Typography", "type": "skills", "paths": ["adv", "gd"], "offered": true},
-    {"code": "3620", "name": "Video Production for Commercials", "type": "skills", "paths": ["adv", "mot"], "offered": true},
-    {"code": "3662", "name": "Strategic Content Creation", "type": "skills", "paths": ["adv", "gd", "mot"], "offered": true},
-    {"code": "3330", "name": "Photography II", "type": "skills", "paths": ["adv"], "offered": true},
-    {"code": "3530", "name": "Adv. Photo Studio", "type": "skills", "paths": ["adv"], "offered": false},
-    {"code": "4611", "name": "Publication Design", "type": "skills", "paths": ["gd"], "offered": true},
-    {"code": "3505", "name": "Special Topics: Expressive Type / Wayfinding", "type": "skills", "paths": ["gd"], "offered": true, "twice": true},
-    {"code": "3412", "name": "Packaging Design", "type": "skills", "paths": ["gd"], "offered": true},
-    {"code": "3621", "name": "Motion Design Techniques", "type": "skills", "paths": ["mot"], "offered": true},
-    {"code": "3640", "name": "3D Animation I", "type": "skills", "paths": ["mot"], "offered": true},
-    {"code": "3313", "name": "Illustration 1: Basic Illustration", "type": "skills", "paths": ["ill"], "offered": true},
-    {"code": "3413", "name": "Character Design", "type": "skills", "paths": ["ill"], "offered": true},
-    {"code": "3533", "name": "Special Topics in Illustration", "type": "skills", "paths": ["ill"], "offered": true, "twice": true},
-    {"code": "3523", "name": "Storyboard Concepts", "type": "skills", "paths": ["ill"], "offered": true},
-    {"code": "3711", "name": "Vector Art Editing", "type": "skills", "paths": ["ill"], "offered": true},
-    {"code": "3551", "name": "Web Design II", "type": "skills", "paths": ["web"], "offered": true},
-    {"code": "3663", "name": "Dynamic Web I", "type": "skills", "paths": ["web"], "offered": true},
-    {"code": "3652", "name": "Web Design III", "type": "skills", "paths": ["web"], "offered": false}
+  [
+   "Robert Half: Graphic Designer, New York",
+   "https://www.roberthalf.com/us/en/job-details/graphic-designer/new-york-ny"
   ],
-  "jobs": [
-    {
-      "id": "art-director", "path": "adv", "role": "ad",
-      "title": "Junior Art Director", "also": "",
-      "where": "Creative department at an ad agency",
-      "why": "The NYC posting asked for strong Photoshop and InDesign, print experience, a portfolio of student or spec work, and After Effects or Premiere as a plus. Stay on the Advertising line and add type, photo, video and content skills.",
-      "postedPay": "$50K to $55K a year (McCann / Omnicom, NYC)",
-      "robertHalf": "",
-      "strategy": ["3602", "3500", "3600"],
-      "skills": ["3527", "3330", "3620", "3662"],
-      "internship": "Creative department at an ad agency, ideally paired with a copywriter",
-      "seniorProject": "An integrated campaign for one brand: print, a video spot and social, with concept boards."
-    },
-    {
-      "id": "social-designer", "path": "adv", "role": "cw",
-      "title": "Social Media Designer", "also": "Also listed as Designer / Social Media Creator",
-      "where": "PR firm, agency, or in-house brand team",
-      "why": "These jobs mix design, short video and writing. Swap the portfolio course for Storytelling for Creatives, and spend your skills courses on content and video.",
-      "postedPay": "$51K to $74K a year (M Booth, NYC). A larger tech brand listed $80K to $95K (Fiverr, NYC).",
-      "robertHalf": "",
-      "strategy": ["3602", "3500", "3420"],
-      "skills": ["3662", "3620", "3621", "3527"],
-      "internship": "Social team at an agency, PR firm, or brand",
-      "seniorProject": "A social campaign system: templates, short motion posts and a month of planned content."
-    },
-    {
-      "id": "graphic-designer", "path": "gd", "role": "gd",
-      "title": "Junior Graphic Designer", "also": "Also listed as Junior Designer",
-      "where": "In-house brand team or design studio",
-      "why": "Hiring managers look for strong type and for one idea held together across many pieces. Take the full Graphic Design line.",
-      "postedPay": "$66K (maman, NYC) and $70K to $80K (Related, NYC). PayScale puts most NYC junior graphic designers between $45K and $66K.",
-      "robertHalf": "Graphic Designer: $72K low, $94K mid, $111K high (2027 guide)",
-      "strategy": ["3501", "3601", "3402"],
-      "skills": ["3527", "4611", "3505", "3412"],
-      "internship": "A design studio or a brand's in-house creative team",
-      "seniorProject": "An identity system carried across print, packaging, signage and digital."
-    },
-    {
-      "id": "packaging-designer", "path": "gd", "role": "gd",
-      "title": "Junior Packaging Designer", "also": "",
-      "where": "Consumer products company or packaging agency",
-      "why": "Packaging teams want proof you can build a file a printer can use. Copywriting helps because every package has to sell in a few words.",
-      "postedPay": "$52K to $65K (Best Brands Consumer Products, Edison NJ)",
-      "robertHalf": "Package Designer: $76K low, $92K mid, $113K high (2026 guide)",
-      "strategy": ["3501", "3402", "3602"],
-      "skills": ["3412", "3527", "3711", "3505"],
-      "internship": "A packaging agency or a consumer brand's design team",
-      "seniorProject": "A product line with real dielines, printed prototypes and shelf mockups."
-    },
-    {
-      "id": "production-artist", "path": "gd", "role": "gd",
-      "title": "Production Artist", "also": "",
-      "where": "Agency, publisher, or a retailer's in-house studio",
-      "why": "Production artists keep big campaigns accurate, and it's a common first job. Campaign Development shows you how a campaign is planned before you build all its pieces.",
-      "postedPay": "$19 to $38 an hour on NYC listings (ZipRecruiter)",
-      "robertHalf": "Production Artist: $74K low, $89K mid, $103K high (2027 guide)",
-      "strategy": ["3501", "3601", "3500"],
-      "skills": ["4611", "3527", "3412", "3711"],
-      "internship": "In-house studio at a retailer, publisher, or agency",
-      "seniorProject": "One campaign or catalog rolled out across many sizes and formats, with print-ready files and a spec sheet."
-    },
-    {
-      "id": "motion-designer", "path": "mot", "role": "mo",
-      "title": "Junior Motion Designer", "also": "Also listed as Jr. Motion Graphics Designer / Animator",
-      "where": "Agency, media company, or sports and entertainment brand",
-      "why": "A motion reel gets you hired. Take the full Motion line, and borrow Storyboard Concepts so your reel shows planning as well as finish.",
-      "postedPay": "$25 to $27 an hour (Serino Coyne, NYC, a combined editor and motion role). MSG Sports has also posted a Junior Motion Designer role.",
-      "robertHalf": "Motion Designer: $105K low, $124K mid, $148K high (2027 guide)",
-      "strategy": ["3420", "3520", "3521"],
-      "skills": ["3621", "3640", "3620", "3523"],
-      "internship": "A motion studio or a media company's in-house team",
-      "seniorProject": "An animated brand package: logo animation, title cards and social cutdowns."
-    },
-    {
-      "id": "brand-motion", "path": "mot", "role": "mo",
-      "title": "Brand + Motion Designer", "also": "",
-      "where": "In-house brand team or agency",
-      "why": "More brand teams want one person who can design the system and make it move. Borrow Identity Design from Graphic Design and add Advanced Typography.",
-      "postedPay": "$62K to $85K (Precision, NYC)",
-      "robertHalf": "",
-      "strategy": ["3520", "3521", "3501"],
-      "skills": ["3621", "3527", "3662", "3620"],
-      "internship": "A brand team that makes its own content",
-      "seniorProject": "A brand identity that moves: the static system plus rules for how it animates."
-    },
-    {
-      "id": "video-editor", "path": "mot", "role": "ve",
-      "title": "Junior Video Editor", "also": "Also listed as Jr. Editor",
-      "where": "Production company, agency, or media company",
-      "why": "Editors are judged on pacing and story. Video Production for Commercials and Photography II build your camera and lighting eye.",
-      "postedPay": "$25 to $27 an hour (Serino Coyne, NYC, a combined editor and motion role)",
-      "robertHalf": "Video Editor: $83K low, $99K mid, $123K high (2027 guide)",
-      "strategy": ["3420", "3520", "3521"],
-      "skills": ["3620", "3621", "3662", "3330"],
-      "internship": "A post-production house or an agency's video team",
-      "seniorProject": "A short commercial or mini documentary you shoot, cut, color and mix, plus social cutdowns."
-    },
-    {
-      "id": "childrens-books", "path": "ill", "role": "il",
-      "title": "Junior Designer, Children's Books", "also": "",
-      "where": "Art department at a book publisher",
-      "why": "Publishing art departments hire people who can draw and also lay out a page. Borrow Storytelling for Creatives, and take Publication Design and Advanced Typography from Graphic Design.",
-      "postedPay": "$55K (Simon & Schuster, Little Simon / Simon Spotlight imprints, NYC)",
-      "robertHalf": "Illustrator: $76K low, $90K mid, $107K high (2027 guide)",
-      "strategy": ["3513", "3633", "3420"],
-      "skills": ["3413", "3523", "4611", "3527"],
-      "internship": "A publisher's art department or a magazine",
-      "seniorProject": "A picture book dummy or a series of book covers, with type."
-    },
-    {
-      "id": "print-textile", "path": "ill", "role": "il",
-      "title": "Junior Print / Textile Designer", "also": "",
-      "where": "Apparel or consumer goods brand",
-      "why": "Brands need a steady supply of graphics and patterns, and some lines are built on licensed characters. Clean vector work and seamless repeats are the job, and Identity Design helps you design for a label's look.",
-      "postedPay": "The NYC-area posting we found (Jersey City) did not list pay. Junior apparel design roles in Manhattan listed $55K to $75K.",
-      "robertHalf": "Illustrator: $76K low, $90K mid, $107K high (2027 guide)",
-      "strategy": ["3513", "3633", "3501"],
-      "skills": ["3711", "3533", "3313", "3413"],
-      "internship": "Print or graphics team at an apparel brand",
-      "seniorProject": "A seasonal collection of prints with repeat patterns, colorways and product mockups."
-    },
-    {
-      "id": "ux-ui", "path": "web", "role": "ux",
-      "title": "Junior UX/UI Designer", "also": "Also listed as Junior Product Designer",
-      "where": "Tech company, agency, or public agency",
-      "why": "Product teams hire from case studies that show research, testing and a clear reason for each choice. Information Design trains you to make complex content clear, and motion helps you prototype how screens behave.",
-      "postedPay": "$49K to $83K on NYC junior UX listings (ZipRecruiter). Most NYC product design openings ask for experience, so many people start through an internship or contract role.",
-      "robertHalf": "UX Designer: $134K low, $165K mid, $198K high (2027 guide). This is where the role goes with experience.",
-      "strategy": ["3562", "3563", "3601"],
-      "skills": ["3551", "3663", "3527", "3621"],
-      "internship": "Product team at a startup, agency, or city agency",
-      "seniorProject": "A researched and tested app or service, with a case study that explains your decisions."
-    },
-    {
-      "id": "web-designer", "path": "web", "role": "ux",
-      "title": "Web Designer", "also": "Also listed as Webflow Designer",
-      "where": "Web agency or in-house marketing team",
-      "why": "A site that is live and working beats any mockup. Marketing sites are brand work on screen, so Identity Design, Advanced Typography and content skills pay off.",
-      "postedPay": "$21 to $37 an hour on NYC Webflow designer listings (ZipRecruiter). PayScale shows about $51K for NYC web designers with under a year of experience.",
-      "robertHalf": "",
-      "strategy": ["3562", "3563", "3501"],
-      "skills": ["3551", "3663", "3527", "3662"],
-      "internship": "A web or digital agency",
-      "seniorProject": "A live website launched for a real client."
-    },
-    {
-      "id": "digital-designer", "path": "web", "role": "ux",
-      "title": "Digital Designer", "also": "",
-      "where": "In-house marketing or e-commerce team",
-      "why": "Digital designers handle everything a brand puts on a screen. Campaign Development, content and motion give you range across formats.",
-      "postedPay": "We didn't find a junior listing with pay. Robert Half names digital designers among the roles employers most want for 2026.",
-      "robertHalf": "Digital Designer: $93K low, $112K mid, $137K high (2027 guide)",
-      "strategy": ["3562", "3563", "3500"],
-      "skills": ["3551", "3662", "3621", "3527"],
-      "internship": "In-house e-commerce or marketing team",
-      "seniorProject": "One campaign built as a system across a landing page, email and display ads."
-    }
+  [
+   "Robert Half: Motion Designer, New York",
+   "https://www.roberthalf.com/salary-details/motion-designer/new-york-ny"
   ],
-  "sources": [
-    ["COMD Advisement Sheet (degree map)", "https://docs.google.com/document/d/1G6ajLcefwZUwbaY_1X4qIqRkFG9c5hajsexl6dwXRys/edit"],
-    ["Robert Half: Graphic Designer, New York", "https://www.roberthalf.com/us/en/job-details/graphic-designer/new-york-ny"],
-    ["Robert Half: Motion Designer, New York", "https://www.roberthalf.com/salary-details/motion-designer/new-york-ny"],
-    ["Robert Half: Illustrator, New York", "https://www.roberthalf.com/us/en/job-details/illustrator/new-york-ny"],
-    ["Robert Half: Video Editor, New York", "https://www.roberthalf.com/us/en/job-details/video-editor/new-york-ny"],
-    ["Robert Half: Package Designer, New York", "https://www.roberthalf.com/us/en/job-details/package-designer/new-york-ny"],
-    ["Robert Half: Production Artist, New York", "https://www.roberthalf.com/us/en/job-details/production-artist/new-york-ny"],
-    ["Robert Half: Digital Designer, New York", "https://www.roberthalf.com/us/en/job-details/digital-designer/new-york-ny"],
-    ["Robert Half: UX Designer, New York", "https://www.roberthalf.com/us/en/job-details/ux-designer/new-york-ny"],
-    ["Junior Art Director posting (McCann / Omnicom)", "https://www.ziprecruiter.com/c/Omnicom/Job/Junior-Art-Director/-in-New-York,NY?jid=7bf9bf88014c99e6"],
-    ["NYC junior motion designer listings", "https://www.ziprecruiter.com/Jobs/Junior-Motion-Designer/-in-New-York-City,NY"],
-    ["NYC junior illustrator and junior designer listings", "https://www.ziprecruiter.com/Jobs/Junior-Illustrator/-in-New-York,NY"],
-    ["NYC social media designer listings", "https://www.ziprecruiter.com/Jobs/Social-Media-Designer/-in-New-York,NY"],
-    ["NYC production artist listings", "https://www.ziprecruiter.com/Jobs/Production-Artist/-in-New-York,NY"],
-    ["NYC junior UX/UI listings", "https://www.ziprecruiter.com/Jobs/Junior-Ux-Ui-Designer/-in-New-York,NY"],
-    ["NYC Webflow designer listings", "https://www.ziprecruiter.com/Jobs/Webflow-Designer/--in-New-York"],
-    ["PayScale: Junior Graphic Designer, New York", "https://www.payscale.com/research/US/Job=Junior_Graphic_Designer/Salary/5dc549e6/New-York-NY"],
-    ["PayScale: Web Designer, New York", "https://www.payscale.com/research/US/Job=Web_Designer/Salary/ab5b0a12/New-York-NY"]
+  [
+   "Robert Half: Illustrator, New York",
+   "https://www.roberthalf.com/us/en/job-details/illustrator/new-york-ny"
+  ],
+  [
+   "Robert Half: Video Editor, New York",
+   "https://www.roberthalf.com/us/en/job-details/video-editor/new-york-ny"
+  ],
+  [
+   "Robert Half: Package Designer, New York",
+   "https://www.roberthalf.com/us/en/job-details/package-designer/new-york-ny"
+  ],
+  [
+   "Robert Half: Production Artist, New York",
+   "https://www.roberthalf.com/us/en/job-details/production-artist/new-york-ny"
+  ],
+  [
+   "Robert Half: Digital Designer, New York",
+   "https://www.roberthalf.com/us/en/job-details/digital-designer/new-york-ny"
+  ],
+  [
+   "Robert Half: UX Designer, New York",
+   "https://www.roberthalf.com/us/en/job-details/ux-designer/new-york-ny"
+  ],
+  [
+   "Junior Art Director posting (McCann / Omnicom)",
+   "https://www.ziprecruiter.com/c/Omnicom/Job/Junior-Art-Director/-in-New-York,NY?jid=7bf9bf88014c99e6"
+  ],
+  [
+   "NYC junior motion designer listings",
+   "https://www.ziprecruiter.com/Jobs/Junior-Motion-Designer/-in-New-York-City,NY"
+  ],
+  [
+   "NYC junior illustrator and junior designer listings",
+   "https://www.ziprecruiter.com/Jobs/Junior-Illustrator/-in-New-York,NY"
+  ],
+  [
+   "NYC social media designer listings",
+   "https://www.ziprecruiter.com/Jobs/Social-Media-Designer/-in-New-York,NY"
+  ],
+  [
+   "NYC production artist listings",
+   "https://www.ziprecruiter.com/Jobs/Production-Artist/-in-New-York,NY"
+  ],
+  [
+   "NYC junior UX/UI listings",
+   "https://www.ziprecruiter.com/Jobs/Junior-Ux-Ui-Designer/-in-New-York,NY"
+  ],
+  [
+   "NYC Webflow designer listings",
+   "https://www.ziprecruiter.com/Jobs/Webflow-Designer/--in-New-York"
+  ],
+  [
+   "PayScale: Junior Graphic Designer, New York",
+   "https://www.payscale.com/research/US/Job=Junior_Graphic_Designer/Salary/5dc549e6/New-York-NY"
+  ],
+  [
+   "PayScale: Web Designer, New York",
+   "https://www.payscale.com/research/US/Job=Web_Designer/Salary/ab5b0a12/New-York-NY"
   ]
+ ]
 }
