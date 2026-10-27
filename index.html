@@ -102,6 +102,7 @@ h2{margin:0; font-size:20px; font-weight:800}
 .status{font-size:12px; font-weight:700; padding:3px 6px; align-self:start; text-align:center; border:1.5px solid var(--ink)}
 .status.yes{background:var(--ink); color:var(--bg)}
 .status.part{background:var(--bg)}
+.status.studio{color:var(--ink); border-color:var(--muted)}
 .status.no{border-style:dashed; color:var(--muted); border-color:var(--muted)}
 .comp .t{font-weight:700; line-height:1.35}
 .comp .where{font-size:13px; color:var(--muted); margin-top:2px}
@@ -445,6 +446,569 @@ h2{margin:0; font-size:20px; font-weight:800}
  }
 }
 </script>
+<script type="application/json" id="course-skills">
+{
+ "about": "Skill chart: for each COMD class, the job skills it builds. This is the one place to update which classes teach which skills. The Path Finder builds each job's skill list from it. 'jobs' sets each job's skills, in order and in the words students see. 'courses' lists, for each class, the skills it builds for each job. A skill can come from more than one class. Studio courses (every BFA student takes them) are shown with their skills but never change which electives are recommended.",
+ "updated": "2026-10-26",
+ "jobs": {
+  "gd": {
+   "name": "Graphic designer",
+   "skills": [
+    "Set type, size and arrangement of layouts",
+    "Logos and brand identity systems",
+    "Base design choices on brand and marketing strategy",
+    "Product and packaging graphics",
+    "Print-ready production files (InDesign, Acrobat)",
+    "Graphics and layouts for websites (Figma)",
+    "Vector illustration (Illustrator)",
+    "Present work and act on client feedback"
+   ]
+  },
+  "ad": {
+   "name": "Junior art director",
+   "skills": [
+    "Develop concepts with a creative team",
+    "Campaigns that run across media",
+    "Present layouts to clients for approval",
+    "Run projects on budget and schedule",
+    "Direct photography and image editing (Photoshop)",
+    "Video and motion basics (After Effects)",
+    "Typography and layout"
+   ]
+  },
+  "cw": {
+   "name": "Copywriter and content strategy",
+   "skills": [
+    "Headlines, taglines and ad copy",
+    "Campaign concepts with an art director",
+    "Writing in a brand voice",
+    "Storytelling for video and social",
+    "Plan and produce content for social and digital channels",
+    "Present and defend ideas"
+   ]
+  },
+  "mo": {
+   "name": "Motion designer",
+   "skills": [
+    "2D and 3D animation",
+    "Timing and motion principles (After Effects)",
+    "Storytelling and storyboards",
+    "Light, color, texture and realism in 3D",
+    "Plan multimedia campaigns on budget and schedule",
+    "Shoot and edit video"
+   ]
+  },
+  "il": {
+   "name": "Illustrator",
+   "skills": [
+    "Create artwork in traditional and digital media (Photoshop, Illustrator)",
+    "Use line, color and perspective to convey ideas and mood",
+    "Characters and visual development",
+    "Sequential images and storyboards",
+    "Work with art directors and editors on content",
+    "Keep a portfolio and market your work"
+   ]
+  },
+  "ux": {
+   "name": "Visual & UX designer",
+   "skills": [
+    "Design, build and maintain websites",
+    "Front-end code and scripting",
+    "Interface and user experience design (Figma)",
+    "Test, find and fix problems from user feedback",
+    "Read analytics and site traffic",
+    "Work with developers on project timelines"
+   ]
+  },
+  "fe": {
+   "name": "Front-end developer",
+   "skills": [
+    "Code websites with HTML, CSS and JavaScript",
+    "Build and maintain sites with content tools such as WordPress",
+    "Test sites across browsers and devices",
+    "Turn user needs into technical requirements",
+    "Build from designs made in Figma",
+    "Track site performance with analytics",
+    "Work on a team with designers and developers"
+   ]
+  },
+  "ve": {
+   "name": "Video editor",
+   "skills": [
+    "Cut raw footage into a clear story",
+    "Shoot and edit video for commercials and social",
+    "Add titles, graphics and motion effects (After Effects)",
+    "Plan sequences with storyboards",
+    "Deliver video for YouTube, Instagram and TikTok",
+    "Take direction from producers and clients"
+   ]
+  },
+  "cp": {
+   "name": "Creative producer",
+   "skills": [
+    "Plan budgets, schedules and production details",
+    "Develop campaign and content ideas with a creative team",
+    "Plan shots, scenes and storyboards",
+    "Review work against the brief and quality standards",
+    "Present to clients and stakeholders",
+    "Measure results with analytics"
+   ]
+  }
+ },
+ "courses": {
+  "3313": {
+   "name": "Illustration 1",
+   "studio": false,
+   "builds": {
+    "gd": [
+     "Vector illustration (Illustrator)"
+    ],
+    "il": [
+     "Create artwork in traditional and digital media (Photoshop, Illustrator)"
+    ]
+   }
+  },
+  "3330": {
+   "name": "Photography II",
+   "studio": false,
+   "builds": {
+    "ad": [
+     "Direct photography and image editing (Photoshop)"
+    ]
+   }
+  },
+  "3402": {
+   "name": "Brand Strategy for Creatives",
+   "studio": false,
+   "builds": {
+    "gd": [
+     "Base design choices on brand and marketing strategy"
+    ],
+    "ad": [
+     "Develop concepts with a creative team"
+    ],
+    "cw": [
+     "Writing in a brand voice"
+    ]
+   }
+  },
+  "3412": {
+   "name": "Packaging Design",
+   "studio": false,
+   "builds": {
+    "gd": [
+     "Product and packaging graphics"
+    ]
+   }
+  },
+  "3413": {
+   "name": "Character Design",
+   "studio": false,
+   "builds": {
+    "il": [
+     "Characters and visual development"
+    ]
+   }
+  },
+  "3420": {
+   "name": "Storytelling for Creatives",
+   "studio": false,
+   "builds": {
+    "cw": [
+     "Storytelling for video and social"
+    ],
+    "mo": [
+     "Storytelling and storyboards"
+    ],
+    "ve": [
+     "Cut raw footage into a clear story",
+     "Plan sequences with storyboards"
+    ],
+    "cp": [
+     "Plan shots, scenes and storyboards"
+    ]
+   }
+  },
+  "3500": {
+   "name": "Campaign Development",
+   "studio": false,
+   "builds": {
+    "ad": [
+     "Develop concepts with a creative team",
+     "Campaigns that run across media"
+    ],
+    "cw": [
+     "Campaign concepts with an art director"
+    ],
+    "cp": [
+     "Develop campaign and content ideas with a creative team"
+    ]
+   }
+  },
+  "3501": {
+   "name": "Identity Design",
+   "studio": false,
+   "builds": {
+    "gd": [
+     "Logos and brand identity systems"
+    ]
+   }
+  },
+  "3504": {
+   "name": "Com. Design Theory (WI)",
+   "studio": true,
+   "builds": {
+    "gd": [
+     "Present work and act on client feedback"
+    ]
+   }
+  },
+  "3505": {
+   "name": "Special Topics: Expressive Type / Wayfinding",
+   "studio": false,
+   "builds": {
+    "gd": [
+     "Set type, size and arrangement of layouts"
+    ]
+   }
+  },
+  "3513": {
+   "name": "Narrative Illustration",
+   "studio": false,
+   "builds": {
+    "il": [
+     "Use line, color and perspective to convey ideas and mood"
+    ]
+   }
+  },
+  "3520": {
+   "name": "Principles in Motion Design",
+   "studio": false,
+   "builds": {
+    "ad": [
+     "Video and motion basics (After Effects)"
+    ],
+    "mo": [
+     "Timing and motion principles (After Effects)"
+    ],
+    "ve": [
+     "Add titles, graphics and motion effects (After Effects)"
+    ]
+   }
+  },
+  "3521": {
+   "name": "Strategies in Motion Design",
+   "studio": false,
+   "builds": {
+    "mo": [
+     "Plan multimedia campaigns on budget and schedule"
+    ],
+    "cp": [
+     "Plan budgets, schedules and production details"
+    ]
+   }
+  },
+  "3523": {
+   "name": "Storyboard Concepts",
+   "studio": false,
+   "builds": {
+    "mo": [
+     "Storytelling and storyboards"
+    ],
+    "il": [
+     "Sequential images and storyboards"
+    ],
+    "ve": [
+     "Plan sequences with storyboards"
+    ],
+    "cp": [
+     "Plan shots, scenes and storyboards"
+    ]
+   }
+  },
+  "3527": {
+   "name": "Advanced Typography",
+   "studio": false,
+   "builds": {
+    "gd": [
+     "Set type, size and arrangement of layouts"
+    ],
+    "ad": [
+     "Typography and layout"
+    ]
+   }
+  },
+  "3530": {
+   "name": "Adv. Photo Studio",
+   "studio": false,
+   "builds": {
+    "ad": [
+     "Direct photography and image editing (Photoshop)"
+    ]
+   }
+  },
+  "3533": {
+   "name": "Special Topics in Illustration",
+   "studio": false,
+   "builds": {
+    "il": [
+     "Keep a portfolio and market your work"
+    ]
+   }
+  },
+  "3551": {
+   "name": "Web Design II",
+   "studio": false,
+   "builds": {
+    "gd": [
+     "Graphics and layouts for websites (Figma)"
+    ],
+    "ux": [
+     "Design, build and maintain websites"
+    ],
+    "fe": [
+     "Code websites with HTML, CSS and JavaScript",
+     "Build and maintain sites with content tools such as WordPress"
+    ]
+   }
+  },
+  "3562": {
+   "name": "UX/UI",
+   "studio": false,
+   "builds": {
+    "gd": [
+     "Graphics and layouts for websites (Figma)"
+    ],
+    "ux": [
+     "Interface and user experience design (Figma)",
+     "Test, find and fix problems from user feedback"
+    ],
+    "fe": [
+     "Test sites across browsers and devices",
+     "Turn user needs into technical requirements",
+     "Build from designs made in Figma"
+    ]
+   }
+  },
+  "3563": {
+   "name": "Web Analytics & Traffic",
+   "studio": false,
+   "builds": {
+    "ux": [
+     "Test, find and fix problems from user feedback",
+     "Read analytics and site traffic"
+    ],
+    "fe": [
+     "Track site performance with analytics"
+    ],
+    "cp": [
+     "Measure results with analytics"
+    ]
+   }
+  },
+  "3600": {
+   "name": "Advertising Portfolio Dev.",
+   "studio": false,
+   "builds": {
+    "ad": [
+     "Campaigns that run across media",
+     "Present layouts to clients for approval"
+    ],
+    "cw": [
+     "Campaign concepts with an art director",
+     "Present and defend ideas"
+    ],
+    "cp": [
+     "Review work against the brief and quality standards",
+     "Present to clients and stakeholders"
+    ]
+   }
+  },
+  "3601": {
+   "name": "Information Design",
+   "studio": false,
+   "builds": {
+    "gd": [
+     "Set type, size and arrangement of layouts"
+    ]
+   }
+  },
+  "3602": {
+   "name": "Copywriting for Creatives",
+   "studio": false,
+   "builds": {
+    "ad": [
+     "Develop concepts with a creative team"
+    ],
+    "cw": [
+     "Headlines, taglines and ad copy"
+    ]
+   }
+  },
+  "3620": {
+   "name": "Video Production for Commercials",
+   "studio": false,
+   "builds": {
+    "ad": [
+     "Video and motion basics (After Effects)"
+    ],
+    "mo": [
+     "Shoot and edit video"
+    ],
+    "ve": [
+     "Cut raw footage into a clear story",
+     "Shoot and edit video for commercials and social"
+    ]
+   }
+  },
+  "3621": {
+   "name": "Motion Design Techniques",
+   "studio": false,
+   "builds": {
+    "mo": [
+     "2D and 3D animation",
+     "Timing and motion principles (After Effects)"
+    ],
+    "ve": [
+     "Add titles, graphics and motion effects (After Effects)"
+    ]
+   }
+  },
+  "3633": {
+   "name": "Adv. Strategies in Illustration",
+   "studio": false,
+   "builds": {
+    "il": [
+     "Use line, color and perspective to convey ideas and mood",
+     "Work with art directors and editors on content"
+    ]
+   }
+  },
+  "3640": {
+   "name": "3D Animation I",
+   "studio": false,
+   "builds": {
+    "mo": [
+     "2D and 3D animation",
+     "Light, color, texture and realism in 3D"
+    ]
+   }
+  },
+  "3652": {
+   "name": "Web Design III",
+   "studio": false,
+   "builds": {
+    "ux": [
+     "Design, build and maintain websites",
+     "Front-end code and scripting"
+    ],
+    "fe": [
+     "Build and maintain sites with content tools such as WordPress",
+     "Test sites across browsers and devices"
+    ]
+   }
+  },
+  "3662": {
+   "name": "Strategic Content Creation",
+   "studio": false,
+   "builds": {
+    "ad": [
+     "Campaigns that run across media"
+    ],
+    "cw": [
+     "Storytelling for video and social",
+     "Plan and produce content for social and digital channels"
+    ],
+    "mo": [
+     "Plan multimedia campaigns on budget and schedule"
+    ],
+    "ve": [
+     "Shoot and edit video for commercials and social",
+     "Deliver video for YouTube, Instagram and TikTok"
+    ],
+    "cp": [
+     "Develop campaign and content ideas with a creative team"
+    ]
+   }
+  },
+  "3663": {
+   "name": "Dynamic Web I",
+   "studio": false,
+   "builds": {
+    "ux": [
+     "Front-end code and scripting"
+    ],
+    "fe": [
+     "Code websites with HTML, CSS and JavaScript"
+    ]
+   }
+  },
+  "3711": {
+   "name": "Vector Art Editing",
+   "studio": false,
+   "builds": {
+    "gd": [
+     "Vector illustration (Illustrator)"
+    ],
+    "il": [
+     "Create artwork in traditional and digital media (Photoshop, Illustrator)"
+    ]
+   }
+  },
+  "4611": {
+   "name": "Publication Design",
+   "studio": false,
+   "builds": {
+    "gd": [
+     "Set type, size and arrangement of layouts",
+     "Print-ready production files (InDesign, Acrobat)"
+    ]
+   }
+  },
+  "4701": {
+   "name": "Design Team",
+   "studio": true,
+   "builds": {
+    "gd": [
+     "Present work and act on client feedback"
+    ],
+    "ad": [
+     "Present layouts to clients for approval",
+     "Run projects on budget and schedule"
+    ],
+    "cw": [
+     "Present and defend ideas"
+    ],
+    "il": [
+     "Work with art directors and editors on content"
+    ],
+    "ux": [
+     "Work with developers on project timelines"
+    ],
+    "fe": [
+     "Work on a team with designers and developers"
+    ],
+    "ve": [
+     "Take direction from producers and clients"
+    ],
+    "cp": [
+     "Review work against the brief and quality standards",
+     "Present to clients and stakeholders"
+    ]
+   }
+  },
+  "4801": {
+   "name": "The Portfolio",
+   "studio": true,
+   "builds": {
+    "il": [
+     "Keep a portfolio and market your work"
+    ]
+   }
+  }
+ }
+}
+</script>
 <script type="application/json" id="job-data">
 {
  "updated": "2026-10-22",
@@ -742,78 +1306,30 @@ h2{margin:0; font-size:20px; font-weight:800}
   var ONET = 'https://www.onetonline.org/link/summary/';
   var STUDIO_NOTE = 'Every BFA student also builds teamwork, presenting and client skills in the six studio courses. Point your internship (COMD 4900) and senior project (COMD 4830) at this job.';
   var ROLES = [
-    {id:'gd', path:'gd', name:'Graphic designer',  src:{label:'O*NET 27-1024.00 Graphic Designers', url:ONET+'27-1024.00'}, comps:[
-      ['Set type, size and arrangement of layouts', ['3527','3505','4611','3601']],
-      ['Logos and brand identity systems', ['3501']],
-      ['Base design choices on brand and marketing strategy', ['3402']],
-      ['Product and packaging graphics', ['3412']],
-      ['Print-ready production files (InDesign, Acrobat)', ['4611']],
-      ['Graphics and layouts for websites (Figma)', ['3562','3551']],
-      ['Vector illustration (Illustrator)', ['3711','3313']]
-    ]},
-    {id:'ad', path:'adv', name:'Junior art director',  src:{label:'O*NET 27-1011.00 Art Directors', url:ONET+'27-1011.00'}, comps:[
-      ['Develop concepts with a creative team', ['3602','3500','3402']],
-      ['Campaigns that run across media', ['3500','3600','3662']],
-      ['Present layouts to clients for approval', ['3600']],
-      ['Direct photography and image editing (Photoshop)', ['3330','3530']],
-      ['Video and motion basics (After Effects)', ['3620','3520']],
-      ['Typography and layout', ['3527']]
-    ]},
-    {id:'cw', path:'adv', name:'Copywriter and content strategy',  src:null, comps:[
-      ['Headlines, taglines and ad copy', ['3602']],
-      ['Campaign concepts with an art director', ['3500','3600']],
-      ['Writing in a brand voice', ['3402']],
-      ['Storytelling for video and social', ['3420','3662']],
-      ['Plan and produce content for social and digital channels', ['3662']],
-      ['Present and defend ideas', ['3600']]
-    ]},
-    {id:'mo', path:'mot', name:'Motion designer',  src:{label:'O*NET 27-1014.00 Special Effects Artists and Animators', url:ONET+'27-1014.00'}, comps:[
-      ['2D and 3D animation', ['3640','3621']],
-      ['Timing and motion principles (After Effects)', ['3520','3621']],
-      ['Storytelling and storyboards', ['3420','3523']],
-      ['Light, color, texture and realism in 3D', ['3640']],
-      ['Plan multimedia campaigns on budget and schedule', ['3521','3662']],
-      ['Shoot and edit video', ['3620']]
-    ]},
-    {id:'il', path:'ill', name:'Illustrator',  src:{label:'O*NET 27-1013.00 Fine Artists, incl. Illustrators', url:ONET+'27-1013.00'}, comps:[
-      ['Create artwork in traditional and digital media (Photoshop, Illustrator)', ['3313','3711']],
-      ['Use line, color and perspective to convey ideas and mood', ['3513','3633']],
-      ['Characters and visual development', ['3413']],
-      ['Sequential images and storyboards', ['3523']],
-      ['Work with art directors and editors on content', ['3633']],
-      ['Keep a portfolio and market your work', ['3533']]
-    ]},
-    {id:'ux', path:'web', name:'Visual & UX designer',  src:{label:'O*NET 15-1255.00 Web and Digital Interface Designers', url:ONET+'15-1255.00'}, comps:[
-      ['Design, build and maintain websites', ['3551','3652']],
-      ['Front-end code and scripting', ['3663','3652']],
-      ['Interface and user experience design (Figma)', ['3562']],
-      ['Test, find and fix problems from user feedback', ['3562','3563']],
-      ['Read analytics and site traffic', ['3563']]
-    ]},
-    {id:'fe', path:'web', name:'Front-end developer', src:{label:'O*NET 15-1254.00 Web Developers', url:ONET+'15-1254.00'}, comps:[
-      ['Code websites with HTML, CSS and JavaScript', ['3551','3663']],
-      ['Build and maintain sites with content tools such as WordPress', ['3652','3551']],
-      ['Test sites across browsers and devices', ['3652','3562']],
-      ['Turn user needs into technical requirements', ['3562']],
-      ['Build from designs made in Figma', ['3562']],
-      ['Track site performance with analytics', ['3563']]
-    ]},
-    {id:'ve', path:'mot', name:'Video editor', src:{label:'O*NET 27-4032.00 Film and Video Editors', url:ONET+'27-4032.00'}, comps:[
-      ['Cut raw footage into a clear story', ['3420','3620']],
-      ['Shoot and edit video for commercials and social', ['3620','3662']],
-      ['Add titles, graphics and motion effects (After Effects)', ['3621','3520']],
-      ['Plan sequences with storyboards', ['3523','3420']],
-      ['Deliver video for YouTube, Instagram and TikTok', ['3662']]
-    ]},
-    {id:'cp', path:'adv', name:'Creative producer', src:{label:'O*NET 27-2012.00 Producers and Directors', url:ONET+'27-2012.00'}, comps:[
-      ['Plan budgets, schedules and production details', ['3521']],
-      ['Develop campaign and content ideas with a creative team', ['3500','3662']],
-      ['Plan shots, scenes and storyboards', ['3523','3420']],
-      ['Review work against the brief and quality standards', ['3600']],
-      ['Present to clients and stakeholders', ['3600']],
-      ['Measure results with analytics', ['3563']]
-    ]}
+    {id:'gd', path:'gd', name:'Graphic designer',  src:{label:'O*NET 27-1024.00 Graphic Designers', url:ONET+'27-1024.00'}, comps:[]},
+    {id:'ad', path:'adv', name:'Junior art director',  src:{label:'O*NET 27-1011.00 Art Directors', url:ONET+'27-1011.00'}, comps:[]},
+    {id:'cw', path:'adv', name:'Copywriter and content strategy',  src:null, comps:[]},
+    {id:'mo', path:'mot', name:'Motion designer',  src:{label:'O*NET 27-1014.00 Special Effects Artists and Animators', url:ONET+'27-1014.00'}, comps:[]},
+    {id:'il', path:'ill', name:'Illustrator',  src:{label:'O*NET 27-1013.00 Fine Artists, incl. Illustrators', url:ONET+'27-1013.00'}, comps:[]},
+    {id:'ux', path:'web', name:'Visual & UX designer',  src:{label:'O*NET 15-1255.00 Web and Digital Interface Designers', url:ONET+'15-1255.00'}, comps:[]},
+    {id:'fe', path:'web', name:'Front-end developer', src:{label:'O*NET 15-1254.00 Web Developers', url:ONET+'15-1254.00'}, comps:[]},
+    {id:'ve', path:'mot', name:'Video editor', src:{label:'O*NET 27-4032.00 Film and Video Editors', url:ONET+'27-4032.00'}, comps:[]},
+    {id:'cp', path:'adv', name:'Creative producer', src:{label:'O*NET 27-2012.00 Producers and Directors', url:ONET+'27-2012.00'}, comps:[]}
   ];
+  /* Each job's skills, and the classes that teach each one, come from the skill chart (data/course-skills.json). */
+  function applySkills(chart){
+    if(!chart || !chart.jobs || !chart.courses) return;
+    ROLES.forEach(function(x){
+      var j = chart.jobs[x.id]; if(!j) return;
+      x.comps = j.skills.map(function(sk){
+        var codes = Object.keys(chart.courses).filter(function(c){ var b = chart.courses[c].builds || {}; return BY[c] && (b[x.id] || []).indexOf(sk) > -1; });
+        codes.sort(function(p, q){ return (BY[p].type==='studio') - (BY[q].type==='studio') || (p < q ? -1 : 1); });
+        return [sk, codes];
+      });
+    });
+    FEEDS = null;
+  }
+  applySkills(JSON.parse(document.getElementById('course-skills').textContent));
   var JOB = JSON.parse(document.getElementById('job-data').textContent);
   ROLES.forEach(function(x){ var d = JOB.roles[x.id] || {}; Object.keys(d).forEach(function(k){ x[k] = d[k]; }); });
   var RC = {}; try{ RC = JSON.parse(document.getElementById('role-content').textContent); }catch(e){}
@@ -1001,28 +1517,30 @@ h2{margin:0; font-size:20px; font-weight:800}
       '<div class="note" style="margin-top:6px">'+g+' growing · '+f+' flat · '+d+' shrinking'+(n?' · '+n+' unlinked':'')+'</div>'+
       '<div class="align-list">'+items.join('')+'</div>';
   }
+  function onLine(code, x){ return BY[code].paths.indexOf(x.path) > -1 ? 1 : 0; }
   function reach(x){
     var sRem = Math.max(0,3-count('strat')), kRem = Math.max(0,4-count('skill')-count('boost'));
-    var cov = x.comps.map(function(cp){ return cp[1].some(has); });
+    var cov = x.comps.map(function(cp){ return cp[1].some(has); });  /* studio courses never change which electives are picked */
     var now = cov.filter(Boolean).length, picks = [];
     while(true){
       var tally = {};
       x.comps.forEach(function(cp,i){ if(cov[i]) return; cp[1].forEach(function(c){
-        var cc = BY[c]; if(has(c) || cc.off || picks.indexOf(c)>-1) return;
+        var cc = BY[c]; if(has(c) || cc.off || cc.type==='studio' || picks.indexOf(c)>-1) return;
         if((cc.type==='strat' && sRem>0) || (isSkill(cc) && kRem>0)) tally[c] = (tally[c]||0)+1;
       }); });
-      var best = Object.keys(tally).sort(function(a,b){ return tally[b]-tally[a]; })[0];
+      var best = Object.keys(tally).sort(function(a,b){ return tally[b]-tally[a] || onLine(b, x) - onLine(a, x) || (a < b ? -1 : 1); })[0];
       if(!best) break;
       picks.push(best); if(BY[best].type==='strat') sRem--; else kRem--;
       x.comps.forEach(function(cp,i){ if(!cov[i] && cp[1].indexOf(best)>-1) cov[i] = true; });
     }
+    x.comps.forEach(function(cp,i){ if(cp[1].some(function(c){ return BY[c].type==='studio'; })) cov[i] = true; });
     return {now:now, after:cov.filter(Boolean).length, picks:picks};
   }
   function pivotHtml(cur){
     var sRem = Math.max(0,3-count('strat')), kRem = Math.max(0,4-count('skill')-count('boost'));
     var list = ROLES.filter(function(x){ return x.id!==cur.id; }).map(function(x){ var r = reach(x); r.x = x; return r; })
       .sort(function(a,b){ return (b.after/b.x.comps.length)-(a.after/a.x.comps.length) || b.x.out-a.x.out; });
-    var intro = (sRem+kRem) ? 'These use only your '+sRem+' strategy and '+kRem+' skills slot'+((sRem+kRem)>1?'s':'')+' left. No extra courses.' : 'Your elective slots are full, so these show what your current classes already give you. No extra courses.';
+    var intro = (sRem+kRem) ? 'These use only your '+sRem+' strategy and '+kRem+' skills slot'+((sRem+kRem)>1?'s':'')+' left, plus the studio courses every student takes. No extra courses.' : 'Your elective slots are full, so these show what your current classes plus your studio courses already give you. No extra courses.';
     return '<div class="pivot"><h2 style="font-size:18px">Thinking of changing direction?</h2><p>'+intro+'</p>'+ list.map(function(r){
       var x = r.x, how = r.picks.length ? 'Use your slots on '+r.picks.map(function(c){ return '<span class="code">'+c+'</span>'; }).join(', ') : 'No slot changes needed';
       return '<div class="pv"><span class="jn"><span class="dot" style="background:'+color(x.path)+'"></span>'+x.name+'</span>'+
@@ -1097,13 +1615,14 @@ h2{margin:0; font-size:20px; font-weight:800}
         var on = has(code);
         return '<span class="'+(on?'got':'')+'" title="'+esc(BY[code].name)+'"><span class="code">'+code+'</span>'+(on?' ✓':'')+'</span>';
       }).join('');
-      return '<div class="comp"><div class="cls">'+cls+'</div><span class="arrow" aria-hidden="true">→</span><div class="t">'+esc(cp[0])+'</div><span class="status '+(got.length?'yes':'no')+'">'+(got.length?'You have it':'Not yet')+'</span></div>';
+      var inStudio = !got.length && cp[1].some(function(c){ return BY[c].type==='studio'; });
+      return '<div class="comp"><div class="cls">'+cls+'</div><span class="arrow" aria-hidden="true">→</span><div class="t">'+esc(cp[0])+'</div><span class="status '+(got.length?'yes':(inStudio?'studio':'no'))+'">'+(got.length?'You have it':(inStudio?'In studio':'Not yet'))+'</span></div>';
     }).join('');
 
     var cand = {};
-    gaps.forEach(function(cp){ cp[1].forEach(function(code){ if(!has(code) && !BY[code].off){ (cand[code] = cand[code] || []).push(cp[0]); } }); });
+    gaps.forEach(function(cp){ cp[1].forEach(function(code){ if(!has(code) && !BY[code].off && BY[code].type!=='studio'){ (cand[code] = cand[code] || []).push(cp[0]); } }); });
     var list = Object.keys(cand).map(function(code){ return {c:BY[code], why:cand[code]}; })
-      .sort(function(a,b){ return b.why.length - a.why.length; });
+      .sort(function(a,b){ return b.why.length - a.why.length || onLine(b.c.code, r) - onLine(a.c.code, r) || (a.c.code < b.c.code ? -1 : 1); });
     var sRem = Math.max(0,3-s), kRem = Math.max(0,4-k);
     var stratPick = list.filter(function(x){ return x.c.type==='strat'; }).slice(0,sRem);
     var skillPick = list.filter(function(x){ return x.c.type==='skill' || x.c.type==='boost'; }).slice(0,kRem);
@@ -1156,12 +1675,12 @@ h2{margin:0; font-size:20px; font-weight:800}
         var l2 = [r.what, 'Median pay '+money(r.pay)+' ('+JOB.payPeriod+'). Outlook '+outTxt(r.out)+', '+outWord(r.out).toLowerCase()+' ('+JOB.outlookPeriod+'). '+r.jobs.toLocaleString('en-US')+' U.S. jobs.', 'Where they work: '+r.where, r.entry, ''];
         r.comps.forEach(function(cp){
           var got = cp[1].filter(has);
-          l2.push((got.length?'[x] ':'[  ] ')+cp[0]+'  (classes: '+cp[1].map(function(c){ return c+(has(c)?' taken':''); }).join(', ')+')');
+          l2.push((got.length?'[x] ':'[  ] ')+cp[0]+'  (classes: '+cp[1].map(function(c){ return c+(has(c)?' taken':(BY[c].type==='studio'?' studio':'')); }).join(', ')+')');
         });
         var rc = reach(r);
         if(rc.picks.length) l2.push('', 'Use my remaining slots on: '+rc.picks.map(function(c){ return 'COMD '+c+' '+BY[c].name; }).join('; '));
         l2.push(STUDIO_NOTE);
-        l2.push('Readiness: '+rc.now+' of '+r.comps.length+' now, '+rc.after+' of '+r.comps.length+' with this plan');
+        l2.push('Readiness: '+rc.now+' of '+r.comps.length+' now, '+rc.after+' of '+r.comps.length+' with this plan and your studio courses');
         secs.push({h:'Career goal: '+r.name, lines:l2});
       }
     }
@@ -1371,7 +1890,7 @@ h2{margin:0; font-size:20px; font-weight:800}
         y += h;
       });
       doc.setDrawColor(INK); doc.setLineWidth(0.8); doc.line(M, y, W - M, y); y += 15;
-      font(9.5, true); doc.text('Readiness: ' + cr.now + ' of ' + cr.total + ' now, ' + cr.after + ' of ' + cr.total + ' with this plan', M, y); y += 13;
+      font(9.5, true); doc.text('Readiness: ' + cr.now + ' of ' + cr.total + ' now, ' + cr.after + ' of ' + cr.total + ' with this plan and your studio courses', M, y); y += 13;
       if(cr.plan){ font(8.5, false); y = lines(wrap(cr.plan, CW), M, y, 11); }
       y += 18;
 
@@ -1455,7 +1974,7 @@ h2{margin:0; font-size:20px; font-weight:800}
       plan.push(STUDIO_NOTE);
       career = {job:r.name, what:r.what, entry:r.entry, pay:money(r.pay), pay10:money(r.pay10||0), pay90:money(r.pay90||0), payNote:r.payNote||'', payPeriod:JOB.payPeriod, duties:r.duties||[], out:outTxt(r.out), outWord:outWord(r.out), outPeriod:JOB.outlookPeriod,
         jobs:r.jobs.toLocaleString('en-US'), where:r.where, now:rc.now, after:rc.after, total:r.comps.length, plan:plan.join(' '),
-        comps:r.comps.map(function(cp){ return {skill:cp[0], has:cp[1].some(has), classes:cp[1].map(function(c){ return c+' '+BY[c].name+(has(c)?' (taken)':''); }).join(', ')}; })};
+        comps:r.comps.map(function(cp){ return {skill:cp[0], has:cp[1].some(has), classes:cp[1].map(function(c){ return c+' '+BY[c].name+(has(c)?' (taken)':(BY[c].type==='studio'?' (studio course)':'')); }).join(', ')}; })};
     }
     var extras = planData().filter(function(sec){ return sec.h.indexOf('Job market')===0 || sec.h.indexOf('Other directions')===0; });
     return {
@@ -1564,9 +2083,9 @@ h2{margin:0; font-size:20px; font-weight:800}
     if(rc) RC = rc;
   }
   if(location.protocol !== 'file:'){
-    Promise.all(['data/job-data.json','data/role-content.json'].map(function(u){
+    Promise.all(['data/job-data.json','data/role-content.json','data/course-skills.json'].map(function(u){
       return fetch(u, {cache:'no-cache'}).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; });
-    })).then(function(d){ if(d[0] || d[1]){ applyData(d[0], d[1]); render(); } });
+    })).then(function(d){ if(d[2]) applySkills(d[2]); if(d[0] || d[1] || d[2]){ applyData(d[0], d[1]); render(); } });
   }
   if(!load()){ taken=new Set(EXAMPLE); isExample=true; }
   render();

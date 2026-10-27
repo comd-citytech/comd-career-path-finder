@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>COMD Skill Chart</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800&family=Work+Sans:wght@700;800&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+/* Faculty page. Shows data/course-skills.json: the job skills each COMD class builds. The Path Finder reads the same file. */
+:root{
+  --bg:#F4F3EF; --surface:#FFFFFF; --ink:#16161A; --muted:#5C5A55; --line:#D8D5CC;
+  --gd:#047857; --adv:#1D4ED8; --mot:#7C3AED; --ill:#B98900; --web:#C2187A; --studio:#5C5A55;
+  --display:'Archivo','Helvetica Neue',Arial,sans-serif;
+  --head:'Work Sans','Helvetica Neue',Arial,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#131315; --surface:#1D1D21; --ink:#EDEBE6; --muted:#A3A09A; --line:#34343A;
+  --gd:#34B892; --adv:#7B9BF7; --mot:#AE87F7; --ill:#E9B730; --web:#F06BB4; --studio:#A3A09A; color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#131315; --surface:#1D1D21; --ink:#EDEBE6; --muted:#A3A09A; --line:#34343A;
+  --gd:#34B892; --adv:#7B9BF7; --mot:#AE87F7; --ill:#E9B730; --web:#F06BB4; --studio:#A3A09A; color-scheme:dark }
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--display);font-size:15px;line-height:1.5}
+h1,h2{font-family:var(--head);margin:0;text-wrap:balance}
+p{margin:0;max-width:72ch}
+a{color:inherit;text-underline-offset:3px}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--gd);outline-offset:2px}
+.wrap{max-width:1240px;margin:0 auto;padding:32px max(16px,env(safe-area-inset-right,0px)) 48px max(16px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:24px}
+header{display:flex;flex-direction:column;gap:8px;border-bottom:3px solid var(--ink);padding-bottom:16px}
+.eyebrow{font-family:var(--mono);font-size:13px;color:var(--muted)}
+h1{font-size:clamp(30px,5vw,48px);font-weight:800;letter-spacing:-0.02em;line-height:1.05}
+.how{background:var(--surface);border:1px solid var(--line);padding:14px 16px;display:flex;flex-direction:column;gap:6px;font-size:14px}
+.how b{font-weight:700}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.tabs button{border:2px solid var(--ink);background:transparent;padding:6px 14px;font-weight:700}
+.tabs button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.tabs input{flex:1 1 220px;min-width:0;border:2px solid var(--ink);background:var(--surface);color:var(--ink);padding:6px 10px;font:inherit}
+.row{display:grid;grid-template-columns:minmax(150px,240px) 1fr;gap:16px;padding:14px 0;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.code{font-family:var(--mono);font-weight:600}
+.name{font-weight:700}
+.tag{display:inline-block;font-family:var(--mono);font-size:11px;border:1px solid var(--muted);color:var(--muted);padding:0 5px;margin-top:4px}
+.groups{display:flex;flex-direction:column;gap:8px;min-width:0}
+.job{font-size:13px;font-weight:700;display:flex;align-items:center;gap:6px}
+.dot{width:10px;height:10px;border-radius:50%;flex:none}
+ul{margin:2px 0 0;padding-left:22px}
+li{margin:1px 0}
+.cls{display:flex;flex-wrap:wrap;gap:6px}
+.cls span{font-family:var(--mono);font-size:13px;border:1px solid var(--line);background:var(--surface);padding:1px 6px}
+.cls span.st{border-style:dashed;color:var(--muted)}
+.skill{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 16px;padding:6px 0;border-top:1px dashed var(--line);align-items:start}
+.empty{color:var(--muted)}
+footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
+@media (max-width:640px){ .row{grid-template-columns:1fr;gap:6px} .skill{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">COMD faculty · City Tech Communication Design</div>
+    <h1>Skill chart</h1>
+    <p>Which job skills each COMD class builds. The Career Path Finder uses this chart to show students how their classes connect to each job and which electives to take next.</p>
+  </header>
+  <div class="how">
+    <p><b>To update a class:</b> edit its entry in <a href="https://github.com/comd-citytech/comd-career-path-finder/blob/main/data/course-skills.json">data/course-skills.json</a> on GitHub and open a pull request. Under "builds", list the job skills the class teaches, copied word for word from that job's list under "jobs". The data check flags any skill that doesn't match.</p>
+    <p><b>Studio courses</b> (3504, 4701, 4730, 4801, 4830, 4900) are shown with the skills they build, but every BFA student takes them, so they never change which electives the Path Finder recommends.</p>
+    <p id="updated" class="eyebrow"></p>
+  </div>
+  <div class="tabs" role="group" aria-label="View">
+    <button type="button" id="v-class" aria-pressed="true">By class</button>
+    <button type="button" id="v-job" aria-pressed="false">By job</button>
+    <input type="search" id="q" placeholder="Filter by class, job or skill" aria-label="Filter">
+  </div>
+  <main id="out" aria-live="polite"><p class="empty">Loading the skill chart...</p></main>
+  <footer>Skill wording adapted from O*NET job profiles. Class links are a faculty draft and are being reviewed by COMD faculty.</footer>
+</div>
+<script>
+(function(){
+  var LINE = {gd:'var(--gd)', adv:'var(--adv)', mot:'var(--mot)', ill:'var(--ill)', web:'var(--web)'};
+  var JOBLINE = {gd:'gd', ad:'adv', cw:'adv', cp:'adv', mo:'mot', ve:'mot', il:'ill', ux:'web', fe:'web'};
+  var data = null, map = null, view = 'class';
+  function esc(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+  function get(u){ return fetch(u, {cache:'no-cache'}).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; }); }
+  function dot(rid){ return '<span class="dot" style="background:'+(LINE[JOBLINE[rid]]||'var(--studio)')+'"></span>'; }
+  function lines(code){ var c = map && map[code]; return c ? c.paths : []; }
+  function render(){
+    var out = document.getElementById('out'), q = document.getElementById('q').value.trim().toLowerCase(), html = '';
+    if(!data){ out.innerHTML = '<p class="empty">The skill chart did not load. Open data/course-skills.json on GitHub instead.</p>'; return; }
+    var J = data.jobs, CS = data.courses;
+    if(view === 'class'){
+      Object.keys(CS).sort(function(a,b){ return (CS[a].studio - CS[b].studio) || (a < b ? -1 : 1); }).forEach(function(code){
+        var c = CS[code], b = c.builds || {};
+        var text = (code + ' ' + c.name + ' ' + Object.keys(b).map(function(r){ return J[r].name + ' ' + b[r].join(' '); }).join(' ')).toLowerCase();
+        if(q && text.indexOf(q) < 0) return;
+        var tags = c.studio ? '<span class="tag">Studio course</span>' : lines(code).map(function(p){ return '<span class="dot" style="background:'+LINE[p]+';display:inline-block;margin-right:4px" title="'+p+'"></span>'; }).join('');
+        html += '<div class="row"><div><div><span class="code">COMD '+code+'</span></div><div class="name">'+esc(c.name)+'</div><div>'+tags+'</div></div><div class="groups">'+
+          Object.keys(J).filter(function(r){ return b[r]; }).map(function(r){ return '<div><div class="job">'+dot(r)+esc(J[r].name)+'</div><ul>'+b[r].map(function(s){ return '<li>'+esc(s)+'</li>'; }).join('')+'</ul></div>'; }).join('')+'</div></div>';
+      });
+    } else {
+      Object.keys(J).forEach(function(r){
+        var rows = J[r].skills.map(function(s){
+          var codes = Object.keys(CS).filter(function(code){ return ((CS[code].builds||{})[r]||[]).indexOf(s) > -1; })
+            .sort(function(a,b){ return (CS[a].studio - CS[b].studio) || (a < b ? -1 : 1); });
+          return {s:s, codes:codes};
+        }).filter(function(x){ return !q || (J[r].name + ' ' + x.s + ' ' + x.codes.map(function(c){ return c + ' ' + CS[c].name; }).join(' ')).toLowerCase().indexOf(q) > -1; });
+        if(!rows.length) return;
+        html += '<div class="row"><div><div class="job" style="font-size:16px">'+dot(r)+esc(J[r].name)+'</div><div class="eyebrow">'+J[r].skills.length+' skills</div></div><div>'+
+          rows.map(function(x){ return '<div class="skill"><div>'+esc(x.s)+'</div><div class="cls">'+(x.codes.length ? x.codes.map(function(c){ return '<span class="'+(CS[c].studio?'st':'')+'" title="'+esc(CS[c].name)+'">'+c+'</span>'; }).join('') : '<span>No class yet</span>')+'</div></div>'; }).join('')+'</div></div>';
+      });
+    }
+    out.innerHTML = html || '<p class="empty">Nothing matches that filter.</p>';
+  }
+  function setView(v){ view = v; document.getElementById('v-class').setAttribute('aria-pressed', v==='class'); document.getElementById('v-job').setAttribute('aria-pressed', v==='job'); render(); }
+  document.getElementById('v-class').addEventListener('click', function(){ setView('class'); });
+  document.getElementById('v-job').addEventListener('click', function(){ setView('job'); });
+  document.getElementById('q').addEventListener('input', render);
+  Promise.all([get('data/course-skills.json'), get('data/career-map.json')]).then(function(d){
+    data = d[0];
+    if(d[1] && d[1].courses){ map = {}; d[1].courses.forEach(function(c){ map[c.code] = c; }); }
+    if(data && data.updated){ var p = data.updated.split('-'); document.getElementById('updated').textContent = 'Chart last updated ' + ['January','February','March','April','May','June','July','August','September','October','November','December'][+p[1]-1] + ' ' + (+p[2]) + ', ' + p[0] + '.'; }
+    render();
+  });
+})();
+</script>
+</body>
+</html>
