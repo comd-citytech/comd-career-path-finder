@@ -165,6 +165,13 @@ h2{margin:0; font-size:20px; font-weight:800}
 .chip.full{opacity:.45}
 .chip.off{opacity:.6; border-style:dashed}
 .chip .mk.note{font-weight:400}
+.gen-group{display:flex; flex-direction:column; gap:8px; margin-top:12px}
+.gen-group:first-child{margin-top:0}
+.gen-group h3{font-size:14px; margin:0}
+.gen-group .sub{font-size:12px; color:var(--muted); margin:0}
+.chip .req{display:inline-block; font-family:var(--mono); font-size:11px; border:1px solid currentColor; padding:0 4px; margin-left:4px; opacity:.75; white-space:nowrap}
+.gen-notes{margin:10px 0 0; padding-left:18px; font-size:12px; color:var(--muted)}
+.gen-notes li{margin:2px 0}
 .legend{display:flex; flex-wrap:wrap; gap:6px 16px; font-size:12px; color:var(--muted)}
 .stack{display:flex; height:12px; background:var(--line); overflow:hidden}
 .stack span{display:block; height:100%}
@@ -281,6 +288,11 @@ h2{margin:0; font-size:20px; font-weight:800}
       <section class="sec">
         <div class="sec-head"><h2>Studio courses</h2><span>Required for every BFA student.</span></div>
         <div class="chips" id="studio"></div>
+      </section>
+
+      <section class="sec" id="gen-sec">
+        <div class="sec-head"><h2>General education and art history</h2><span>Check these off as you finish them. They count toward your degree, not your job plan.</span></div>
+        <div id="gen"></div>
       </section>
 
     </div>
@@ -1354,11 +1366,44 @@ h2{margin:0; font-size:20px; font-weight:800}
   function isSkill(c){ return c.type==='skill' || c.type==='boost'; }
   var KEY = 'comd-path-finder-v1';
   var taken = new Set();
+  /* General education and art history, from the COMD AAS and BFA checklists. These count toward the degree, never toward a job plan. */
+  var GEN = [
+    {id:'aas', title:'AAS: first 60 credits', sub:'Art history (6 credits) and general education required and Flexible Common Core (15 credits).', items:[
+      {id:'arth3311', code:'ARTH 3311', name:'The History of Graphic Design (CE)', req:true},
+      {id:'aas-arth', code:'ARTH 11XX, AFR 1301 or AFR 1304', name:'Any ARTH 1100-series course, Introduction to the Art of Africa, or African American Art'},
+      {id:'eng1101', code:'ENG 1101', name:'English Composition I (EC)', req:true},
+      {id:'eng1121', code:'ENG 1121', name:'English Composition II (EC)', req:true},
+      {id:'mat1190', code:'MAT 1190', name:'Mathematical and Quantitative Reasoning (MQR) or higher', req:true},
+      {id:'aas-lps', code:'', name:'Life and Physical Sciences'},
+      {id:'aas-flex', code:'', name:'Flexible Common Core course: WCGI, USED, IS, CE or SW'}
+    ]},
+    {id:'bfa', title:'BFA: adds 60 credits', sub:'Additional art history (6 credits) and Flexible Common Core and college option (15 credits).', items:[
+      {id:'3504', comd:'3504'},
+      {id:'bfa-arth', code:'ARTH 11XX, AFR 1301 or AFR 1304', name:'A second ARTH 1100-series course, Introduction to the Art of Africa, or African American Art'},
+      {id:'bfa-flex', code:'', name:'Flexible Common Core course: WCGI, USED, IS, CE or SW'},
+      {id:'bfa-is', code:'', name:'Individual and Society (IS)'},
+      {id:'bfa-com', code:'COM', name:'One speech or oral communication course: COM 1330, 1332, 1403, 2405, 2406 or 3401', req:true},
+      {id:'bfa-id', code:'', name:'Interdisciplinary course (ID must be in the course name)'},
+      {id:'bfa-lib', code:'', name:'Liberal arts elective or foreign language sequence (FL)'},
+      {id:'bfa-adv', code:'', name:'Advanced liberal arts elective or foreign language sequence (FL)'}
+    ]}
+  ];
+  var GEN_NOTES = [
+    'AAS: 60 credits, with at least 20 in liberal arts and sciences. BFA: 120 credits, with at least 42 in liberal arts and sciences.',
+    'Take at least one Writing Intensive (WI) course in general education, art history or the Flexible Common Core.',
+    'Across both degrees, take one course in each of the five Flexible Core areas (WCGI, USED, IS, CE, SW) plus a sixth, with no more than two from any one area.',
+    'If your COM speech course already fills a Flexible Core area, add another liberal arts course from outside the major.',
+    'Advanced liberal arts: take at least one advanced liberal arts course, or two courses in a row in one foreign language, such as Arabic, Spanish, Chinese or French.'
+  ];
+  var gen = new Set();
+  function genDone(id){ var it = genItem(id); return it && it.comd ? has(it.comd) : gen.has(id); }
+  function genCount(gid){ var grp = GEN.filter(function(x){ return x.id === gid; })[0]; return grp.items.filter(function(it){ return genDone(it.id); }).length + ' of ' + grp.items.length; }
+  function genItem(id){ for(var i = 0; i < GEN.length; i++) for(var j = 0; j < GEN[i].items.length; j++) if(GEN[i].items[j].id === id) return GEN[i].items[j]; return null; }
   var isExample = false;
 
-  function save(){ try{ localStorage.setItem(KEY, JSON.stringify({t:Array.from(taken), ex:isExample})); }catch(e){} }
+  function save(){ try{ localStorage.setItem(KEY, JSON.stringify({t:Array.from(taken), g:Array.from(gen), ex:isExample})); }catch(e){} }
   function load(){
-    try{ var s = JSON.parse(localStorage.getItem(KEY)||'null'); if(s && Array.isArray(s.t)){ taken = new Set(s.t); isExample = !!s.ex; return true; } }catch(e){}
+    try{ var s = JSON.parse(localStorage.getItem(KEY)||'null'); if(s && Array.isArray(s.t)){ taken = new Set(s.t); gen = new Set(Array.isArray(s.g) ? s.g : []); isExample = !!s.ex; return true; } }catch(e){}
     return false;
   }
   function color(id){ return 'var(--'+id+')'; }
@@ -1409,6 +1454,24 @@ h2{margin:0; font-size:20px; font-weight:800}
     });
     var st = document.getElementById('studio');
     C.filter(function(c){return c.type==='studio';}).forEach(function(c){ st.appendChild(chip(c)); });
+    var g = document.getElementById('gen');
+    GEN.forEach(function(grp){
+      var box = document.createElement('div'); box.className = 'gen-group';
+      box.innerHTML = '<h3>'+grp.title+'</h3><p class="sub">'+grp.sub+'</p>';
+      var chips = document.createElement('div'); chips.className = 'chips';
+      grp.items.forEach(function(it){
+        if(it.comd){ chips.appendChild(chip(BY[it.comd])); return; }
+        var b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.dataset.gen = it.id;
+        b.innerHTML = '<span class="box" aria-hidden="true"></span><span>'+(it.code ? '<span class="code">'+it.code+'</span> ' : '')+it.name+(it.req ? ' <span class="req">required</span>' : '')+'</span>';
+        b.setAttribute('aria-label', (it.code ? it.code+' ' : '')+it.name+(it.req ? ', required' : ''));
+        b.addEventListener('click', function(){ if(gen.has(it.id)) gen.delete(it.id); else gen.add(it.id); isExample = false; save(); render(); });
+        chips.appendChild(b);
+      });
+      box.appendChild(chips); g.appendChild(box);
+    });
+    var ul = document.createElement('ul'); ul.className = 'gen-notes';
+    ul.innerHTML = GEN_NOTES.map(function(n){ return '<li>'+n+'</li>'; }).join('');
+    g.appendChild(ul);
   }
 
   function scores(){
@@ -1436,7 +1499,10 @@ h2{margin:0; font-size:20px; font-weight:800}
   }
 
   function render(){
-    document.querySelectorAll('.chip').forEach(function(b){
+    document.querySelectorAll('.chip[data-gen]').forEach(function(b){
+      var on = gen.has(b.dataset.gen); b.setAttribute('aria-pressed', on?'true':'false'); b.querySelector('.box').textContent = on ? '✓' : '';
+    });
+    document.querySelectorAll('.chip[data-code]').forEach(function(b){
       var code=b.dataset.code, on=has(code), c=BY[code];
       b.setAttribute('aria-pressed', on?'true':'false');
       b.querySelector('.box').textContent = on ? '✓' : '';
@@ -1664,6 +1730,10 @@ h2{margin:0; font-size:20px; font-weight:800}
         var got = C.filter(function(c){ return c.type===t && has(c.code); });
         if(got.length) lines.push(lab+': '+got.map(function(c){ return 'COMD '+c.code+' '+c.name; }).join('; '));
       });
+      GEN.forEach(function(grp){
+        var got = grp.items.filter(function(it){ return genDone(it.id); }).map(function(it){ return it.comd ? 'COMD '+it.comd+' '+BY[it.comd].name : (it.code ? it.code+' ' : '')+it.name; });
+        lines.push(grp.title.split(':')[0]+' general education and art history: '+genCount(grp.id)+(got.length ? ' ('+got.join('; ')+')' : ''));
+      });
       lines.push('Requirements: strategy '+Math.min(count('strat'),3)+'/3, skills '+Math.min(count('skill')+count('boost'),4)+'/4, studio '+count('studio')+'/6');
       var sc = scores().sort(function(a,b){ return b.pct-a.pct; })[0];
       if(sc.done) lines.push('Strongest line: '+sc.path.name);
@@ -1793,7 +1863,7 @@ h2{margin:0; font-size:20px; font-weight:800}
         font(8, false, dark ? '#FFFFFF' : '#333333'); ty = lines(s, x + colW/2, ty, 9.5, 'center');
         if(c.status === 'taken') tag('TAKEN', x + colW/2, ty + 6, false, true);
         if(c.status === 'planned') tag('SUGGESTED', x + colW/2, ty + 6, false);
-        if(c.type === 'gen') box(x + 5, cy + 5, 7, false);
+        if(c.type === 'gen' && !c.status) box(x + 5, cy + 5, 7, false);
       }
     });
     y += headH + rows*rowH + 20;
@@ -1805,7 +1875,7 @@ h2{margin:0; font-size:20px; font-weight:800}
     if(m.career) notes.push('Suggested courses fill your open slots with the classes that best build toward ' + m.career.job + '. They are suggestions only. You can take any other course in those slots.');
     notes.push('Writing Intensive: COMD 3504 Communication Design Theory and COMD 4900 Internship are WI. Check DegreeWorks for your WI requirements.');
     notes.push('COMD 4900 Internship needs COMD 4730, COMD 4701, or approval first. If you change the order of your semesters, keep 4701 before your internship.');
-    notes.push('Mark the small boxes on general education courses yourself. This planner only tracks COMD courses.');
+    notes.push('General education and art history from your checklist: AAS ' + m.genAas + ', BFA ' + m.genBfa + '. Courses you checked are marked TAKEN. Confirm the exact courses in DegreeWorks.');
     bullets(notes, M, y, CW, 8.5, 11);
 
     /* Page 2: advising notes (college) */
@@ -1928,17 +1998,17 @@ h2{margin:0; font-size:20px; font-weight:800}
 
   var SEQ = {
     '4': [
-      ['SEMESTER 05', ['skill1','skill2','strat1','gen:COM 1330|Public Speaking','gen:Flex Common Core|']],
-      ['SEMESTER 06', ['req:4701','skill3','strat2','strat3','gen:ARTH 11XX / AFR 1301, 1304|Any ARTH 1100 Series or Intro to African Art']],
-      ['SEMESTER 07', ['req:4730','req:3504','req:4900','skill4','gen:Interdisciplinary Course|']],
-      ['SEMESTER 08', ['req:4830','req:4801','gen:Liberal Arts|','gen:Adv. Lib Arts|','gen:Flex Common Core|WCGI/USED/IS/CE/SW Pathway']]
+      ['SEMESTER 05', ['skill1','skill2','strat1','gen:bfa-com|COM Speech Course|COM 1330, 1332, 1403, 2405, 2406 or 3401','gen:bfa-is|Individual and Society|IS']],
+      ['SEMESTER 06', ['req:4701','skill3','strat2','strat3','gen:bfa-arth|ARTH 11XX / AFR 1301, 1304|Any ARTH 1100 Series or Intro to African Art']],
+      ['SEMESTER 07', ['req:4730','req:3504','req:4900','skill4','gen:bfa-id|Interdisciplinary Course|']],
+      ['SEMESTER 08', ['req:4830','req:4801','gen:bfa-lib|Liberal Arts|or Foreign Language','gen:bfa-adv|Adv. Lib Arts|or Foreign Language','gen:bfa-flex|Flex Common Core|WCGI/USED/IS/CE/SW Pathway']]
     ],
     '5': [
-      ['SEMESTER 06', ['skill1','skill2','strat1','gen:COM 1330|Public Speaking']],
-      ['SEMESTER 07', ['skill3','strat2','strat3','gen:ARTH 11XX / AFR 1301, 1304|Any ARTH 1100 Series or Intro to African Art']],
-      ['SEMESTER 08', ['req:3504','req:4701','skill4','gen:Flex Common Core|']],
-      ['SEMESTER 09', ['req:4730','req:4900','gen:Interdisciplinary Course|','gen:Liberal Arts|']],
-      ['SEMESTER 10', ['req:4830','req:4801','gen:Adv. Lib Arts|','gen:Flex Common Core|WCGI/USED/IS/CE/SW Pathway']]
+      ['SEMESTER 06', ['skill1','skill2','strat1','gen:bfa-com|COM Speech Course|COM 1330, 1332, 1403, 2405, 2406 or 3401']],
+      ['SEMESTER 07', ['skill3','strat2','strat3','gen:bfa-arth|ARTH 11XX / AFR 1301, 1304|Any ARTH 1100 Series or Intro to African Art']],
+      ['SEMESTER 08', ['req:3504','req:4701','skill4','gen:bfa-is|Individual and Society|IS']],
+      ['SEMESTER 09', ['req:4730','req:4900','gen:bfa-id|Interdisciplinary Course|','gen:bfa-lib|Liberal Arts|or Foreign Language']],
+      ['SEMESTER 10', ['req:4830','req:4801','gen:bfa-adv|Adv. Lib Arts|or Foreign Language','gen:bfa-flex|Flex Common Core|WCGI/USED/IS/CE/SW Pathway']]
     ]
   };
   function val(id){ var el = document.getElementById(id); return el ? el.value.trim() : ''; }
@@ -1963,7 +2033,7 @@ h2{margin:0; font-size:20px; font-weight:800}
                    : {type:mm[1], title:'Upper-Level', sub:(mm[1]==='strat'?'Strategy':'Skills')+' Course ('+mm[2]+')', status:null};
         }
         if(k.indexOf('req:')===0){ var code = k.slice(4); return {type:'req', title:'COMD '+code, sub:BY[code].name.replace(' (WI)',''), status:has(code)?'taken':null}; }
-        var g = k.slice(4).split('|'); return {type:'gen', title:g[0], sub:g[1]||'', status:null};
+        var g = k.slice(4).split('|'); return {type:'gen', title:g[1], sub:g[2]||'', status:genDone(g[0])?'taken':null};
       })};
     });
     var top = scores().sort(function(a,b){ return b.pct-a.pct || b.done-a.done; })[0];
@@ -1980,7 +2050,7 @@ h2{margin:0; font-size:20px; font-weight:800}
     return {
       seqKind:seqKind, grid:grid, career:career, extras: extras.length ? extras : null,
       name:val('pl-name'), grad:val('pl-grad'), emplid: document.getElementById('pl-share').checked ? val('pl-emplid') : null,
-      fonts:FONTS, logo:LOGO, dutiesCredit:JOB.dutiesCredit||'', today:today(), dateShort:new Date().toLocaleDateString('en-US'), foot:foot(),
+      fonts:FONTS, logo:LOGO, dutiesCredit:JOB.dutiesCredit||'', today:today(), dateShort:new Date().toLocaleDateString('en-US'), foot:foot(), genAas:genCount('aas'), genBfa:genCount('bfa'),
       tally:{strat:Math.min(count('strat'),3), skill:Math.min(count('skill')+count('boost'),4), studio:count('studio'), line: top.done ? top.path.name : ''}
     };
   }
@@ -2068,7 +2138,7 @@ h2{margin:0; font-size:20px; font-weight:800}
     isExample = false; render(); save();
   });
   document.getElementById('btn-example').addEventListener('click', function(){ taken=new Set(EXAMPLE); isExample=true; render(); save(); });
-  document.getElementById('btn-clear').addEventListener('click', function(){ taken=new Set(); isExample=false; render(); save(); });
+  document.getElementById('btn-clear').addEventListener('click', function(){ taken=new Set(); gen=new Set(); isExample=false; render(); save(); });
 
   (function(){
     if(window.parent === window) return;

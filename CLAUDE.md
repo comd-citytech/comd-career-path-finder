@@ -14,6 +14,7 @@ This repository is the single source of truth for COMD course and career data. C
 | BLS / O*NET pay and outlook (updated automatically) | `data/job-data.json` |
 | Skill chart: the job skills each class builds, and each job's skill list | `data/course-skills.json`. The Path Finder builds each job's skills from it, and `skill-chart.html` shows it to faculty. `index.html` keeps a backup copy in its `course-skills` block; refresh that copy when the chart changes. |
 | Path Finder job names, lines and O*NET sources | `ROLES` in `index.html` |
+| General education and art history checklist (AAS and BFA) | `GEN` and `GEN_NOTES` in `index.html`, from the department's AAS and BFA checklists. Each BFA item's id also ties it to its cell in the PDF grid (`SEQ`). It never affects job plans. |
 | Not-offered courses in the Path Finder | `OFF` in `index.html`. Must match `"offered": false` in `data/career-map.json`; the check fails if they differ. |
 | Magazine job cards, course combinations, pay and outlook | `career-magazine.html` (written by hand). Course lists come from the skill chart; figures come from `data/job-data.json`. |
 
