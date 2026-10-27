@@ -41,7 +41,7 @@ All three pages must agree. When a course is retired, renamed, moved to another 
 
 ## Jobs
 
-The same nine jobs appear on every page, under the same names: Graphic designer, Junior art director, Copywriter, Motion designer, Video editor, Illustrator, Visual & UX designer, Front-end developer, Creative producer. The `ROLES` list in `index.html` holds those names. The Career Map can list several entry-level titles under one job (its `role` field), but every job needs at least one Career Map entry and a magazine spread. When a job is added, renamed or removed, change `index.html`, `data/career-map.json` and `career-magazine.html` in the same pull request. The check fails if a job is missing from the Career Map or the magazine.
+The same nine jobs appear on every page, under the same names: Graphic designer, Junior art director, Copywriter and content strategy, Motion designer, Video editor, Illustrator, Visual & UX designer, Front-end developer, Creative producer. The `ROLES` list in `index.html` holds those names. The Career Map can list several entry-level titles under one job (its `role` field), but every job needs at least one Career Map entry and a magazine spread. When a job is added, renamed or removed, change `index.html`, `data/career-map.json` and `career-magazine.html` in the same pull request. The check fails if a job is missing from the Career Map or the magazine.
 
 ## Footnote
 
