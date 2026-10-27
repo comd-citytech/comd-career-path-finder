@@ -49,6 +49,8 @@ The same nine jobs appear on every page, under the same names: Graphic designer,
 
 `data/course-skills.json` is the one place to say which classes build which job skills. To update a class, edit its `builds` list, copying each skill word for word from that job's list under `jobs`. A skill can come from more than one class. Update `updated` to the date of the change. The data check fails if a skill is misspelled, a job skill has no class, a class is retired, or a job name doesn't match the Path Finder.
 
+Faculty review the chart in a spreadsheet (COMD Skill Chart: Faculty Review), not on GitHub. The spreadsheet is a review copy made from `data/course-skills.json`: faculty mark each class-skill link Keep, Remove or Reword and add missing links. Once the chair approves the changes, copy them into `data/course-skills.json` in a pull request, and the Path Finder and `skill-chart.html` update from it. After that, make a fresh review copy from the repo for the next round instead of editing the old one.
+
 ## Footnote
 
 Every page (Path Finder, Career Map, magazine) and the Path Finder PDF carry the same footnote. Its exact text lives in `data/footnote.txt`. When the chair changes it, update `data/footnote.txt`, `index.html` (the page footer and `NOTE` for the PDF), `career-map.html` and `career-magazine.html` in the same pull request. The check fails if any page doesn't match.
