@@ -1,0 +1,1 @@
+This tool helps COMD students explore how their courses connect to careers after college. It is not an official degree audit. Pay and job outlook come from the U.S. Bureau of Labor Statistics, and job skills from O*NET. The course-to-career connections were drafted with Claude, an AI assistant, and are being reviewed by COMD faculty. Confirm with your COMD advisor.

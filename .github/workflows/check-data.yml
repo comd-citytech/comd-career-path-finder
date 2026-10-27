@@ -114,6 +114,11 @@ jobs:
               if re.search(r"(?<!\d)" + code + r"(?!\d)", mag):
                   print(f"::error file=career-magazine.html::COMD {code} hasn't been offered recently, so the magazine shouldn't recommend it.")
                   ok = False
+          note = open("data/footnote.txt", encoding="utf-8").read().strip()
+          for page in ["index.html", "career-map.html", "career-magazine.html"]:
+              if note not in open(page, encoding="utf-8").read():
+                  print(f"::error file={page}::The footnote doesn't match data/footnote.txt. Every page (and the Path Finder PDF) must use the same footnote, word for word.")
+                  ok = False
           print("All data files look good." if ok else "Fix the problems above, then commit again.")
           sys.exit(0 if ok else 1)
           PY
