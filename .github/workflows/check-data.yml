@@ -119,6 +119,17 @@ jobs:
               if note not in open(page, encoding="utf-8").read():
                   print(f"::error file={page}::The footnote doesn't match data/footnote.txt. Every page (and the Path Finder PDF) must use the same footnote, word for word.")
                   ok = False
+          role_names = dict(re.findall(r"\{id:'(\w+)', path:'\w+', name:'([^']+)'", idx))
+          map_roles = {j.get("role") for j in cm.get("jobs", [])}
+          mag_text = re.sub(r"<[^>]+>", " ", mag).replace("&amp;", "&").lower()
+          mag_text = re.sub(r"\s+", " ", mag_text)
+          for rid, name in role_names.items():
+              if rid not in map_roles:
+                  print(f"::error file=data/career-map.json::The job '{name}' is in the Path Finder but has no Career Map entry.")
+                  ok = False
+              if name.lower() not in mag_text:
+                  print(f"::error file=career-magazine.html::The job '{name}' is in the Path Finder but not named in the magazine.")
+                  ok = False
           print("All data files look good." if ok else "Fix the problems above, then commit again.")
           sys.exit(0 if ok else 1)
           PY
