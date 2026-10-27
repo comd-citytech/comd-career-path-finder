@@ -302,14 +302,14 @@ h2{margin:0; font-size:20px; font-weight:800}
     </div>
     <div class="incl">
       <label><input type="checkbox" id="pl-share"> I'm sharing this plan with my advisor or the department</label>
-      <label class="fld" for="pl-emplid" id="emplid-wrap" hidden>EmplID<input id="pl-emplid" type="text" inputmode="numeric" maxlength="8"></label>
+      <label class="fld" for="pl-emplid" id="emplid-wrap" hidden>EMPLID<input id="pl-emplid" type="text" inputmode="numeric" maxlength="8"></label>
     </div>
     <div class="incl" role="group" aria-label="Optional third page">
       <span class="lbl">On the career page, also include</span>
       <label><input type="checkbox" id="inc-market" checked> Job market table</label>
       <label><input type="checkbox" id="inc-pivot"> Other directions I could take</label>
     </div>
-    <p class="note" style="margin:0">Your name and EmplID are never saved or sent anywhere. They only go into the PDF you download.</p>
+    <p class="note" style="margin:0">Your name and EMPLID are never saved or sent anywhere. They only go into the PDF you download.</p>
     <div class="bar">
       <button class="btn solid" type="button" id="btn-pdf">Download PDF</button>
       <button class="btn" type="button" id="btn-print" hidden>Print</button>
@@ -1232,7 +1232,7 @@ h2{margin:0; font-size:20px; font-weight:800}
       var fx = 372, fw = W - M - fx;
       field('Name', m.name, fx, M + 2, fw);
       var parts = [['Graduating', m.grad], ['Date', m.dateShort || m.today]];
-      if(m.emplid !== null) parts.push(['EmplID', m.emplid]);
+      if(m.emplid !== null) parts.push(['EMPLID', m.emplid]);
       var pw = (fw - (parts.length - 1)*10) / parts.length;
       parts.forEach(function(p, i){ field(p[0], p[1], fx + i*(pw + 10), M + 30, pw); });
       doc.setDrawColor(INK); doc.setLineWidth(1.6); doc.line(M, M + 62, W - M, M + 62);
@@ -1318,7 +1318,18 @@ h2{margin:0; font-size:20px; font-weight:800}
     doc.setDrawColor(INK); doc.setLineWidth(0.8); doc.rect(M, y, rw, bh, 'S');
     font(8, true); doc.text('RESOURCES', M + 10, y + 16);
     font(8.5, false);
-    lines(['DegreeWorks degree audit', 'CUNYfirst registration', 'City Tech College Catalog', 'Writing Intensive course list', 'Academic Calendar', 'COMD advisement and Sophomore Review', 'COMD Career Path Finder'], M + 10, y + 32, 13.5);
+    [['DegreeWorks degree audit', 'https://www.citytech.cuny.edu/registrar/degreeworks.aspx'],
+     ['CUNYfirst registration', 'https://ssologin.cuny.edu/cuny.html?resource_url=https%3A%2F%2Fhome.cunyfirst.cuny.edu%252Fpsp%252Fcnyepprd%252FEMPLOYEE%252FEMPL%252Fh%252F%3Ftab%253DDEFAULT'],
+     ['City Tech College Catalog', 'https://www.citytech.cuny.edu/academics/academic-catalog.aspx'],
+     ['Writing Intensive course list', 'https://www.citytech.cuny.edu/gen-ed/writing-intensive.aspx'],
+     ['Academic Calendar', 'https://www.citytech.cuny.edu/registrar/academic-calendar.aspx'],
+     ['COMD advisement and Sophomore Review', 'https://openlab.citytech.cuny.edu/comd-advisement/'],
+     ['COMD Career Path Finder', 'https://comd-citytech.github.io/comd-career-path-finder/hub.html']
+    ].forEach(function(rs, i){
+      var ry = y + 32 + i*13.5;
+      doc.textWithLink(rs[0], M + 10, ry, {url: rs[1]});
+      doc.setDrawColor(HAIR); doc.setLineWidth(0.4); doc.line(M + 10, ry + 1.5, M + 10 + doc.getTextWidth(rs[0]), ry + 1.5);
+    });
     var fy = y + 32 + 7*13.5 + 12, fw2 = rw - 20, ADV = 'https://openlab.citytech.cuny.edu/comd-advisement/find-your-advisor/', MAIL = 'communicationdesign@citytech.cuny.edu';
     doc.setDrawColor(HAIR); doc.setLineWidth(0.5); doc.line(M + 10, fy - 10, M + rw - 10, fy - 10);
     font(8, true); doc.text('FIND YOUR ADVISOR', M + 10, fy + 2);
@@ -1494,10 +1505,15 @@ h2{margin:0; font-size:20px; font-weight:800}
     var t = new Promise(function(res){ setTimeout(res, 2500); }); note('Preparing your PDF...'); Promise.race([loadFonts(), t]).then(fn);
   }
   document.getElementById('btn-pdf').addEventListener('click', function(){ whenReady(makePdf); });
+  function pdfName(){
+    var who = val('pl-name').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^A-Za-z0-9 -]/g, '').trim().replace(/\s+/g, '-');
+    var d = new Date(), day = d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
+    return (who ? who + '_' : '') + day + '_COMD-PathFinder.pdf';
+  }
   function makePdf(){
     var doc = planPdf();
     if(!doc){ note('The PDF tool did not load. Try Copy as text instead.'); return; }
-    var blob = doc.output('blob'), name = 'my-comd-plan.pdf';
+    var blob = doc.output('blob'), name = pdfName();
     if(dl){
       dl.save({filename:name, data:blob}).then(function(){ note('PDF saved.'); }).catch(function(e){
         var c = e && e.code;
