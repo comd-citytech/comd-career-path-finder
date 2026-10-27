@@ -1318,11 +1318,13 @@ h2{margin:0; font-size:20px; font-weight:800}
     doc.setDrawColor(INK); doc.setLineWidth(0.8); doc.rect(M, y, rw, bh, 'S');
     font(8, true); doc.text('RESOURCES', M + 10, y + 16);
     font(8.5, false);
+    /* Resource links: keep these current. See "PDF resource links" in CLAUDE.md. */
     [['DegreeWorks degree audit', 'https://www.citytech.cuny.edu/registrar/degreeworks.aspx'],
      ['CUNYfirst registration', 'https://ssologin.cuny.edu/cuny.html?resource_url=https%3A%2F%2Fhome.cunyfirst.cuny.edu%252Fpsp%252Fcnyepprd%252FEMPLOYEE%252FEMPL%252Fh%252F%3Ftab%253DDEFAULT'],
-     ['City Tech College Catalog', 'https://www.citytech.cuny.edu/academics/academic-catalog.aspx'],
+     ['City Tech College Catalog', 'https://citytech.catalog.cuny.edu/'],
      ['Writing Intensive course list', 'https://www.citytech.cuny.edu/gen-ed/writing-intensive.aspx'],
      ['Academic Calendar', 'https://www.citytech.cuny.edu/registrar/academic-calendar.aspx'],
+     ['Professional Development Center', 'https://www.citytech.cuny.edu/pdc/'],
      ['COMD advisement and Sophomore Review', 'https://openlab.citytech.cuny.edu/comd-advisement/'],
      ['COMD Career Path Finder', 'https://comd-citytech.github.io/comd-career-path-finder/hub.html']
     ].forEach(function(rs, i){
@@ -1330,7 +1332,7 @@ h2{margin:0; font-size:20px; font-weight:800}
       doc.textWithLink(rs[0], M + 10, ry, {url: rs[1]});
       doc.setDrawColor(HAIR); doc.setLineWidth(0.4); doc.line(M + 10, ry + 1.5, M + 10 + doc.getTextWidth(rs[0]), ry + 1.5);
     });
-    var fy = y + 32 + 7*13.5 + 12, fw2 = rw - 20, ADV = 'https://openlab.citytech.cuny.edu/comd-advisement/find-your-advisor/', MAIL = 'communicationdesign@citytech.cuny.edu';
+    var fy = y + 32 + 8*13.5 + 12, fw2 = rw - 20, ADV = 'https://openlab.citytech.cuny.edu/comd-advisement/find-your-advisor/', MAIL = 'communicationdesign@citytech.cuny.edu';
     doc.setDrawColor(HAIR); doc.setLineWidth(0.5); doc.line(M + 10, fy - 10, M + rw - 10, fy - 10);
     font(8, true); doc.text('FIND YOUR ADVISOR', M + 10, fy + 2);
     font(8.5, false); fy = lines(wrap('Review this plan with your advisor.', fw2), M + 10, fy + 16, 11);

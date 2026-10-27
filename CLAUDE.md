@@ -47,6 +47,21 @@ The same nine jobs appear on every page, under the same names: Graphic designer,
 
 Every page (Path Finder, Career Map, magazine) and the Path Finder PDF carry the same footnote. Its exact text lives in `data/footnote.txt`. When the chair changes it, update `data/footnote.txt`, `index.html` (the page footer and `NOTE` for the PDF), `career-map.html` and `career-magazine.html` in the same pull request. The check fails if any page doesn't match.
 
+## PDF resource links
+
+The Resources box on page 2 of the Path Finder PDF links to these pages. Every link must be up to date: before each semester's advisement period, and whenever City Tech moves a page, click each one and fix any that are broken or point to an old page. The links live in `index.html` (search for "Resource links").
+
+- DegreeWorks degree audit: https://www.citytech.cuny.edu/registrar/degreeworks.aspx
+- CUNYfirst registration: the CUNY login page (ssologin.cuny.edu)
+- City Tech College Catalog: https://citytech.catalog.cuny.edu/
+- Writing Intensive course list: https://www.citytech.cuny.edu/gen-ed/writing-intensive.aspx
+- Academic Calendar: https://www.citytech.cuny.edu/registrar/academic-calendar.aspx
+- Professional Development Center: https://www.citytech.cuny.edu/pdc/ (use this link anywhere a page mentions the PDC)
+- COMD advisement and Sophomore Review: https://openlab.citytech.cuny.edu/comd-advisement/
+- COMD Career Path Finder: https://comd-citytech.github.io/comd-career-path-finder/hub.html
+
+The Find Your Advisor block below it links to https://openlab.citytech.cuny.edu/comd-advisement/find-your-advisor/ and communicationdesign@citytech.cuny.edu.
+
 ## Writing
 
 Students are the audience: sophomores choosing a concentration and juniors picking electives. Use plain language. No em dashes.
