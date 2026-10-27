@@ -25,7 +25,7 @@ This repository is the single source of truth for COMD course and career data. C
 - COMD 3711 Vector Art Editing sits under Illustration.
 - COMD 3505 Special Topics in GD alternates between expressive typography and wayfinding.
 - COMD 3562 UX/UI is always offered.
-- Leave out the courses every BFA student takes (3504, 4701, 4730, 4801, 4830, 4900) from job plans. Mention only that the internship and senior project should point at the student's target job.
+- The courses every BFA student takes (3504, 4701, 4730, 4801, 4830, 4900) are called "Studio courses" on every page and in the PDF (not "Senior studio"). Leave them out of job plans: they don't count toward any job's skills in `ROLES`, the Career Map, or the magazine's course lists. Mention only that the internship and senior project should point at the student's target job.
 - Use the five current concentrations (Advertising, Graphic Design, Motion, Illustration, Web / UX). Don't reference any proposed track restructure in these pages.
 
 When the chair changes a course decision, update this list in the same commit as the data change.

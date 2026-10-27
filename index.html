@@ -278,7 +278,7 @@ h2{margin:0; font-size:20px; font-weight:800}
 
 
       <section class="sec">
-        <div class="sec-head"><h2>Senior studio</h2><span>Required for every BFA student.</span></div>
+        <div class="sec-head"><h2>Studio courses</h2><span>Required for every BFA student.</span></div>
         <div class="chips" id="studio"></div>
       </section>
 
@@ -740,6 +740,7 @@ h2{margin:0; font-size:20px; font-weight:800}
   var FOUND = C.filter(function(c){return c.type==='found';}).map(function(c){return c.code;});
   var EXAMPLE = FOUND.concat(['3501','3402','3527','3551']);
   var ONET = 'https://www.onetonline.org/link/summary/';
+  var STUDIO_NOTE = 'Every BFA student also builds teamwork, presenting and client skills in the six studio courses. Point your internship (COMD 4900) and senior project (COMD 4830) at this job.';
   var ROLES = [
     {id:'gd', path:'gd', name:'Graphic designer',  src:{label:'O*NET 27-1024.00 Graphic Designers', url:ONET+'27-1024.00'}, comps:[
       ['Set type, size and arrangement of layouts', ['3527','3505','4611','3601']],
@@ -748,14 +749,12 @@ h2{margin:0; font-size:20px; font-weight:800}
       ['Product and packaging graphics', ['3412']],
       ['Print-ready production files (InDesign, Acrobat)', ['4611']],
       ['Graphics and layouts for websites (Figma)', ['3562','3551']],
-      ['Vector illustration (Illustrator)', ['3711','3313']],
-      ['Present work and act on client feedback', ['4701','3504']]
+      ['Vector illustration (Illustrator)', ['3711','3313']]
     ]},
     {id:'ad', path:'adv', name:'Junior art director',  src:{label:'O*NET 27-1011.00 Art Directors', url:ONET+'27-1011.00'}, comps:[
       ['Develop concepts with a creative team', ['3602','3500','3402']],
       ['Campaigns that run across media', ['3500','3600','3662']],
-      ['Present layouts to clients for approval', ['3600','4701']],
-      ['Run projects on budget and schedule', ['4701']],
+      ['Present layouts to clients for approval', ['3600']],
       ['Direct photography and image editing (Photoshop)', ['3330','3530']],
       ['Video and motion basics (After Effects)', ['3620','3520']],
       ['Typography and layout', ['3527']]
@@ -766,7 +765,7 @@ h2{margin:0; font-size:20px; font-weight:800}
       ['Writing in a brand voice', ['3402']],
       ['Storytelling for video and social', ['3420','3662']],
       ['Plan and produce content for social and digital channels', ['3662']],
-      ['Present and defend ideas', ['4701','3600']]
+      ['Present and defend ideas', ['3600']]
     ]},
     {id:'mo', path:'mot', name:'Motion designer',  src:{label:'O*NET 27-1014.00 Special Effects Artists and Animators', url:ONET+'27-1014.00'}, comps:[
       ['2D and 3D animation', ['3640','3621']],
@@ -781,16 +780,15 @@ h2{margin:0; font-size:20px; font-weight:800}
       ['Use line, color and perspective to convey ideas and mood', ['3513','3633']],
       ['Characters and visual development', ['3413']],
       ['Sequential images and storyboards', ['3523']],
-      ['Work with art directors and editors on content', ['4701','3633']],
-      ['Keep a portfolio and market your work', ['4801','3533']]
+      ['Work with art directors and editors on content', ['3633']],
+      ['Keep a portfolio and market your work', ['3533']]
     ]},
     {id:'ux', path:'web', name:'Visual & UX designer',  src:{label:'O*NET 15-1255.00 Web and Digital Interface Designers', url:ONET+'15-1255.00'}, comps:[
       ['Design, build and maintain websites', ['3551','3652']],
       ['Front-end code and scripting', ['3663','3652']],
       ['Interface and user experience design (Figma)', ['3562']],
       ['Test, find and fix problems from user feedback', ['3562','3563']],
-      ['Read analytics and site traffic', ['3563']],
-      ['Work with developers on project timelines', ['4701']]
+      ['Read analytics and site traffic', ['3563']]
     ]},
     {id:'fe', path:'web', name:'Front-end developer', src:{label:'O*NET 15-1254.00 Web Developers', url:ONET+'15-1254.00'}, comps:[
       ['Code websites with HTML, CSS and JavaScript', ['3551','3663']],
@@ -798,23 +796,21 @@ h2{margin:0; font-size:20px; font-weight:800}
       ['Test sites across browsers and devices', ['3652','3562']],
       ['Turn user needs into technical requirements', ['3562']],
       ['Build from designs made in Figma', ['3562']],
-      ['Track site performance with analytics', ['3563']],
-      ['Work on a team with designers and developers', ['4701']]
+      ['Track site performance with analytics', ['3563']]
     ]},
     {id:'ve', path:'mot', name:'Video editor', src:{label:'O*NET 27-4032.00 Film and Video Editors', url:ONET+'27-4032.00'}, comps:[
       ['Cut raw footage into a clear story', ['3420','3620']],
       ['Shoot and edit video for commercials and social', ['3620','3662']],
       ['Add titles, graphics and motion effects (After Effects)', ['3621','3520']],
       ['Plan sequences with storyboards', ['3523','3420']],
-      ['Deliver video for YouTube, Instagram and TikTok', ['3662']],
-      ['Take direction from producers and clients', ['4701']]
+      ['Deliver video for YouTube, Instagram and TikTok', ['3662']]
     ]},
     {id:'cp', path:'adv', name:'Creative producer', src:{label:'O*NET 27-2012.00 Producers and Directors', url:ONET+'27-2012.00'}, comps:[
       ['Plan budgets, schedules and production details', ['3521']],
       ['Develop campaign and content ideas with a creative team', ['3500','3662']],
       ['Plan shots, scenes and storyboards', ['3523','3420']],
-      ['Review work against the brief and quality standards', ['4701','3600']],
-      ['Present to clients and stakeholders', ['4701','3600']],
+      ['Review work against the brief and quality standards', ['3600']],
+      ['Present to clients and stakeholders', ['3600']],
       ['Measure results with analytics', ['3563']]
     ]}
   ];
@@ -1008,12 +1004,7 @@ h2{margin:0; font-size:20px; font-weight:800}
   function reach(x){
     var sRem = Math.max(0,3-count('strat')), kRem = Math.max(0,4-count('skill')-count('boost'));
     var cov = x.comps.map(function(cp){ return cp[1].some(has); });
-    var now = cov.filter(Boolean).length, picks = [], studio = [];
-    x.comps.forEach(function(cp,i){
-      if(cov[i]) return;
-      var st = cp[1].filter(function(c){ return BY[c].type==='studio'; });
-      if(st.length){ cov[i] = true; if(studio.indexOf(st[0])<0) studio.push(st[0]); }
-    });
+    var now = cov.filter(Boolean).length, picks = [];
     while(true){
       var tally = {};
       x.comps.forEach(function(cp,i){ if(cov[i]) return; cp[1].forEach(function(c){
@@ -1025,16 +1016,15 @@ h2{margin:0; font-size:20px; font-weight:800}
       picks.push(best); if(BY[best].type==='strat') sRem--; else kRem--;
       x.comps.forEach(function(cp,i){ if(!cov[i] && cp[1].indexOf(best)>-1) cov[i] = true; });
     }
-    return {now:now, after:cov.filter(Boolean).length, picks:picks, studio:studio};
+    return {now:now, after:cov.filter(Boolean).length, picks:picks};
   }
   function pivotHtml(cur){
     var sRem = Math.max(0,3-count('strat')), kRem = Math.max(0,4-count('skill')-count('boost'));
     var list = ROLES.filter(function(x){ return x.id!==cur.id; }).map(function(x){ var r = reach(x); r.x = x; return r; })
       .sort(function(a,b){ return (b.after/b.x.comps.length)-(a.after/a.x.comps.length) || b.x.out-a.x.out; });
-    var intro = (sRem+kRem) ? 'These use only your '+sRem+' strategy and '+kRem+' skills slot'+((sRem+kRem)>1?'s':'')+' left, plus senior studio. No extra courses.' : 'Your elective slots are full, so these show what your current classes plus senior studio already give you. No extra courses.';
+    var intro = (sRem+kRem) ? 'These use only your '+sRem+' strategy and '+kRem+' skills slot'+((sRem+kRem)>1?'s':'')+' left. No extra courses.' : 'Your elective slots are full, so these show what your current classes already give you. No extra courses.';
     return '<div class="pivot"><h2 style="font-size:18px">Thinking of changing direction?</h2><p>'+intro+'</p>'+ list.map(function(r){
       var x = r.x, how = r.picks.length ? 'Use your slots on '+r.picks.map(function(c){ return '<span class="code">'+c+'</span>'; }).join(', ') : 'No slot changes needed';
-      if(r.studio.length) how += '. Senior studio adds '+r.studio.map(function(c){ return '<span class="code">'+c+'</span>'; }).join(', ');
       return '<div class="pv"><span class="jn"><span class="dot" style="background:'+color(x.path)+'"></span>'+x.name+'</span>'+
         '<span class="rch">'+r.now+' → '+r.after+'/'+x.comps.length+' <span class="out '+outCls(x.out)+'">'+outTxt(x.out)+'</span></span>'+
         '<span class="how">'+how+'.</span><button type="button" class="btn" data-go="'+x.id+'">See this job</button></div>';
@@ -1117,8 +1107,7 @@ h2{margin:0; font-size:20px; font-weight:800}
     var sRem = Math.max(0,3-s), kRem = Math.max(0,4-k);
     var stratPick = list.filter(function(x){ return x.c.type==='strat'; }).slice(0,sRem);
     var skillPick = list.filter(function(x){ return x.c.type==='skill' || x.c.type==='boost'; }).slice(0,kRem);
-    var studio = list.filter(function(x){ return x.c.type==='studio'; });
-    var extra = list.filter(function(x){ return x.c.type!=='studio' && stratPick.indexOf(x)<0 && skillPick.indexOf(x)<0; });
+    var extra = list.filter(function(x){ return stratPick.indexOf(x)<0 && skillPick.indexOf(x)<0; });
     function li(x){ return '<li><span class="code">COMD '+x.c.code+'</span> '+esc(x.c.name)+'<span class="why">Builds: '+x.why.map(esc).join('; ')+'</span></li>'; }
 
     var plan = '<div class="plan"><div><div class="sub">Job readiness</div><div class="big">'+covered+'/'+r.comps.length+'</div><div class="note">skills on this list covered by your courses</div></div>';
@@ -1127,10 +1116,9 @@ h2{margin:0; font-size:20px; font-weight:800}
     } else {
       if(stratPick.length) plan += '<div><div class="sub">Your '+sRem+' strategy slot'+(sRem>1?'s':'')+'</div><ul>'+stratPick.map(li).join('')+'</ul></div>';
       if(skillPick.length) plan += '<div><div class="sub">Your '+kRem+' skills slot'+(kRem>1?'s':'')+'</div><ul>'+skillPick.map(li).join('')+'</ul></div>';
-      if(studio.length) plan += '<div><div class="sub">Coming in senior studio</div><ul>'+studio.map(li).join('')+'</ul></div>';
       if(extra.length && !stratPick.length && !skillPick.length) plan += '<div><div class="sub">Slots full. Worth an extra elective</div><ul>'+extra.slice(0,2).map(li).join('')+'</ul></div>';
     }
-    plan += '</div>';
+    plan += '<div class="note">'+STUDIO_NOTE+'</div></div>';
 
     var src = (r.src ? 'Skills adapted from <a href="'+r.src.url+'" target="_blank" rel="noopener">'+r.src.label+'</a>. ' : 'Skills drafted from typical postings, source to be confirmed. ') + 'Pay, jobs and outlook from the <a href="'+r.ooh+'" target="_blank" rel="noopener">BLS Occupational Outlook Handbook</a>. Class links are a faculty draft.';
     var snap = '<div><div class="sub">About this job</div><p class="what">'+esc(r.what)+'<small>'+esc(r.entry)+'</small></p></div>'+
@@ -1153,7 +1141,7 @@ h2{margin:0; font-size:20px; font-weight:800}
     if(inc.classes){
       var lines = ['Foundation: '+FOUND.filter(has).length+' of '+FOUND.length+' AAS courses'];
       ['strat','skill','studio'].forEach(function(t){
-        var lab = {strat:'Strategy',skill:'Skills',boost:'Boosters',studio:'Senior studio'}[t];
+        var lab = {strat:'Strategy',skill:'Skills',boost:'Boosters',studio:'Studio courses'}[t];
         var got = C.filter(function(c){ return c.type===t && has(c.code); });
         if(got.length) lines.push(lab+': '+got.map(function(c){ return 'COMD '+c.code+' '+c.name; }).join('; '));
       });
@@ -1172,7 +1160,7 @@ h2{margin:0; font-size:20px; font-weight:800}
         });
         var rc = reach(r);
         if(rc.picks.length) l2.push('', 'Use my remaining slots on: '+rc.picks.map(function(c){ return 'COMD '+c+' '+BY[c].name; }).join('; '));
-        if(rc.studio.length) l2.push('Senior studio will add: '+rc.studio.map(function(c){ return 'COMD '+c+' '+BY[c].name; }).join('; '));
+        l2.push(STUDIO_NOTE);
         l2.push('Readiness: '+rc.now+' of '+r.comps.length+' now, '+rc.after+' of '+r.comps.length+' with this plan');
         secs.push({h:'Career goal: '+r.name, lines:l2});
       }
@@ -1291,7 +1279,7 @@ h2{margin:0; font-size:20px; font-weight:800}
     });
     y += headH + rows*rowH + 20;
     y = section('Where you stand', y);
-    var stand = [['Strategy', m.tally.strat + ' of 3'], ['Skills', m.tally.skill + ' of 4'], ['Senior studio', m.tally.studio + ' of 6'], ['Strongest line', m.tally.line || 'Not chosen yet']];
+    var stand = [['Strategy', m.tally.strat + ' of 3'], ['Skills', m.tally.skill + ' of 4'], ['Studio courses', m.tally.studio + ' of 6'], ['Strongest line', m.tally.line || 'Not chosen yet']];
     stand.forEach(function(s, i){ var sx = M + i*(CW/4); font(7.5, true, MUTED); doc.text(s[0].toUpperCase(), sx, y); hfont(12.5); doc.text(s[1], sx, y + 15); });
     y += 34;
     var notes = [];
@@ -1439,7 +1427,7 @@ h2{margin:0; font-size:20px; font-weight:800}
     var seqKind = document.getElementById('seq-5').checked ? '5' : '4';
     var unlocked = count('strat')>=2 && (count('skill')+count('boost'))>=2;
     var r = unlocked ? ROLES.filter(function(x){ return x.id===role; })[0] : null;
-    var rc = r ? reach(r) : {picks:[], studio:[], now:0, after:0};
+    var rc = r ? reach(r) : {picks:[], now:0, after:0};
     function fill(isType, pickType){
       var out = C.filter(function(c){ return isType(c) && has(c.code); }).map(function(c){ return {c:c, st:'taken'}; });
       rc.picks.filter(function(code){ return pickType(BY[code]); }).forEach(function(code){ out.push({c:BY[code], st:'planned'}); });
@@ -1464,7 +1452,7 @@ h2{margin:0; font-size:20px; font-weight:800}
     if(r){
       var plan = [];
       if(rc.picks.length) plan.push('Use my open slots on ' + rc.picks.map(function(c){ return 'COMD '+c+' '+BY[c].name; }).join(', ') + '.');
-      if(rc.studio.length) plan.push('Senior studio adds ' + rc.studio.map(function(c){ return 'COMD '+c+' '+BY[c].name; }).join(', ') + '.');
+      plan.push(STUDIO_NOTE);
       career = {job:r.name, what:r.what, entry:r.entry, pay:money(r.pay), pay10:money(r.pay10||0), pay90:money(r.pay90||0), payNote:r.payNote||'', payPeriod:JOB.payPeriod, duties:r.duties||[], out:outTxt(r.out), outWord:outWord(r.out), outPeriod:JOB.outlookPeriod,
         jobs:r.jobs.toLocaleString('en-US'), where:r.where, now:rc.now, after:rc.after, total:r.comps.length, plan:plan.join(' '),
         comps:r.comps.map(function(cp){ return {skill:cp[0], has:cp[1].some(has), classes:cp[1].map(function(c){ return c+' '+BY[c].name+(has(c)?' (taken)':''); }).join(', ')}; })};
