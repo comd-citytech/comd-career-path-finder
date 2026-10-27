@@ -8,6 +8,7 @@ on:
       - "career-map.html"
       - "career-magazine.html"
       - "hub.html"
+      - "skill-chart.html"
   push:
     branches: [main]
     paths:
@@ -16,6 +17,7 @@ on:
       - "career-map.html"
       - "career-magazine.html"
       - "hub.html"
+      - "skill-chart.html"
 
 jobs:
   check:
@@ -84,7 +86,7 @@ jobs:
           import re
           cm = json.load(open("data/career-map.json", encoding="utf-8"))
           retired = set(cm.get("retired", []))
-          files = ["index.html", "career-map.html", "career-magazine.html", "hub.html", "data/career-map.json", "data/role-content.json"]
+          files = ["index.html", "career-map.html", "career-magazine.html", "hub.html", "skill-chart.html", "data/career-map.json", "data/role-content.json", "data/course-skills.json"]
           for f in files:
               text = open(f, encoding="utf-8").read()
               if f == "data/career-map.json":
@@ -130,6 +132,45 @@ jobs:
               if name.lower() not in mag_text:
                   print(f"::error file=career-magazine.html::The job '{name}' is in the Path Finder but not named in the magazine.")
                   ok = False
+          sk_path = "data/course-skills.json"
+          try:
+              sk = json.load(open(sk_path, encoding="utf-8"))
+          except json.JSONDecodeError as e:
+              print(f"::error file={sk_path},line={e.lineno}::Formatting problem on line {e.lineno}: {e.msg}. Check for a missing comma or quote mark.")
+              ok = False
+              sk = {"jobs": {}, "courses": {}}
+          sk_jobs, sk_courses = sk.get("jobs", {}), sk.get("courses", {})
+          for rid, name in role_names.items():
+              if rid not in sk_jobs:
+                  print(f"::error file={sk_path}::The job '{name}' ({rid}) has no skill list in the skill chart.")
+                  ok = False
+          for rid, j in sk_jobs.items():
+              if rid not in role_names:
+                  print(f"::error file={sk_path}::'{rid}' in the skill chart is not a Path Finder job.")
+                  ok = False
+              elif j.get("name") != role_names[rid]:
+                  print(f"::error file={sk_path}::Job '{rid}' is named '{j.get('name')}' in the skill chart but '{role_names[rid]}' in the Path Finder.")
+                  ok = False
+          taught = set()
+          all_pf = {m.group(1) for m in re.finditer(r"\['(\d{4})','[^']*','(?:found|strat|skill|boost|studio)'", idx)}
+          for code, c in sk_courses.items():
+              if code in retired:
+                  print(f"::error file={sk_path}::COMD {code} is retired. Remove it from the skill chart.")
+                  ok = False
+              if code not in all_pf:
+                  print(f"::error file={sk_path}::COMD {code} is in the skill chart but not in the Path Finder course list.")
+                  ok = False
+              for rid, skills in c.get("builds", {}).items():
+                  for s in skills:
+                      if s not in sk_jobs.get(rid, {}).get("skills", []):
+                          print(f"::error file={sk_path}::COMD {code} builds '{s}' for '{rid}', but that skill isn't in the job's list under 'jobs'. Check the spelling.")
+                          ok = False
+                      taught.add((rid, s))
+          for rid, j in sk_jobs.items():
+              for s in j.get("skills", []):
+                  if (rid, s) not in taught:
+                      print(f"::error file={sk_path}::No class builds '{s}' for the job '{j.get('name')}'. Add it to at least one class.")
+                      ok = False
           print("All data files look good." if ok else "Fix the problems above, then commit again.")
           sys.exit(0 if ok else 1)
           PY

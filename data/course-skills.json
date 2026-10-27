@@ -1,0 +1,561 @@
+{
+ "about": "Skill chart: for each COMD class, the job skills it builds. This is the one place to update which classes teach which skills. The Path Finder builds each job's skill list from it. 'jobs' sets each job's skills, in order and in the words students see. 'courses' lists, for each class, the skills it builds for each job. A skill can come from more than one class. Studio courses (every BFA student takes them) are shown with their skills but never change which electives are recommended.",
+ "updated": "2026-10-26",
+ "jobs": {
+  "gd": {
+   "name": "Graphic designer",
+   "skills": [
+    "Set type, size and arrangement of layouts",
+    "Logos and brand identity systems",
+    "Base design choices on brand and marketing strategy",
+    "Product and packaging graphics",
+    "Print-ready production files (InDesign, Acrobat)",
+    "Graphics and layouts for websites (Figma)",
+    "Vector illustration (Illustrator)",
+    "Present work and act on client feedback"
+   ]
+  },
+  "ad": {
+   "name": "Junior art director",
+   "skills": [
+    "Develop concepts with a creative team",
+    "Campaigns that run across media",
+    "Present layouts to clients for approval",
+    "Run projects on budget and schedule",
+    "Direct photography and image editing (Photoshop)",
+    "Video and motion basics (After Effects)",
+    "Typography and layout"
+   ]
+  },
+  "cw": {
+   "name": "Copywriter and content strategy",
+   "skills": [
+    "Headlines, taglines and ad copy",
+    "Campaign concepts with an art director",
+    "Writing in a brand voice",
+    "Storytelling for video and social",
+    "Plan and produce content for social and digital channels",
+    "Present and defend ideas"
+   ]
+  },
+  "mo": {
+   "name": "Motion designer",
+   "skills": [
+    "2D and 3D animation",
+    "Timing and motion principles (After Effects)",
+    "Storytelling and storyboards",
+    "Light, color, texture and realism in 3D",
+    "Plan multimedia campaigns on budget and schedule",
+    "Shoot and edit video"
+   ]
+  },
+  "il": {
+   "name": "Illustrator",
+   "skills": [
+    "Create artwork in traditional and digital media (Photoshop, Illustrator)",
+    "Use line, color and perspective to convey ideas and mood",
+    "Characters and visual development",
+    "Sequential images and storyboards",
+    "Work with art directors and editors on content",
+    "Keep a portfolio and market your work"
+   ]
+  },
+  "ux": {
+   "name": "Visual & UX designer",
+   "skills": [
+    "Design, build and maintain websites",
+    "Front-end code and scripting",
+    "Interface and user experience design (Figma)",
+    "Test, find and fix problems from user feedback",
+    "Read analytics and site traffic",
+    "Work with developers on project timelines"
+   ]
+  },
+  "fe": {
+   "name": "Front-end developer",
+   "skills": [
+    "Code websites with HTML, CSS and JavaScript",
+    "Build and maintain sites with content tools such as WordPress",
+    "Test sites across browsers and devices",
+    "Turn user needs into technical requirements",
+    "Build from designs made in Figma",
+    "Track site performance with analytics",
+    "Work on a team with designers and developers"
+   ]
+  },
+  "ve": {
+   "name": "Video editor",
+   "skills": [
+    "Cut raw footage into a clear story",
+    "Shoot and edit video for commercials and social",
+    "Add titles, graphics and motion effects (After Effects)",
+    "Plan sequences with storyboards",
+    "Deliver video for YouTube, Instagram and TikTok",
+    "Take direction from producers and clients"
+   ]
+  },
+  "cp": {
+   "name": "Creative producer",
+   "skills": [
+    "Plan budgets, schedules and production details",
+    "Develop campaign and content ideas with a creative team",
+    "Plan shots, scenes and storyboards",
+    "Review work against the brief and quality standards",
+    "Present to clients and stakeholders",
+    "Measure results with analytics"
+   ]
+  }
+ },
+ "courses": {
+  "3313": {
+   "name": "Illustration 1",
+   "studio": false,
+   "builds": {
+    "gd": [
+     "Vector illustration (Illustrator)"
+    ],
+    "il": [
+     "Create artwork in traditional and digital media (Photoshop, Illustrator)"
+    ]
+   }
+  },
+  "3330": {
+   "name": "Photography II",
+   "studio": false,
+   "builds": {
+    "ad": [
+     "Direct photography and image editing (Photoshop)"
+    ]
+   }
+  },
+  "3402": {
+   "name": "Brand Strategy for Creatives",
+   "studio": false,
+   "builds": {
+    "gd": [
+     "Base design choices on brand and marketing strategy"
+    ],
+    "ad": [
+     "Develop concepts with a creative team"
+    ],
+    "cw": [
+     "Writing in a brand voice"
+    ]
+   }
+  },
+  "3412": {
+   "name": "Packaging Design",
+   "studio": false,
+   "builds": {
+    "gd": [
+     "Product and packaging graphics"
+    ]
+   }
+  },
+  "3413": {
+   "name": "Character Design",
+   "studio": false,
+   "builds": {
+    "il": [
+     "Characters and visual development"
+    ]
+   }
+  },
+  "3420": {
+   "name": "Storytelling for Creatives",
+   "studio": false,
+   "builds": {
+    "cw": [
+     "Storytelling for video and social"
+    ],
+    "mo": [
+     "Storytelling and storyboards"
+    ],
+    "ve": [
+     "Cut raw footage into a clear story",
+     "Plan sequences with storyboards"
+    ],
+    "cp": [
+     "Plan shots, scenes and storyboards"
+    ]
+   }
+  },
+  "3500": {
+   "name": "Campaign Development",
+   "studio": false,
+   "builds": {
+    "ad": [
+     "Develop concepts with a creative team",
+     "Campaigns that run across media"
+    ],
+    "cw": [
+     "Campaign concepts with an art director"
+    ],
+    "cp": [
+     "Develop campaign and content ideas with a creative team"
+    ]
+   }
+  },
+  "3501": {
+   "name": "Identity Design",
+   "studio": false,
+   "builds": {
+    "gd": [
+     "Logos and brand identity systems"
+    ]
+   }
+  },
+  "3504": {
+   "name": "Com. Design Theory (WI)",
+   "studio": true,
+   "builds": {
+    "gd": [
+     "Present work and act on client feedback"
+    ]
+   }
+  },
+  "3505": {
+   "name": "Special Topics: Expressive Type / Wayfinding",
+   "studio": false,
+   "builds": {
+    "gd": [
+     "Set type, size and arrangement of layouts"
+    ]
+   }
+  },
+  "3513": {
+   "name": "Narrative Illustration",
+   "studio": false,
+   "builds": {
+    "il": [
+     "Use line, color and perspective to convey ideas and mood"
+    ]
+   }
+  },
+  "3520": {
+   "name": "Principles in Motion Design",
+   "studio": false,
+   "builds": {
+    "ad": [
+     "Video and motion basics (After Effects)"
+    ],
+    "mo": [
+     "Timing and motion principles (After Effects)"
+    ],
+    "ve": [
+     "Add titles, graphics and motion effects (After Effects)"
+    ]
+   }
+  },
+  "3521": {
+   "name": "Strategies in Motion Design",
+   "studio": false,
+   "builds": {
+    "mo": [
+     "Plan multimedia campaigns on budget and schedule"
+    ],
+    "cp": [
+     "Plan budgets, schedules and production details"
+    ]
+   }
+  },
+  "3523": {
+   "name": "Storyboard Concepts",
+   "studio": false,
+   "builds": {
+    "mo": [
+     "Storytelling and storyboards"
+    ],
+    "il": [
+     "Sequential images and storyboards"
+    ],
+    "ve": [
+     "Plan sequences with storyboards"
+    ],
+    "cp": [
+     "Plan shots, scenes and storyboards"
+    ]
+   }
+  },
+  "3527": {
+   "name": "Advanced Typography",
+   "studio": false,
+   "builds": {
+    "gd": [
+     "Set type, size and arrangement of layouts"
+    ],
+    "ad": [
+     "Typography and layout"
+    ]
+   }
+  },
+  "3530": {
+   "name": "Adv. Photo Studio",
+   "studio": false,
+   "builds": {
+    "ad": [
+     "Direct photography and image editing (Photoshop)"
+    ]
+   }
+  },
+  "3533": {
+   "name": "Special Topics in Illustration",
+   "studio": false,
+   "builds": {
+    "il": [
+     "Keep a portfolio and market your work"
+    ]
+   }
+  },
+  "3551": {
+   "name": "Web Design II",
+   "studio": false,
+   "builds": {
+    "gd": [
+     "Graphics and layouts for websites (Figma)"
+    ],
+    "ux": [
+     "Design, build and maintain websites"
+    ],
+    "fe": [
+     "Code websites with HTML, CSS and JavaScript",
+     "Build and maintain sites with content tools such as WordPress"
+    ]
+   }
+  },
+  "3562": {
+   "name": "UX/UI",
+   "studio": false,
+   "builds": {
+    "gd": [
+     "Graphics and layouts for websites (Figma)"
+    ],
+    "ux": [
+     "Interface and user experience design (Figma)",
+     "Test, find and fix problems from user feedback"
+    ],
+    "fe": [
+     "Test sites across browsers and devices",
+     "Turn user needs into technical requirements",
+     "Build from designs made in Figma"
+    ]
+   }
+  },
+  "3563": {
+   "name": "Web Analytics & Traffic",
+   "studio": false,
+   "builds": {
+    "ux": [
+     "Test, find and fix problems from user feedback",
+     "Read analytics and site traffic"
+    ],
+    "fe": [
+     "Track site performance with analytics"
+    ],
+    "cp": [
+     "Measure results with analytics"
+    ]
+   }
+  },
+  "3600": {
+   "name": "Advertising Portfolio Dev.",
+   "studio": false,
+   "builds": {
+    "ad": [
+     "Campaigns that run across media",
+     "Present layouts to clients for approval"
+    ],
+    "cw": [
+     "Campaign concepts with an art director",
+     "Present and defend ideas"
+    ],
+    "cp": [
+     "Review work against the brief and quality standards",
+     "Present to clients and stakeholders"
+    ]
+   }
+  },
+  "3601": {
+   "name": "Information Design",
+   "studio": false,
+   "builds": {
+    "gd": [
+     "Set type, size and arrangement of layouts"
+    ]
+   }
+  },
+  "3602": {
+   "name": "Copywriting for Creatives",
+   "studio": false,
+   "builds": {
+    "ad": [
+     "Develop concepts with a creative team"
+    ],
+    "cw": [
+     "Headlines, taglines and ad copy"
+    ]
+   }
+  },
+  "3620": {
+   "name": "Video Production for Commercials",
+   "studio": false,
+   "builds": {
+    "ad": [
+     "Video and motion basics (After Effects)"
+    ],
+    "mo": [
+     "Shoot and edit video"
+    ],
+    "ve": [
+     "Cut raw footage into a clear story",
+     "Shoot and edit video for commercials and social"
+    ]
+   }
+  },
+  "3621": {
+   "name": "Motion Design Techniques",
+   "studio": false,
+   "builds": {
+    "mo": [
+     "2D and 3D animation",
+     "Timing and motion principles (After Effects)"
+    ],
+    "ve": [
+     "Add titles, graphics and motion effects (After Effects)"
+    ]
+   }
+  },
+  "3633": {
+   "name": "Adv. Strategies in Illustration",
+   "studio": false,
+   "builds": {
+    "il": [
+     "Use line, color and perspective to convey ideas and mood",
+     "Work with art directors and editors on content"
+    ]
+   }
+  },
+  "3640": {
+   "name": "3D Animation I",
+   "studio": false,
+   "builds": {
+    "mo": [
+     "2D and 3D animation",
+     "Light, color, texture and realism in 3D"
+    ]
+   }
+  },
+  "3652": {
+   "name": "Web Design III",
+   "studio": false,
+   "builds": {
+    "ux": [
+     "Design, build and maintain websites",
+     "Front-end code and scripting"
+    ],
+    "fe": [
+     "Build and maintain sites with content tools such as WordPress",
+     "Test sites across browsers and devices"
+    ]
+   }
+  },
+  "3662": {
+   "name": "Strategic Content Creation",
+   "studio": false,
+   "builds": {
+    "ad": [
+     "Campaigns that run across media"
+    ],
+    "cw": [
+     "Storytelling for video and social",
+     "Plan and produce content for social and digital channels"
+    ],
+    "mo": [
+     "Plan multimedia campaigns on budget and schedule"
+    ],
+    "ve": [
+     "Shoot and edit video for commercials and social",
+     "Deliver video for YouTube, Instagram and TikTok"
+    ],
+    "cp": [
+     "Develop campaign and content ideas with a creative team"
+    ]
+   }
+  },
+  "3663": {
+   "name": "Dynamic Web I",
+   "studio": false,
+   "builds": {
+    "ux": [
+     "Front-end code and scripting"
+    ],
+    "fe": [
+     "Code websites with HTML, CSS and JavaScript"
+    ]
+   }
+  },
+  "3711": {
+   "name": "Vector Art Editing",
+   "studio": false,
+   "builds": {
+    "gd": [
+     "Vector illustration (Illustrator)"
+    ],
+    "il": [
+     "Create artwork in traditional and digital media (Photoshop, Illustrator)"
+    ]
+   }
+  },
+  "4611": {
+   "name": "Publication Design",
+   "studio": false,
+   "builds": {
+    "gd": [
+     "Set type, size and arrangement of layouts",
+     "Print-ready production files (InDesign, Acrobat)"
+    ]
+   }
+  },
+  "4701": {
+   "name": "Design Team",
+   "studio": true,
+   "builds": {
+    "gd": [
+     "Present work and act on client feedback"
+    ],
+    "ad": [
+     "Present layouts to clients for approval",
+     "Run projects on budget and schedule"
+    ],
+    "cw": [
+     "Present and defend ideas"
+    ],
+    "il": [
+     "Work with art directors and editors on content"
+    ],
+    "ux": [
+     "Work with developers on project timelines"
+    ],
+    "fe": [
+     "Work on a team with designers and developers"
+    ],
+    "ve": [
+     "Take direction from producers and clients"
+    ],
+    "cp": [
+     "Review work against the brief and quality standards",
+     "Present to clients and stakeholders"
+    ]
+   }
+  },
+  "4801": {
+   "name": "The Portfolio",
+   "studio": true,
+   "builds": {
+    "il": [
+     "Keep a portfolio and market your work"
+    ]
+   }
+  }
+ }
+}
